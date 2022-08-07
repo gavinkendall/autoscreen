@@ -448,6 +448,7 @@ namespace AutoScreenCapture
 
             var versionInConfig = new Version(settingCollection.AppCodename, settingCollection.AppVersion);
             Version v2346 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, "2.3.4.6");
+            Version v2423 = VersionManager.Versions.Get(CODENAME_BLADE, "2.4.2.3");
 
             // SaveScreenshotRefs is a new user setting as of 2.3.4.7 so make sure to add it for older versions.
             if (v2346 != null && versionInConfig != null && versionInConfig.VersionNumber <= v2346.VersionNumber)
@@ -455,23 +456,30 @@ namespace AutoScreenCapture
                 User.Add(new Setting("SaveScreenshotRefs", true));
             }
 
+            if (v2423 != null && versionInConfig != null && versionInConfig.VersionNumber <= v2423.VersionNumber)
+            {
+                User.Add(new Setting("ShowInterface", false));
+                User.Add(new Setting("AutoAdaptUsesEnumDisplaySettings", false));
+                User.Add(new Setting("ImageDiffTolerance", 20));
+            }
+
             if (versionInConfig.VersionString.Equals("2.2.0.0") ||
-            versionInConfig.VersionString.Equals("2.2.0.1") ||
-            versionInConfig.VersionString.Equals("2.2.0.2") ||
-            versionInConfig.VersionString.Equals("2.2.0.3") ||
-            versionInConfig.VersionString.Equals("2.2.0.4") ||
-            versionInConfig.VersionString.Equals("2.2.0.5") ||
-            versionInConfig.VersionString.Equals("2.2.0.6") ||
-            versionInConfig.VersionString.Equals("2.2.0.7") ||
-            versionInConfig.VersionString.Equals("2.2.0.8") ||
-            versionInConfig.VersionString.Equals("2.2.0.9") ||
-            versionInConfig.VersionString.Equals("2.2.0.10") ||
-            versionInConfig.VersionString.Equals("2.2.0.11") ||
-            versionInConfig.VersionString.Equals("2.2.0.12") ||
-            versionInConfig.VersionString.Equals("2.2.0.13") ||
-            versionInConfig.VersionString.Equals("2.2.0.14") ||
-            versionInConfig.VersionString.Equals("2.2.0.15") ||
-            versionInConfig.VersionString.Equals("2.2.0.16"))
+                versionInConfig.VersionString.Equals("2.2.0.1") ||
+                versionInConfig.VersionString.Equals("2.2.0.2") ||
+                versionInConfig.VersionString.Equals("2.2.0.3") ||
+                versionInConfig.VersionString.Equals("2.2.0.4") ||
+                versionInConfig.VersionString.Equals("2.2.0.5") ||
+                versionInConfig.VersionString.Equals("2.2.0.6") ||
+                versionInConfig.VersionString.Equals("2.2.0.7") ||
+                versionInConfig.VersionString.Equals("2.2.0.8") ||
+                versionInConfig.VersionString.Equals("2.2.0.9") ||
+                versionInConfig.VersionString.Equals("2.2.0.10") ||
+                versionInConfig.VersionString.Equals("2.2.0.11") ||
+                versionInConfig.VersionString.Equals("2.2.0.12") ||
+                versionInConfig.VersionString.Equals("2.2.0.13") ||
+                versionInConfig.VersionString.Equals("2.2.0.14") ||
+                versionInConfig.VersionString.Equals("2.2.0.15") ||
+                versionInConfig.VersionString.Equals("2.2.0.16"))
             {
                 if (settingCollection.KeyExists("StringPassphrase"))
                 {

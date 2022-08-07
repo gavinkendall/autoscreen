@@ -198,6 +198,13 @@ namespace AutoScreenCapture
                     {
                         // Load existing application settings.
                         Settings.Application.Load(Settings, FileSystem);
+
+                        // Check if this is an old version of the application settings.
+                        // If so then we're likely handling the old format of the configuration file so parse it "the old way".
+                        if (Settings.Application.AppCodename.Equals("Blade"))
+                        {
+                            UpgradeConfig();
+                        }
                     }
                     else
                     {
@@ -924,6 +931,91 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("Config::ParseMacroTagDefinitions", ex);
+            }
+        }
+
+        /// <summary>
+        /// For when we're upgrading from the old format of the configuration file.
+        /// </summary>
+        private void UpgradeConfig()
+        {
+            // Folders
+            const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
+            const string REGEX_DEBUG_FOLDER = "^DebugFolder=(?<Path>.+)$";
+            const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
+
+            // Files
+            const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
+            const string REGEX_EDITORS_FILE = "^EditorsFile=(?<Path>.+)$";
+            const string REGEX_REGIONS_FILE = "^RegionsFile=(?<Path>.+)$";
+            const string REGEX_SCREENS_FILE = "^ScreensFile=(?<Path>.+)$";
+            const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
+            const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
+            const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
+            const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
+
+            // Parse the old configuration file.
+            foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+            {
+                if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                {
+                    continue;
+                }
+
+                if (Regex.IsMatch(line, REGEX_SCREENSHOTS_FOLDER))
+                {
+                    Settings.User.SetValueByKey("ScreenshotsFolder", Regex.Match(line, REGEX_SCREENSHOTS_FOLDER).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_DEBUG_FOLDER))
+                {
+                    Settings.Application.SetValueByKey("ErrorsFolder", Regex.Match(line, REGEX_DEBUG_FOLDER).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_LOGS_FOLDER))
+                {
+                    Settings.Application.SetValueByKey("LogsFolder", Regex.Match(line, REGEX_LOGS_FOLDER).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_COMMAND_FILE))
+                {
+                    Settings.Application.SetValueByKey("CommandFile", Regex.Match(line, REGEX_COMMAND_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_EDITORS_FILE))
+                {
+                    Settings.Application.SetValueByKey("EditorsFile", Regex.Match(line, REGEX_EDITORS_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_REGIONS_FILE))
+                {
+                    Settings.Application.SetValueByKey("RegionsFile", Regex.Match(line, REGEX_REGIONS_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_SCREENS_FILE))
+                {
+                    Settings.Application.SetValueByKey("ScreensFile", Regex.Match(line, REGEX_SCREENS_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_TRIGGERS_FILE))
+                {
+                    Settings.Application.SetValueByKey("TriggersFile", Regex.Match(line, REGEX_TRIGGERS_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_SCREENSHOTS_FILE))
+                {
+                    Settings.Application.SetValueByKey("ScreenshotsFile", Regex.Match(line, REGEX_SCREENSHOTS_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_MACRO_TAGS_FILE))
+                {
+                    Settings.Application.SetValueByKey("MacroTagsFile", Regex.Match(line, REGEX_MACRO_TAGS_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_SCHEDULES_FILE))
+                {
+                    Settings.Application.SetValueByKey("SchedulesFile", Regex.Match(line, REGEX_SCHEDULES_FILE).Groups["Path"].Value);
+                }
             }
         }
     }

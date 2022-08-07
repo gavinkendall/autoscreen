@@ -67,7 +67,7 @@ namespace AutoScreenCapture
                 {
                     if (!ParseCommandLineArguments(args, config))
                     {
-                        WriteStartupError(config, fileSystem, "Cannot start application. Missing or invalid configuration file. Please use the latest version of autoscreen.conf from https://sourceforge.net/projects/autoscreen/files/");
+                        WriteStartupError(config, fileSystem, "Cannot start application. The configuration file is either missing, empty, has invalid definitions, or it's just not the correct version. Please use the latest version of autoscreen.conf from https://sourceforge.net/projects/autoscreen/files/ and try running the application again but if that still isn't working for you then you might need to delete the !autoscreen directory (which is basically like doing a factory reset).");
                     }
                 }
                 else
@@ -76,7 +76,7 @@ namespace AutoScreenCapture
                     // have no commands to parse then we'll load the settings from the default configuration file.
                     if (!config.Load(fileSystem))
                     {
-                        WriteStartupError(config, fileSystem, "Cannot start application. Missing or invalid configuration file. Please use the latest version of autoscreen.conf from https://sourceforge.net/projects/autoscreen/files/");
+                        WriteStartupError(config, fileSystem, "Cannot start application. The configuration file is either missing, empty, has invalid definitions, or it's just not the correct version. Please use the latest version of autoscreen.conf from https://sourceforge.net/projects/autoscreen/files/ and try running the application again but if that still isn't working for you then you might need to delete the !autoscreen directory (which is basically like doing a factory reset).");
                     }
                 }
 
