@@ -158,28 +158,58 @@ namespace AutoScreenCapture
 
                     _log.WriteDebugMessage("Number of triggers loaded = " + _formTrigger.TriggerCollection.Count);
 
-                    // If the ShowInterface is False then make sure to disable all Triggers that use the ShowInterface action.
-                    // (This would have been set in autoscreen.conf)
-                    if (!Convert.ToBoolean(_config.Settings.User.GetByKey("ShowInterface").Value))
+                    // Make sure that what we're about to do is only possible with 2.5 Limoncello (or a later version).
+                    // It's because, when introducing the ShowInterface user setting in 2.5 and upgrading from an old version,
+                    // the old version behaved in such a way that "ShowInterface" didn't exist yet. So we have to simulate the old behaviour.
+                    if (_config.Settings.User.AppCodename.Equals(Settings.CODENAME_LIMONCELLO))
                     {
-                        foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                        // **** 2.5 LIMONCELLO BEHAVIOUR ****
+                        // If the ShowInterface user setting is set to False then make sure to disable all Triggers that use the ShowInterface action.
+                        // (This would have been set in autoscreen.conf)
+                        if (!Convert.ToBoolean(_config.Settings.User.GetByKey("ShowInterface").Value))
                         {
-                            if (trigger.ActionType == TriggerActionType.ShowInterface)
+                            foreach (Trigger trigger in _formTrigger.TriggerCollection)
                             {
-                                trigger.Enable = false;
+                                if (trigger.ActionType == TriggerActionType.ShowInterface)
+                                {
+                                    trigger.Enable = false;
+                                }
+                            }
+                        }
+
+                        // **** 2.5 LIMONCELLO BEHAVIOUR ****
+                        // If the ShowSystemTrayIcon user setting is set to False then make sure to disable all Triggers that use the ShowSystemTrayIcon action.
+                        // (This would have been set in autoscreen.conf)
+                        if (!Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon").Value))
+                        {
+                            foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                            {
+                                if (trigger.ActionType == TriggerActionType.ShowSystemTrayIcon)
+                                {
+                                    trigger.Enable = false;
+                                }
                             }
                         }
                     }
-
-                    // If the ShowSystemTrayIcon is False then make sure to disable all Triggers that use the ShowSystemTrayIcon action.
-                    // (This would have been set in autoscreen.conf)
-                    if (!Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon").Value))
+                    else
                     {
+                        // **** UPGRADE PATH FROM 2.4 BLADE TO 2.5 LIMONCELLO ****
+                        // At this point we'll have "ShowInterface" set to "False" if we were following an upgrade path from an old version of the application.
+                        // This might not represent the true intended purpose when we look at the triggers. So go through the triggers looking for any triggers that
+                        // want to show the interface (and the system tray icon) on application startup and correct the ShowInterface (new in 2.5) and ShowSystemTrayIcon (from 2.4)
+                        // user settings appropriately.
                         foreach (Trigger trigger in _formTrigger.TriggerCollection)
                         {
-                            if (trigger.ActionType == TriggerActionType.ShowSystemTrayIcon)
+                            if (trigger.ConditionType == TriggerConditionType.ApplicationStartup &&
+                                trigger.ActionType == TriggerActionType.ShowInterface)
                             {
-                                trigger.Enable = false;
+                                _config.Settings.User.SetValueByKey("ShowInterface", true);
+                            }
+
+                            if (trigger.ConditionType == TriggerConditionType.ApplicationStartup &&
+                                trigger.ActionType == TriggerActionType.ShowSystemTrayIcon)
+                            {
+                                _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", true);
                             }
                         }
                     }
