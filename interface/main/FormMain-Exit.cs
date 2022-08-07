@@ -63,6 +63,12 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
+                // Stop all running timers.
+                timerHelpTips.Stop();
+                timerParseCommands.Stop();
+                timerScheduleCheck.Stop();
+                timerPerformMaintenance.Stop();
+
                 DisableStopCapture();
                 EnableStartCapture();
 
@@ -99,10 +105,13 @@ namespace AutoScreenCapture
                 // Exit.
                 Environment.Exit(0);
             }
-            catch (Exception ex)
+            catch (AccessViolationException)
             {
-                _screenCapture.ApplicationError = true;
-                _log.WriteExceptionMessage("FormMain-Exit::ExitApplication", ex);
+                Environment.Exit(1);
+            }
+            catch (Exception)
+            {
+                Environment.Exit(1);
             }
         }
     }

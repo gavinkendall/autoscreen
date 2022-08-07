@@ -28,6 +28,9 @@ namespace AutoScreenCapture
     /// </summary>
     public class Config
     {
+        // Version
+        private const String REGEX_VERSION = "^Version=(?<Version>\\d{1}\\.\\d{1}\\.\\d{1}\\.\\d{1})$";
+
         // Settings
         private const string REGEX_APPLICATION_SETTINGS_FILE = "^ApplicationSettingsFile=(?<Path>.+)$";
         private const string REGEX_USER_SETTINGS_FILE = "^UserSettingsFile=(?<Path>.+)$";
@@ -153,6 +156,24 @@ namespace AutoScreenCapture
 
                 if (fileSystem.FileExists(fileSystem.ConfigFile))
                 {
+                    // Assume we're on the current version of the application unless otherwise specified in the configuration file.
+                    string version = Settings.ApplicationVersion;
+
+                    // Look for the version we should be using.
+                    foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
+                    {
+                        // Ignore any empty lines or comments in the configuration file.
+                        if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                        {
+                            continue;
+                        }
+
+                        if (Regex.IsMatch(line, REGEX_VERSION))
+                        {
+                            version = Regex.Match(line, REGEX_VERSION).Groups["Version"].Value;
+                        }
+                    }
+
                     // We need to parse and load all default macro tags before parsing the paths used for files and folders
                     // because they may have macro tags in the paths.
                     ParseMacroTagDefinitions();
@@ -211,6 +232,8 @@ namespace AutoScreenCapture
                         // Acquire default application settings.
                         ParseDefaultApplicationSettings();
 
+                        Settings.Application.AppCodename = Settings.ApplicationCodename;
+                        Settings.Application.AppVersion = version;
                         Settings.Application.Save(Settings, FileSystem);
                     }
 
@@ -238,6 +261,10 @@ namespace AutoScreenCapture
                         // Acquire default user settings.
                         // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
                         ParseDefaultUserSettings();
+
+                        Settings.User.AppCodename = Settings.ApplicationCodename;
+                        Settings.User.AppVersion = version;
+                        Settings.User.Save(Settings, FileSystem);
                     }
 
                     // Something fun to include.
@@ -261,6 +288,10 @@ namespace AutoScreenCapture
                     {
                         // Acquire default SFTP settings.
                         ParseDefaultSFTPSettings();
+
+                        Settings.SFTP.AppCodename = Settings.ApplicationCodename;
+                        Settings.SFTP.AppVersion = version;
+                        Settings.SFTP.Save(Settings, FileSystem);
                     }
 
                     if (fileSystem.FileExists(fileSystem.SmtpSettingsFile))
@@ -272,6 +303,10 @@ namespace AutoScreenCapture
                     {
                         // Acquire default SMTP settings.
                         ParseDefaultSMTPSettings();
+
+                        Settings.SMTP.AppCodename = Settings.ApplicationCodename;
+                        Settings.SMTP.AppVersion = version;
+                        Settings.SMTP.Save(Settings, FileSystem);
                     }
 
                     Log = new Log(Settings, fileSystem, MacroParser);
