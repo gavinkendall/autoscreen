@@ -67,7 +67,7 @@ namespace AutoScreenCapture
                 {
                     if (!ParseCommandLineArguments(args, config))
                     {
-                        WriteStartupError(config, fileSystem, "Cannot start application. Error encountered when parsing command line arguments. Possibly missing configuration file. Where is \"" + fileSystem.ConfigFile + "\"?");
+                        WriteStartupError(config, fileSystem, "Cannot start application. Missing or invalid configuration file. Please use the latest version of autoscreen.conf from https://sourceforge.net/projects/autoscreen/files/");
                     }
                 }
                 else
@@ -76,7 +76,7 @@ namespace AutoScreenCapture
                     // have no commands to parse then we'll load the settings from the default configuration file.
                     if (!config.Load(fileSystem))
                     {
-                        WriteStartupError(config, fileSystem, "Cannot start application. Missing configuration file. Where is \"" + fileSystem.ConfigFile + "\"?");
+                        WriteStartupError(config, fileSystem, "Cannot start application. Missing or invalid configuration file. Please use the latest version of autoscreen.conf from https://sourceforge.net/projects/autoscreen/files/");
                     }
                 }
 

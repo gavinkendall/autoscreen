@@ -333,10 +333,8 @@ namespace AutoScreenCapture
 
                 return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Log.WriteExceptionMessage("Config::Load", ex);
-
                 return false;
             }
         }
