@@ -424,6 +424,11 @@
   <ItemGroup>
     <Content Include="autoscreen.ico" />
     <Content Include="icons\ico\autoscreen-error.ico" />
+    <Content Include="images\about-0.png" />
+    <Content Include="images\about-1.png" />
+    <Content Include="images\about-2.png" />
+    <Content Include="images\about-3.png" />
+    <Content Include="images\about-4.png" />
     <Content Include="images\tools.png" />
     <Content Include="images\zoom_in.png" />
     <Content Include="images\zoom_out.png" />
@@ -461,14 +466,6 @@
     <None Include="images\exit.png" />
     <None Include="images\file_transfer.png" />
     <None Include="images\properties.png" />
-    <Content Include="images\blade.jpg" />
-    <None Include="images\blade0.jpg" />
-    <Content Include="images\blade1.jpg" />
-    <Content Include="images\blade2.jpg" />
-    <Content Include="images\blade3.jpg" />
-    <Content Include="images\blade4.jpg" />
-    <Content Include="images\blade5.jpg" />
-    <Content Include="images\blade6.jpg" />
     <Content Include="images\command_line.png" />
     <Content Include="images\lightbulb.png" />
     <Content Include="images\lock.png" />

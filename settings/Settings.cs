@@ -67,6 +67,11 @@ namespace AutoScreenCapture
 
         // The current major version.
         /// <summary>
+        /// Named after the Italian drink.
+        /// </summary>
+        public const string CODENAME_LIMONCELLO = "Limoncello";
+
+        /// <summary>
         /// Auto Screen Capture "Blade"; named after the superhero vampire movie with Wesley Snipes. Also, the track "Confusion" by New Order is still amazing.
         /// </summary>
         public const string CODENAME_BLADE = "Blade";
@@ -84,7 +89,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The codename of this application.
         /// </summary>
-        public readonly string ApplicationCodename = CODENAME_BLADE;
+        public readonly string ApplicationCodename = CODENAME_LIMONCELLO;
 
         /// <summary>
         /// The application settings collection.

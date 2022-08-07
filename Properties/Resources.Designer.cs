@@ -83,6 +83,56 @@ namespace AutoScreenCapture.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap about_0 {
+            get {
+                object obj = ResourceManager.GetObject("about_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap about_1 {
+            get {
+                object obj = ResourceManager.GetObject("about_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap about_2 {
+            get {
+                object obj = ResourceManager.GetObject("about_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap about_3 {
+            get {
+                object obj = ResourceManager.GetObject("about_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap about_4 {
+            get {
+                object obj = ResourceManager.GetObject("about_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap add {
             get {
                 object obj = ResourceManager.GetObject("add", resourceCulture);
@@ -153,86 +203,6 @@ namespace AutoScreenCapture.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blade {
-            get {
-                object obj = ResourceManager.GetObject("blade", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blade0 {
-            get {
-                object obj = ResourceManager.GetObject("blade0", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blade1 {
-            get {
-                object obj = ResourceManager.GetObject("blade1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blade2 {
-            get {
-                object obj = ResourceManager.GetObject("blade2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blade3 {
-            get {
-                object obj = ResourceManager.GetObject("blade3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blade4 {
-            get {
-                object obj = ResourceManager.GetObject("blade4", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blade5 {
-            get {
-                object obj = ResourceManager.GetObject("blade5", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blade6 {
-            get {
-                object obj = ResourceManager.GetObject("blade6", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap brick {
             get {
                 object obj = ResourceManager.GetObject("brick", resourceCulture);
@@ -261,12 +231,12 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}{\f3\fnil\fcharset2 Symbol;}}
         ///{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Changelog\b0\fs22\par
         ///Who reads these things?\par
-        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoenix (2.0) [rest of string was truncated]&quot;;.
+        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string changelog {
             get {
@@ -501,11 +471,8 @@ namespace AutoScreenCapture.Properties {
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Quick Start\fs22\par
-        ///\b0 Right-click on the system tray icon to open the system tray icon menu and select &quot;Screen Capture Status&quot;.\par
-        ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6271\pich11404\picwgoal3555\pichgoal6465 
-        ///0100090000039c57020000007d57020000000400000003010800050000000c0251feed00050000
-        ///000b0200000000050 [rest of string was truncated]&quot;;.
+        ///\b0 This is for people who don&apos;t want to read through the longer &quot;Getting Started&quot; help section and just want to jump straight into using the application so the information in this section is intentionally very short and basic.\par
+        ///Right-click on the system tray icon to open the system tray icon menu and select &quot;S [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string quick_start {
             get {
@@ -560,11 +527,12 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\colortbl ;\red255\green0\blue0;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Schedules\b0\fs22\par
         ///The &quot;Schedules&quot; module gives you the ability to add, configure, and remove schedules that define when screenshots should be taken between a time period (and what screens and regions should be captured during the running schedule).\par
         ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6403\pich5080\picw [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picpro [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string schedules {
             get {
@@ -684,8 +652,7 @@ namespace AutoScreenCapture.Properties {
         ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Welcome\fs22\par
-        ///\b0 Auto Screen Capture takes screenshots at a set interval. The application is primarily used as a personal automated screen capture utility for keeping track of what you&apos;re working on.\par
-        ///A calendar is available to review what days screenshots were taken (this is indi [rest of string was truncated]&quot;;.
+        ///\b0 Auto Screen Capture takes screenshots at a set interval. The application is primarily used as a personal automated screen capture utility for keeping track of what you&apos;re working on or if you&apos;re needing a way to have screenshots already available to you without having [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string welcome {
             get {

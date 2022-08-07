@@ -221,7 +221,7 @@ namespace AutoScreenCapture
         {
             bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun").Value);
 
-            string welcome = "Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\")";
+            string welcome = "Welcome to Auto Screen Capture";
 
             if (firstRun)
             {

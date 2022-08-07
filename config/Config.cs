@@ -196,10 +196,12 @@ namespace AutoScreenCapture
 
                     if (fileSystem.FileExists(fileSystem.ApplicationSettingsFile))
                     {
+                        // Load existing application settings.
                         Settings.Application.Load(Settings, FileSystem);
                     }
                     else
                     {
+                        // Acquire default application settings.
                         ParseDefaultApplicationSettings();
 
                         Settings.Application.Save(Settings, FileSystem);
@@ -221,12 +223,23 @@ namespace AutoScreenCapture
 
                     if (fileSystem.FileExists(fileSystem.UserSettingsFile))
                     {
+                        // Load existing user settings.
                         Settings.User.Load(Settings, FileSystem);
                     }
                     else
                     {
+                        // Acquire default user settings.
                         // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
                         ParseDefaultUserSettings();
+                    }
+
+                    // Something fun to include.
+                    Setting sneakyPastaSnake = Settings.User.GetByKey("SneakyPastaSnake");
+
+                    if (sneakyPastaSnake != null && sneakyPastaSnake.Value.ToString().Equals("True"))
+                    {
+                        Settings.User.SetValueByKey("ShowInterface", false);
+                        Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
                     }
 
                     // The screenshots folder is from user settings.
@@ -234,6 +247,7 @@ namespace AutoScreenCapture
 
                     if (fileSystem.FileExists(fileSystem.SftpSettingsFile))
                     {
+                        // Load existing SFTP settings.
                         Settings.SFTP.Load(Settings, FileSystem);
                     }
                     else
@@ -244,6 +258,7 @@ namespace AutoScreenCapture
 
                     if (fileSystem.FileExists(fileSystem.SmtpSettingsFile))
                     {
+                        // Load existing SMTP settings.
                         Settings.SMTP.Load(Settings, FileSystem);
                     }
                     else

@@ -56,17 +56,17 @@ namespace AutoScreenCapture
         /// <summary>
         /// Regex for parsing the -captureat command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_CAPTUREAT = @"^-captureat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.4.2.4 to maintain backwards compatibility with older versions
+        internal const string REGEX_COMMAND_LINE_CAPTUREAT = @"^-captureat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.5 to maintain backwards compatibility with older versions
 
         /// <summary>
         /// Regex for parsing the -stopat command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.4.2.4 to maintain backwards compatibility with older versions
+        internal const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.5 to maintain backwards compatibility with older versions
 
         /// <summary>
         /// Regex for parsing the -startat command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.4.2.4 to maintain backwards compatibility with older versions
+        internal const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.5 to maintain backwards compatibility with older versions
 
         /// <summary>
         /// Regex for parsing the -interval command.

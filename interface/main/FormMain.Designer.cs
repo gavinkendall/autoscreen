@@ -422,7 +422,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripSpacer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(168, 19);
+            this.toolStripSpacer.Size = new System.Drawing.Size(199, 19);
             this.toolStripSpacer.Spring = true;
             // 
             // toolStripInfo
@@ -1487,6 +1487,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemAboutAutoScreenCapture.Name = "toolStripMainMenuItemAboutAutoScreenCapture";
             this.toolStripMainMenuItemAboutAutoScreenCapture.Size = new System.Drawing.Size(219, 22);
             this.toolStripMainMenuItemAboutAutoScreenCapture.Text = "About Auto Screen Capture";
+            this.toolStripMainMenuItemAboutAutoScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
             // 
             // toolStripMainSeparatorAbout
             // 

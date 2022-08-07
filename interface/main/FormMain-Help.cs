@@ -32,18 +32,17 @@ namespace AutoScreenCapture
 
         private void LoadHelpTips()
         {
-            _helpTips.Add("Help tips are displayed here in the help bar. You can either click this help bar to show the next tip or wait until the next tip is shown. The Help button will show you the necessary documentation to get started");
-            _helpTips.Add("The Start Screen Capture button begins a session of taking screenshots at the specified interval. The application will run in your system tray. Right-click the system tray icon and select Stop Screen Capture to stop the running screen capture session");
-            _helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day. When you click on a day the list of screenshots for that day will be shown underneath");
-            _helpTips.Add("Below the calendar are the list of screenshots taken on the day selected from the calendar organized in chronological order");
-            _helpTips.Add("On the right side are modules. This includes Screens, Regions, Editors, Schedules, Macro Tags, and Triggers. You can add, configure, or remove various items in each module");
-            _helpTips.Add("The Screens module displays a list of screens. Add, configure, or remove screens from the Screens module");
-            _helpTips.Add("Use the Configure button to configure a Screen or Region. You can add multiple screens and regions each with their own set of attributes");
-            _helpTips.Add("You can add as many editors as you want but only one editor can be set as the default editor");
-            _helpTips.Add("Use the Macro field of a Screen or Region to define the filename pattern for each file with macro tags (such as %date% and %time%)");
-            _helpTips.Add("Macro tags can represent the current date and time. You can also acquire the name of the user or computer. Have a look in the Macro Tags module");
-            _helpTips.Add("There are keyboard shortcuts you can use to manually take screenshots in your own time rather than wait for the next screen capture cycle");
-            _helpTips.Add("You can change the behaviour of the application by configuring triggers. Each trigger performs a certain action based on a particular condition");
+            _helpTips.Add("Screen Capture Status shows you when the next set of screenshots will be captured");
+            //_helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day. When you click on a day the list of screenshots for that day will be shown underneath");
+            //_helpTips.Add("Below the calendar are the list of screenshots taken on the day selected from the calendar organized in chronological order");
+            //_helpTips.Add("On the right side are modules. This includes Screens, Regions, Editors, Schedules, Macro Tags, and Triggers. You can add, configure, or remove various items in each module");
+            //_helpTips.Add("The Screens module displays a list of screens. Add, configure, or remove screens from the Screens module");
+            //_helpTips.Add("Use the Configure button to configure a Screen or Region. You can add multiple screens and regions each with their own set of attributes");
+            //_helpTips.Add("You can add as many editors as you want but only one editor can be set as the default editor");
+            //_helpTips.Add("Use the Macro field of a Screen or Region to define the filename pattern for each file with macro tags (such as %date% and %time%)");
+            //_helpTips.Add("Macro tags can represent the current date and time. You can also acquire the name of the user or computer. Have a look in the Macro Tags module");
+            //_helpTips.Add("There are keyboard shortcuts you can use to manually take screenshots in your own time rather than wait for the next screen capture cycle");
+            //_helpTips.Add("You can change the behaviour of the application by configuring triggers. Each trigger performs a certain action based on a particular condition");
 
             // Tool tips for various controls.
             _toolTip.SetToolTip(comboBoxFilterType, "Choose a type of filter. This could be a label or the title of an active window from an application that was captured during a session");

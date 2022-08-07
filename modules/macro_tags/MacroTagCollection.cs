@@ -185,7 +185,7 @@ namespace AutoScreenCapture
 
                                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                                             Version v2326 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.2.6");
-                                            Version v2424 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, "2.4.2.4");
+                                            Version v2500 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_LIMONCELLO, "2.5.0.0");
 
                                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
@@ -205,11 +205,11 @@ namespace AutoScreenCapture
                                                 value = value.Replace("TimeOfDay", "TimeRange");
                                             }
 
-                                            if (v2424 != null && configVersion != null && configVersion.VersionNumber < v2424.VersionNumber)
+                                            if (v2500 != null && configVersion != null && configVersion.VersionNumber < v2500.VersionNumber)
                                             {
                                                 log.WriteDebugMessage("Blade 2.4.2.3 or older detected");
 
-                                                // Starting with 2.4.2.4 the CountNow type became the CaptureNowCount type.
+                                                // Starting with 2.5 the CountNow type became the CaptureNowCount type.
                                                 value = value.Replace("CountNow", "CaptureNowCount");
                                             }
                                         }
