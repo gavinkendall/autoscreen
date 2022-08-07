@@ -363,7 +363,7 @@ namespace AutoScreenCapture
                 // IMPORTANT: Do not attempt to set the same index for Filter Value here as that control is populated based on the selected index of Filter Type.
                 comboBoxFilterType.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("FilterType").Value);
 
-                monthCalendar.SelectionStart = Convert.ToDateTime(_macroParser.ParseTags(_config.Settings.User.GetByKey("SelectedCalendarDay").Value.ToString(), _formMacroTag.MacroTagCollection, _log));
+                monthCalendar.SelectionStart = Convert.ToDateTime(_config.Settings.User.GetByKey("SelectedCalendarDay").Value);
 
                 // SFTP
                 _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload").Value);

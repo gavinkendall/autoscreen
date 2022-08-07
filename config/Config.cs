@@ -197,20 +197,6 @@ namespace AutoScreenCapture
                     if (fileSystem.FileExists(fileSystem.ApplicationSettingsFile))
                     {
                         Settings.Application.Load(Settings, FileSystem);
-
-                        // The folders for errors and logs are in the application settings collection.
-                        fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
-                        fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
-
-                        // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
-                        fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
-                        fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
-                        fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
-                        fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
-                        fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
-                        fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
-                        fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
-                        fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
                     }
                     else
                     {
@@ -219,18 +205,32 @@ namespace AutoScreenCapture
                         Settings.Application.Save(Settings, FileSystem);
                     }
 
+                    // The folders for errors and logs are in the application settings collection.
+                    fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
+                    fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
+
+                    // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
+                    fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
+                    fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
+                    fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
+                    fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
+                    fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
+                    fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
+                    fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
+                    fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
+
                     if (fileSystem.FileExists(fileSystem.UserSettingsFile))
                     {
                         Settings.User.Load(Settings, FileSystem);
-
-                        // The screenshots folder is from user settings.
-                        fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
                     }
                     else
                     {
                         // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
                         ParseDefaultUserSettings();
                     }
+
+                    // The screenshots folder is from user settings.
+                    fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
 
                     if (fileSystem.FileExists(fileSystem.SftpSettingsFile))
                     {
@@ -397,6 +397,9 @@ namespace AutoScreenCapture
                 // and let the user set their passphrase (which is a secure hash).
                 Settings.User.SetValueByKey("Passphrase", string.Empty);
                 Settings.User.SetValueByKey("PassphraseLastUpdated", string.Empty);
+
+                // This is another setting we don't keep in the configuration file since it's handled internally.
+                Settings.User.SetValueByKey("SelectedCalendarDay", DateTime.Now);
 
                 foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
                 {
