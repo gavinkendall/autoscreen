@@ -217,16 +217,6 @@ namespace AutoScreenCapture
             _ready = true;
         }
 
-        private void FormSchedule_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (ScheduleObject != null && ScheduleObject.Timer.Enabled)
-            {
-                buttonStopSchedule_Click(sender, e);
-
-                MessageBox.Show("The schedule has stopped because you closed this window while the schedule was running.", "Schedule Stopped", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
         private void HelpMessage(string message)
         {
             labelHelp.Text = "       " + message;
@@ -440,7 +430,6 @@ namespace AutoScreenCapture
 
                 StopSchedule.Invoke(sender, e);
 
-                buttonOK.Enabled = true;
                 buttonStartSchedule.Enabled = false;
                 buttonStopSchedule.Enabled = false;
             }
@@ -527,7 +516,6 @@ namespace AutoScreenCapture
 
         private void buttonStartSchedule_Click(object sender, EventArgs e)
         {
-            buttonOK.Enabled = false;
             groupBoxInterval.Enabled = false;
             buttonStartSchedule.Enabled = false;
             buttonStopSchedule.Enabled = true;
@@ -552,7 +540,6 @@ namespace AutoScreenCapture
 
         private void buttonStopSchedule_Click(object sender, EventArgs e)
         {
-            buttonOK.Enabled = true;
             groupBoxInterval.Enabled = true;
             buttonStartSchedule.Enabled = true;
             buttonStopSchedule.Enabled = false;

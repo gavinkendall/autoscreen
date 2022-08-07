@@ -647,6 +647,8 @@ namespace AutoScreenCapture
                     int destinationWidth = (int)(width * imageResolutionRatio);
                     int destinationHeight = (int)(height * imageResolutionRatio);
 
+                    _log.WriteDebugMessage($"destinationWidth={destinationWidth}, destinationHeight={destinationHeight}");
+
                     if (source > 0 && component > -1)
                     {
                         try
@@ -663,6 +665,8 @@ namespace AutoScreenCapture
 
                     if (captureMethod == 0) // System.Drawing.Graphics.CopyFromScreen (.NET)
                     {
+                        _log.WriteDebugMessage("Using captureMethod 0 ... System.Drawing.Graphics.CopyFromScreen (.NET)");
+
                         Size blockRegionSize = new Size(width, height);
 
                         bmpSource = new Bitmap(width, height);
@@ -697,6 +701,8 @@ namespace AutoScreenCapture
                     }
                     else if (captureMethod == 1) // BitBlt (gdi32.dll)
                     {
+                        _log.WriteDebugMessage("Using captureMethod 1 ... BitBlt (gdi32.dll)");
+
                         IntPtr handle = GetDesktopWindow();
                         GetWindowRect(handle, out Rectangle rect);
 
@@ -732,8 +738,6 @@ namespace AutoScreenCapture
 
                     return bmpDestination;
                 }
-
-                _log.WriteDebugMessage("There were no values provided for width and height so a screen image could not be captured");
 
                 return null;
             }

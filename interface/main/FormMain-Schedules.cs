@@ -116,15 +116,13 @@ namespace AutoScreenCapture
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
                                     (dtNow.Minute == schedule.StartAt.Minute))
                                 {
-                                    schedule.Timer.Enabled = true;
-                                    schedule.Timer.Start();
+                                    StartSchedule(schedule);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
                                     (dtNow.Minute == schedule.StopAt.Minute))
                                 {
-                                    schedule.Timer.Stop();
-                                    schedule.Timer.Enabled = false;
+                                    StopSchedule(schedule);
                                 }
                             }
                         }
@@ -153,7 +151,10 @@ namespace AutoScreenCapture
                 {
                     Schedule schedule = (Schedule)timer.Tag;
 
-                    TakeScreenshot(schedule.Scope, captureNow: true);
+                    if (schedule.Enable)
+                    {
+                        TakeScreenshot(schedule.Scope, captureNow: true);
+                    }
                 }
             }
         }
@@ -284,6 +285,15 @@ namespace AutoScreenCapture
                 // This schedule is being started with the intention that it runs with its own independent interval and scope.
                 if (schedule.Logic == 1)
                 {
+                    // Dynamically change the controls of the schedule in the Schedules module list.
+
+                    TextBox scheduleTextBox = (TextBox)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "textBoxObjectName"];
+                    scheduleTextBox.BackColor = System.Drawing.Color.PaleGreen;
+
+                    Button scheduleButton = (Button)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "buttonScheduleTimer"];
+                    scheduleButton.Image = Properties.Resources.stop_screen_capture;
+                    scheduleButton.Click += ScheduleModuleList_StopSchedule;
+
                     // Subscribe to the Tick event only if the schedule is new.
                     // Existing schedules would have already had their Tick events subscribed during LoadSettings.
                     // If we subscribe to the Tick event again for an existing schedule we end up creating a duplicate screenshot for every tick.
@@ -295,8 +305,6 @@ namespace AutoScreenCapture
                     schedule.Timer.Enabled = true;
                     schedule.Timer.Start();
                 }
-
-                BuildSchedulesModule();
             }
         }
 
@@ -313,6 +321,15 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    // Dynamically change the controls of the schedule in the Schedules module list.
+
+                    TextBox scheduleTextBox = (TextBox)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "textBoxObjectName"];
+                    scheduleTextBox.BackColor = System.Drawing.Color.LightYellow;
+
+                    Button scheduleButton = (Button)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "buttonScheduleTimer"];
+                    scheduleButton.Image = Properties.Resources.start_screen_capture;
+                    scheduleButton.Click += ScheduleModuleList_StartSchedule;
+
                     schedule.Timer.Stop();
                     schedule.Timer.Enabled = false;
 
@@ -322,8 +339,6 @@ namespace AutoScreenCapture
                         schedule.Timer.Tick -= ScheduleTimer_Tick;
                     }
                 }
-
-                BuildSchedulesModule();
             }
         }
 

@@ -229,17 +229,30 @@ namespace AutoScreenCapture
 
             if (screen.AutoAdapt)
             {
+                bool autoAdaptUsesEnumDisplaySettings = Convert.ToBoolean(_config.Settings.User.GetByKey("AutoAdaptUsesEnumDisplaySettings").Value);
+
                 for (int i = 0; i < System.Windows.Forms.Screen.AllScreens.Length; i++)
                 {
                     System.Windows.Forms.Screen screenFromWindows = System.Windows.Forms.Screen.AllScreens[i];
-                    ScreenCapture.DeviceOptions deviceResolution = _screenCapture.GetDevice(screenFromWindows);
 
                     if (i == screen.AutoAdaptIndex)
                     {
-                        x = screenFromWindows.Bounds.X;
-                        y = screenFromWindows.Bounds.Y;
-                        width = deviceResolution.width;
-                        height = deviceResolution.height;
+                        if (autoAdaptUsesEnumDisplaySettings)
+                        {
+                            ScreenCapture.DeviceOptions deviceResolution = _screenCapture.GetDevice(screenFromWindows);
+
+                            x = screenFromWindows.Bounds.X;
+                            y = screenFromWindows.Bounds.Y;
+                            width = deviceResolution.width;
+                            height = deviceResolution.height;
+                        }
+                        else
+                        {
+                            x = screenFromWindows.Bounds.X;
+                            y = screenFromWindows.Bounds.Y;
+                            width = screenFromWindows.Bounds.Width;
+                            height = screenFromWindows.Bounds.Height;
+                        }
 
                         break;
                     }

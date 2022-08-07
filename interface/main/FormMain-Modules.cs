@@ -29,7 +29,6 @@ namespace AutoScreenCapture
     {
         private ToolTip _toolTipButtonAdd = new ToolTip();
         private ToolTip _toolTipButtonConfigure = new ToolTip();
-        private ToolTip _toolTipButtonScheduleTimer = new ToolTip();
         private ToolTip _toolTipLabelEnabledStatus = new ToolTip();
         private ToolTip _toolTipButtonRemoveSelected = new ToolTip();
 
@@ -167,6 +166,7 @@ namespace AutoScreenCapture
                 // Add another read-only text box showing the name of the object.
                 TextBox textBoxObjectName = new TextBox
                 {
+                    Name = text + "textBoxObjectName",
                     Width = TEXTBOX_WIDTH,
                     Height = HEIGHT,
                     MaxLength = TEXTBOX_MAX_LENGTH,
@@ -210,6 +210,7 @@ namespace AutoScreenCapture
                 {
                     buttonScheduleTimer = new Button
                     {
+                        Name = text + "buttonScheduleTimer",
                         Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
                         Location = new Point(xPos + X_POS_BUTTON + 23, yPos),
                         FlatStyle = FlatStyle.Flat,
@@ -225,30 +226,19 @@ namespace AutoScreenCapture
 
                     if (schedule.Timer.Enabled)
                     {
-                        // Disable the configure button so we force the user to stop the schedule first before configuring it.
-                        buttonConfigure.Enabled = false;
-
                         // If the schedule's timer is running make sure to indiciate this to the user by changing the color of the text field.
                         textBoxObjectName.BackColor = Color.PaleGreen;
 
                         // Change the image to a "stop" symbol.
                         buttonScheduleTimer.Image = Properties.Resources.stop_screen_capture;
 
-                        // Set the tool tip.
-                        _toolTipButtonScheduleTimer.SetToolTip(buttonScheduleTimer, "Stop this running schedule");
-
                         // Add the Stop Schedule event to Click.
                         buttonScheduleTimer.Click += ScheduleModuleList_StopSchedule;
                     }
                     else
                     {
-                        buttonConfigure.Enabled = true;
-
                         // Change the image to a "play" symbol.
                         buttonScheduleTimer.Image = Properties.Resources.start_screen_capture;
-
-                        // Set the tool tip.
-                        _toolTipButtonScheduleTimer.SetToolTip(buttonScheduleTimer, "Run this schedule");
 
                         // Add the Start Schedule event to Click.
                         buttonScheduleTimer.Click += ScheduleModuleList_StartSchedule;

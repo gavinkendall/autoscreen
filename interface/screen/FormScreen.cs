@@ -31,6 +31,7 @@ namespace AutoScreenCapture
     public partial class FormScreen : Form
     {
         private int _autoAdaptIndex;
+        private bool _autoAdaptUsesEnumDisplaySettings;
 
         private Log _log;
         private Config _config;
@@ -101,6 +102,8 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your filename pattern in the Macro field");
             _toolTip.SetToolTip(checkBoxAutoAdapt, "The position and size will automatically adjust based on changes to your display setup");
             _toolTip.SetToolTip(checkBoxEncrypt, "Screenshots can be encrypted so only you can view each screenshot with Auto Screen Capture");
+
+            _autoAdaptUsesEnumDisplaySettings = Convert.ToBoolean(_config.Settings.User.GetByKey("AutoAdaptUsesEnumDisplaySettings").Value);
 
             comboBoxFormat.Items.Clear();
 
@@ -471,14 +474,25 @@ namespace AutoScreenCapture
                         for (int i = 0; i < System.Windows.Forms.Screen.AllScreens.Length; i++)
                         {
                             System.Windows.Forms.Screen screenFromWindows = System.Windows.Forms.Screen.AllScreens[i];
-                            ScreenCapture.DeviceOptions deviceResolution = _screenCapture.GetDevice(screenFromWindows);
 
                             if (i == _autoAdaptIndex)
                             {
-                                x = screenFromWindows.Bounds.X;
-                                y = screenFromWindows.Bounds.Y;
-                                width = deviceResolution.width;
-                                height = deviceResolution.height;
+                                if (_autoAdaptUsesEnumDisplaySettings)
+                                {
+                                    ScreenCapture.DeviceOptions deviceResolution = _screenCapture.GetDevice(screenFromWindows);
+
+                                    x = screenFromWindows.Bounds.X;
+                                    y = screenFromWindows.Bounds.Y;
+                                    width = deviceResolution.width;
+                                    height = deviceResolution.height;
+                                }
+                                else
+                                {
+                                    x = screenFromWindows.Bounds.X;
+                                    y = screenFromWindows.Bounds.Y;
+                                    width = screenFromWindows.Bounds.Width;
+                                    height = screenFromWindows.Bounds.Height;
+                                }
 
                                 break;
                             }
