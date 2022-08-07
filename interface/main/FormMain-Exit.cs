@@ -63,9 +63,6 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
-                // This is no longer the first run of the application when exiting.
-                _config.Settings.User.SetValueByKey("FirstRun", false);
-
                 DisableStopCapture();
                 EnableStartCapture();
 

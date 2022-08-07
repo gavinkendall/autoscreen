@@ -196,6 +196,12 @@ namespace AutoScreenCapture
 
             InitializeComponent();
 
+            // Make sure we have the schedule timer tick every minute at the top of every minute.
+            // https://itecnote.com/tecnote/c-net-event-every-minute-on-the-minute-is-a-timer-the-best-option/
+            DateTime dtNow = DateTime.Now;
+            timerScheduleCheck.Interval = ((60 - dtNow.Second) * 1000 - dtNow.Millisecond);
+            timerScheduleCheck.Start();
+
             _security = new Security(_fileSystem);
             _slideShow = new Slideshow();
             _dataConvert = new DataConvert();
@@ -476,7 +482,9 @@ namespace AutoScreenCapture
 
                 if (firstRun)
                 {
-                    // Show "Screen Capture Status" if it's the first run.
+                    _config.Settings.User.SetValueByKey("FirstRun", false);
+
+                    // Show "Screen Capture Status" on the first run.
                     if (!_formScreenCaptureStatus.Visible)
                     {
                         _formScreenCaptureStatus.Show();

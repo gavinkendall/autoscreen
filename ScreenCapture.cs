@@ -234,6 +234,8 @@ namespace AutoScreenCapture
 
         private DEVMODE _dm;
 
+        private DeviceOptions _device;
+
         /// <summary>
         /// A struct containing a Windows Forms screen object, display device width, and display device height.
         /// </summary>
@@ -254,8 +256,6 @@ namespace AutoScreenCapture
             /// </summary>
             public int height;
         }
-
-        private DeviceOptions _device;
 
         /// <summary>
         /// The minimum capture limit.

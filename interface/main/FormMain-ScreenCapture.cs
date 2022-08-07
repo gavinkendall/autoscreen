@@ -212,12 +212,6 @@ namespace AutoScreenCapture
                     startScreenCaptureCount++;
                     _config.Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
 
-                    // Turn off "FirstRun" on the first run.
-                    if (startScreenCaptureCount >= 1)
-                    {
-                        _config.Settings.User.SetValueByKey("FirstRun", false);
-                    }
-
                     SaveSettings();
 
                     // Stop the date search thread if it's busy.

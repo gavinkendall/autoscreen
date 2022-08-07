@@ -1128,7 +1128,7 @@ namespace AutoScreenCapture
             // 
             // timerScheduleCheck
             // 
-            this.timerScheduleCheck.Enabled = true;
+            this.timerScheduleCheck.Enabled = false;
             this.timerScheduleCheck.Interval = 60000;
             this.timerScheduleCheck.Tick += new System.EventHandler(this.timerScheduleCheck_Tick);
             // 
