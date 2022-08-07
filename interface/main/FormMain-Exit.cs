@@ -63,6 +63,8 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
+                GC.Collect();
+
                 // Stop all running timers.
                 timerHelpTips.Stop();
                 timerParseCommands.Stop();
@@ -104,10 +106,6 @@ namespace AutoScreenCapture
 
                 // Exit.
                 Environment.Exit(0);
-            }
-            catch (AccessViolationException)
-            {
-                Environment.Exit(1);
             }
             catch (Exception)
             {
