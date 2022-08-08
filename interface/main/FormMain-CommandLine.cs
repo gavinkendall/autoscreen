@@ -223,6 +223,8 @@ namespace AutoScreenCapture
         /// </summary>
         internal const string REGEX_COMMAND_LINE_OPTIMIZE_OFF = "^-optimize=off";
 
+        internal const string REGEX_COMMAND_LINE_IMAGE_DIFF_TOLERANCE = "^-imageDiffTolerance=(?<Value>\\d{1,3})";
+
         /// <summary>
         /// The timer to check commands provided to the application.
         /// This runs every second.
@@ -340,7 +342,6 @@ namespace AutoScreenCapture
                     // -hide
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE))
                     {
-                        _config.Settings.User.SetValueByKey("FirstRun", false);
                         _config.Settings.User.SetValueByKey("ShowInterface", false);
                         _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
 
@@ -373,7 +374,6 @@ namespace AutoScreenCapture
                     // -hideInterface
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_INTERFACE))
                     {
-                        _config.Settings.User.SetValueByKey("FirstRun", false);
                         _config.Settings.User.SetValueByKey("ShowInterface", false);
 
                         if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
@@ -387,7 +387,6 @@ namespace AutoScreenCapture
                     // -hideSystemTrayIcon
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
-                        _config.Settings.User.SetValueByKey("FirstRun", false);
                         _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
 
                         if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
@@ -569,7 +568,15 @@ namespace AutoScreenCapture
                         if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
                         {
                             _formSetup.numericUpDownCaptureLimit.Value = cmdLimit;
-                            _formSetup.checkBoxCaptureLimit.Checked = true;
+
+                            if (cmdLimit == CAPTURE_LIMIT_MIN)
+                            {
+                                _formSetup.checkBoxCaptureLimit.Checked = false;
+                            }
+                            else
+                            {
+                                _formSetup.checkBoxCaptureLimit.Checked = true;
+                            }
 
                             _screenCapture.Limit = _formSetup.checkBoxCaptureLimit.Checked ? (int)_formSetup.numericUpDownCaptureLimit.Value : 0;
                         }
@@ -871,12 +878,42 @@ namespace AutoScreenCapture
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_OPTIMIZE_ON))
                     {
                         _screenCapture.OptimizeScreenCapture = true;
+                        _formSetup.checkBoxOptimizeScreenCapture.Checked = true;
+
+                        _config.Settings.User.SetValueByKey("OptimizeScreenCapture", true);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -optimize=off
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_OPTIMIZE_OFF))
                     {
                         _screenCapture.OptimizeScreenCapture = false;
+                        _formSetup.checkBoxOptimizeScreenCapture.Checked = false;
+
+                        _config.Settings.User.SetValueByKey("OptimizeScreenCapture", false);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+                    }
+
+                    // -imageDiffTolerance=x
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_IMAGE_DIFF_TOLERANCE))
+                    {
+                        _formSetup.trackBarImageDiffTolerance.Value = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_IMAGE_DIFF_TOLERANCE).Groups["Value"].Value);
+                        _formSetup.labelSelectedImageDiffTolerance.Text = _formSetup.trackBarImageDiffTolerance.Value.ToString() + "%";
+
+                        _config.Settings.User.SetValueByKey("ImageDiffTolerance", _formSetup.trackBarImageDiffTolerance.Value);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
                 }
 

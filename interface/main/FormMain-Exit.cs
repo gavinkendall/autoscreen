@@ -60,49 +60,16 @@ namespace AutoScreenCapture
                     }
                 }
 
-                _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
-                RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
-
-                GC.Collect();
-
-                // Stop all running timers.
-                timerHelpTips.Stop();
-                timerParseCommands.Stop();
-                timerScheduleCheck.Stop();
-                timerPerformMaintenance.Stop();
-
-                DisableStopCapture();
-                EnableStartCapture();
-
-                if (_sftpClient != null && _sftpClient.IsConnected)
-                {
-                    _sftpClient.Disconnect();
-                }
-
-                _screenCapture.CycleCount = 0;
-                _screenCapture.Running = false;
-
-                HideSystemTrayIcon();
-
                 if (_screenshotCollection != null)
                 {
                     _log.WriteDebugMessage("Saving screenshot references on clean application exit");
                     _screenshotCollection.SaveToXmlFile(_config);
                 }
 
-                if (runDateSearchThread != null && runDateSearchThread.IsBusy)
-                {
-                    runDateSearchThread.CancelAsync();
-                }
-
-                if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
-                {
-                    runScreenshotSearchThread.CancelAsync();
-                }
-
-                SaveSettings();
-
                 _log.WriteMessage("Bye!");
+
+                _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
+                RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
                 // Exit.
                 Environment.Exit(0);

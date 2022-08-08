@@ -136,8 +136,9 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="fileSystem">The file system to use.</param>
         /// <param name="cleanStartup">Determines if we do a clean startup. This means we do not load the XML data files. By default we load the XML data files.</param>
+        /// <param name="hide">Determines if we start "hidden". This should not show the interface or the system tray icon.</param>
         /// <returns>True if load successful otherwise False if load failed.</returns>
-        public bool Load(FileSystem fileSystem, bool cleanStartup = false)
+        public bool Load(FileSystem fileSystem, bool cleanStartup = false, bool hide = false)
         {
             try
             {
@@ -273,7 +274,11 @@ namespace AutoScreenCapture
                     Settings.User.Save(Settings, FileSystem);
                 }
 
-                // Something fun to include.
+                if (hide)
+                {
+                    Settings.User.SetValueByKey("SneakyPastaSnake", true);
+                }
+                
                 Setting sneakyPastaSnake = Settings.User.GetByKey("SneakyPastaSnake");
 
                 if (sneakyPastaSnake != null && sneakyPastaSnake.Value.ToString().Equals("True"))

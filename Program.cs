@@ -118,14 +118,30 @@ namespace AutoScreenCapture
         /// <returns>True if parsing command line arguments is successful. False if parsing command line arguments unsuccessful.</returns>
         private static bool ParseCommandLineArguments(string[] args, Config config)
         {
+            bool hide = false;
             bool cleanStartup = false;
             FileSystem fileSystem = new FileSystem();
 
             // Make sure we parse for the most important command line options here.
 
-            const string REGEX_COMMAND_LINE_CONFIG = "^-config=(?<ConfigFile>.+)$";
+            const string REGEX_COMMAND_LINE_HIDE = "^-hide$";
             const string REGEX_COMMAND_LINE_CLEAN_STARTUP = "^-cleanStartup$";
+            const string REGEX_COMMAND_LINE_CONFIG = "^-config=(?<ConfigFile>.+)$";
 
+            foreach (string arg in args)
+            {
+                if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE))
+                {
+                    hide = true;
+                }
+
+                if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CLEAN_STARTUP))
+                {
+                    cleanStartup = true;
+                }
+            }
+
+            // If we got a -config command line argument use the custom configuration file that's specified.
             foreach (string arg in args)
             {
                 if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CONFIG))
@@ -136,24 +152,19 @@ namespace AutoScreenCapture
                     {
                         fileSystem.ConfigFile = configFile;
                         
-                        if (!config.Load(fileSystem))
+                        if (!config.Load(fileSystem, cleanStartup, hide))
                         {
                             return false;
                         }
                     }
                 }
-
-                if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CLEAN_STARTUP))
-                {
-                    cleanStartup = true;
-                }
             }
 
-            // We didn't get a -config or -cleanStartup command line argument so just load the default config
+            // We didn't get a -config command line argument so just load the default config
             // and let the application parse any other command line options that were given to it.
             if (config.Settings == null)
             {
-                if (!config.Load(fileSystem, cleanStartup))
+                if (!config.Load(fileSystem, cleanStartup, hide))
                 {
                     return false;
                 }

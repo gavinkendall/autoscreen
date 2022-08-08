@@ -415,43 +415,41 @@ namespace AutoScreenCapture
         {
             try
             {
-                _config.Settings.User.GetByKey("ScreenCaptureInterval").Value = GetScreenCaptureInterval();
-                _config.Settings.User.GetByKey("CaptureLimit").Value = _formSetup.numericUpDownCaptureLimit.Value;
-                _config.Settings.User.GetByKey("CaptureLimitCheck").Value = _formSetup.checkBoxCaptureLimit.Checked;
-                _config.Settings.User.GetByKey("TakeInitialScreenshot").Value = _formSetup.checkBoxInitialScreenshot.Checked;
+                _config.Settings.User.SetValueByKey("ScreenCaptureInterval", GetScreenCaptureInterval());
+                _config.Settings.User.SetValueByKey("CaptureLimit", _formSetup.numericUpDownCaptureLimit.Value);
+                _config.Settings.User.SetValueByKey("CaptureLimitCheck", _formSetup.checkBoxCaptureLimit.Checked);
+                _config.Settings.User.SetValueByKey("TakeInitialScreenshot", _formSetup.checkBoxInitialScreenshot.Checked);
 
-                _config.Settings.User.GetByKey("ApplyScreenshotLabel").Value = _formSetup.checkBoxScreenshotLabel.Checked;
+                // Optimize Screen Capture
+                _config.Settings.User.SetValueByKey("OptimizeScreenCapture", _formSetup.checkBoxOptimizeScreenCapture.Checked);
+                _config.Settings.User.SetValueByKey("ImageDiffTolerance", _formSetup.trackBarImageDiffTolerance.Value);
+
+                // Labels
+                _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", _formSetup.checkBoxScreenshotLabel.Checked);
 
                 // Active Window Title
-                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck").Value = _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked;
-                _config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck").Value = _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked;
-                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText").Value = _formSetup.textBoxActiveWindowTitle.Text.Trim();
-                _config.Settings.User.GetByKey("ActiveWindowTitleSampleText").Value = _formSetup.textBoxActiveWindowTitleTest.Text.Trim();
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked);
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleNoMatchCheck", _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked);
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", _formSetup.textBoxActiveWindowTitle.Text.Trim());
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleSampleText", _formSetup.textBoxActiveWindowTitleTest.Text.Trim());
 
                 if (_formSetup.radioButtonCaseSensitiveMatch.Checked)
                 {
-                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType").Value = 1;
+                    _config.Settings.User.SetValueByKey("ActiveWindowTitleMatchType", 1);
                 }
                 else if (_formSetup.radioButtonCaseInsensitiveMatch.Checked)
                 {
-                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType").Value = 2;
+                    _config.Settings.User.SetValueByKey("ActiveWindowTitleMatchType", 2);
                 }
                 else if (_formSetup.radioButtonRegularExpressionMatch.Checked)
                 {
-                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType").Value = 3;
+                    _config.Settings.User.SetValueByKey("ActiveWindowTitleMatchType", 3);
                 }
 
                 // Application Focus
-                _config.Settings.User.GetByKey("ApplicationFocus").Value = _formSetup.listBoxProcessList.Text;
-                _config.Settings.User.GetByKey("ApplicationFocusDelayBefore").Value = (int)_formSetup.numericUpDownApplicationFocusDelayBefore.Value;
-                _config.Settings.User.GetByKey("ApplicationFocusDelayAfter").Value = (int)_formSetup.numericUpDownApplicationFocusDelayAfter.Value;
-
-                // Optimize Screen Capture
-                _config.Settings.User.GetByKey("OptimizeScreenCapture").Value = _formSetup.checkBoxOptimizeScreenCapture.Checked;
-                
-                // SFTP
-                _config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload").Value = _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked;
-                _config.Settings.User.GetByKey("SFTPKeepFailedUploads").Value = _formFileTransferSettings.checkBoxKeepFailedUploads.Checked;
+                _config.Settings.User.SetValueByKey("ApplicationFocus", _formSetup.listBoxProcessList.Text);
+                _config.Settings.User.SetValueByKey("ApplicationFocusDelayBefore", _formSetup.numericUpDownApplicationFocusDelayBefore.Value);
+                _config.Settings.User.SetValueByKey("ApplicationFocusDelayAfter", _formSetup.numericUpDownApplicationFocusDelayAfter.Value);
 
                 if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                 {

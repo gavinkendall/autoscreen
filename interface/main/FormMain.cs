@@ -483,16 +483,6 @@ namespace AutoScreenCapture
                 if (firstRun)
                 {
                     _config.Settings.User.SetValueByKey("FirstRun", false);
-
-                    // Show "Screen Capture Status" on the first run.
-                    if (!_formScreenCaptureStatus.Visible)
-                    {
-                        _formScreenCaptureStatus.Show();
-                    }
-                    else
-                    {
-                        _formScreenCaptureStatus.Activate();
-                    }
                 }
 
                 _log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
@@ -796,7 +786,13 @@ namespace AutoScreenCapture
             {
                 BuildViewTabPages();
 
-                SaveSettings();
+                _config.Settings.User.SetValueByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked);
+                _config.Settings.User.SetValueByKey("SFTPKeepFailedUploads", _formFileTransferSettings.checkBoxKeepFailedUploads.Checked);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -839,9 +835,12 @@ namespace AutoScreenCapture
 
             _config.Settings.User.SetValueByKey("Preview", _preview);
 
-            ShowScreenshotBySlideIndex();
+            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+            {
+                _screenCapture.ApplicationError = true;
+            }
 
-            SaveSettings();
+            ShowScreenshotBySlideIndex();
         }
 
         /// <summary>

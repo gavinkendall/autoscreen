@@ -212,7 +212,10 @@ namespace AutoScreenCapture
                     startScreenCaptureCount++;
                     _config.Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
 
-                    SaveSettings();
+                    if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
 
                     // Stop the date search thread if it's busy.
                     if (runDateSearchThread != null && runDateSearchThread.IsBusy)

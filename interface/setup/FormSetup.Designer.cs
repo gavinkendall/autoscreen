@@ -1628,7 +1628,11 @@
         private System.Windows.Forms.Label labelFilenamePatternPreview;
         private System.Windows.Forms.Label labelFilenamePatternFilename;
         private System.Windows.Forms.Label labelImageDifference;
-        private System.Windows.Forms.Label labelSelectedImageDiffTolerance;
+
+        /// <summary>
+        /// The label for ImageDiffTolerance.
+        /// </summary>
+        public System.Windows.Forms.Label labelSelectedImageDiffTolerance;
 
         /// <summary>
         /// The checkbox control for "Initial Capture".
