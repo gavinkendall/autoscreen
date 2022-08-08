@@ -79,6 +79,16 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_PASSPHRASE = "^-passphrase=(?<Passphrase>.+)$";
 
         /// <summary>
+        /// Regex for parsing the -showInterface command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_SHOW_INTERFACE = "^-showInterface";
+
+        /// <summary>
+        /// Regex for parsing the -hideInterface command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_HIDE_INTERFACE = "^-hideInterface";
+
+        /// <summary>
         /// Regex for parsing the -showSystemTrayIcon command.
         /// </summary>
         internal const string REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON = "^-showSystemTrayIcon$";
@@ -330,6 +340,7 @@ namespace AutoScreenCapture
                     // -hide
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE))
                     {
+                        _config.Settings.User.SetValueByKey("FirstRun", false);
                         _config.Settings.User.SetValueByKey("ShowInterface", false);
                         _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
 
@@ -338,9 +349,9 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        HideSystemTrayIcon();
-
                         HideInterface();
+
+                        HideSystemTrayIcon();
 
                         foreach (Trigger trigger in _formTrigger.TriggerCollection)
                         {
@@ -359,9 +370,24 @@ namespace AutoScreenCapture
                         }
                     }
 
+                    // -hideInterface
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_INTERFACE))
+                    {
+                        _config.Settings.User.SetValueByKey("FirstRun", false);
+                        _config.Settings.User.SetValueByKey("ShowInterface", false);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        HideInterface();
+                    }
+
                     // -hideSystemTrayIcon
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
+                        _config.Settings.User.SetValueByKey("FirstRun", false);
                         _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
 
                         if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
@@ -468,6 +494,19 @@ namespace AutoScreenCapture
                         _screenCapture.AutoStartFromCommandLine = false;
 
                         StopScreenCapture();
+                    }
+
+                    // -showInterface
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_SHOW_INTERFACE))
+                    {
+                        _config.Settings.User.SetValueByKey("ShowInterface", true);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        ShowInterface();
                     }
 
                     // -showSystemTrayIcon

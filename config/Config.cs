@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace AutoScreenCapture
@@ -154,226 +155,228 @@ namespace AutoScreenCapture
                     fileSystem.CreateDirectory(configDirectory);
                 }
 
-                if (fileSystem.FileExists(fileSystem.ConfigFile))
+                if (!fileSystem.FileExists(fileSystem.ConfigFile))
                 {
-                    // Assume we're on the current version of the application unless otherwise specified in the configuration file.
-                    string version = Settings.ApplicationVersion;
-
-                    // Look for the version we should be using.
-                    foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
-                    {
-                        // Ignore any empty lines or comments in the configuration file.
-                        if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
-                        {
-                            continue;
-                        }
-
-                        if (Regex.IsMatch(line, REGEX_VERSION))
-                        {
-                            version = Regex.Match(line, REGEX_VERSION).Groups["Version"].Value;
-                        }
-                    }
-
-                    // We need to parse and load all default macro tags before parsing the paths used for files and folders
-                    // because they may have macro tags in the paths.
-                    ParseMacroTagDefinitions();
-
-                    // Read each line of the configuration file looking for the filepaths of the application, user, SFTP, and SMTP settings files.
-                    foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
-                    {
-                        // Ignore any empty lines or comments in the configuration file.
-                        if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
-                        {
-                            continue;
-                        }
-
-                        // Acquire the filepath for !autoscreen\settings\application.xml and create any sub-folders (that may contain macro tags).
-                        if (Regex.IsMatch(line, REGEX_APPLICATION_SETTINGS_FILE))
-                        {
-                            fileSystem.ApplicationSettingsFile = ProcessPath(Regex.Match(line, REGEX_APPLICATION_SETTINGS_FILE).Groups["Path"].Value);
-                        }
-
-                        // Acquire the filepath for !autoscreen\settings\user.xml and create any sub-folders (that may contain macro tags).
-                        if (Regex.IsMatch(line, REGEX_USER_SETTINGS_FILE))
-                        {
-                            fileSystem.UserSettingsFile = ProcessPath(Regex.Match(line, REGEX_USER_SETTINGS_FILE).Groups["Path"].Value);
-                        }
-
-                        // Acquire the filepath for !autoscreen\settings\sftp.xml and create any sub-folders (that may contain macro tags).
-                        if (Regex.IsMatch(line, REGEX_SFTP_SETTINGS_FILE))
-                        {
-                            fileSystem.SftpSettingsFile = ProcessPath(Regex.Match(line, REGEX_SFTP_SETTINGS_FILE).Groups["Path"].Value);
-                        }
-
-                        // Acquire the filepath for !autoscreen\settings\smtp.xml and create any sub-folders (that may contain macro tags).
-                        if (Regex.IsMatch(line, REGEX_SMTP_SETTINGS_FILE))
-                        {
-                            fileSystem.SmtpSettingsFile = ProcessPath(Regex.Match(line, REGEX_SMTP_SETTINGS_FILE).Groups["Path"].Value);
-                        }
-                    }
-
-                    // Now that we have the File System setup with the filepaths for application, user, SFTP, and SMTP settings we can initialize settings.
-                    Settings.Initialize(fileSystem);
-
-                    if (fileSystem.FileExists(fileSystem.ApplicationSettingsFile))
-                    {
-                        // Load existing application settings.
-                        Settings.Application.Load(Settings, FileSystem);
-
-                        // Check if this is an old version of the application settings.
-                        // If so then we're likely handling the old format of the configuration file so parse it "the old way".
-                        if (Settings.Application.AppCodename.Equals("Blade"))
-                        {
-                            UpgradeConfig();
-                        }
-                    }
-                    else
-                    {
-                        // Acquire default application settings.
-                        ParseDefaultApplicationSettings();
-
-                        Settings.Application.AppCodename = Settings.ApplicationCodename;
-                        Settings.Application.AppVersion = version;
-                        Settings.Application.Save(Settings, FileSystem);
-                    }
-
-                    // The folders for errors and logs are in the application settings collection.
-                    fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
-                    fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
-
-                    // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
-                    fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
-                    fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
-                    fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
-                    fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
-                    fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
-                    fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
-                    fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
-                    fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
-
-                    if (fileSystem.FileExists(fileSystem.UserSettingsFile))
-                    {
-                        // Load existing user settings.
-                        Settings.User.Load(Settings, FileSystem);
-                    }
-                    else
-                    {
-                        // Acquire default user settings.
-                        // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
-                        ParseDefaultUserSettings();
-
-                        Settings.User.AppCodename = Settings.ApplicationCodename;
-                        Settings.User.AppVersion = version;
-                        Settings.User.Save(Settings, FileSystem);
-                    }
-
-                    // Something fun to include.
-                    Setting sneakyPastaSnake = Settings.User.GetByKey("SneakyPastaSnake");
-
-                    if (sneakyPastaSnake != null && sneakyPastaSnake.Value.ToString().Equals("True"))
-                    {
-                        Settings.User.SetValueByKey("ShowInterface", false);
-                        Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
-                    }
-
-                    // The screenshots folder is from user settings.
-                    fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
-
-                    if (fileSystem.FileExists(fileSystem.SftpSettingsFile))
-                    {
-                        // Load existing SFTP settings.
-                        Settings.SFTP.Load(Settings, FileSystem);
-                    }
-                    else
-                    {
-                        // Acquire default SFTP settings.
-                        ParseDefaultSFTPSettings();
-
-                        Settings.SFTP.AppCodename = Settings.ApplicationCodename;
-                        Settings.SFTP.AppVersion = version;
-                        Settings.SFTP.Save(Settings, FileSystem);
-                    }
-
-                    if (fileSystem.FileExists(fileSystem.SmtpSettingsFile))
-                    {
-                        // Load existing SMTP settings.
-                        Settings.SMTP.Load(Settings, FileSystem);
-                    }
-                    else
-                    {
-                        // Acquire default SMTP settings.
-                        ParseDefaultSMTPSettings();
-
-                        Settings.SMTP.AppCodename = Settings.ApplicationCodename;
-                        Settings.SMTP.AppVersion = version;
-                        Settings.SMTP.Save(Settings, FileSystem);
-                    }
-
-                    Log = new Log(Settings, fileSystem, MacroParser);
-                    ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
-                    Security security = new Security(fileSystem);
-
-                    // Parse all the definitions in the configuration file for the various types of modules.
-                    ParseScreenDefinitions();
-                    ParseRegionDefinitions();
-                    ParseEditorDefinitions();
-                    ParseScheduleDefinitions();
-                    ParseTriggerDefinitions();
-
-                    // Save the data for each collection that's been loaded from the configuration file.
-
-                    // Save the screen collection if the screens data file (screens.xml) cannot be found. This will create the default screens.
-                    if (!FileSystem.FileExists(FileSystem.ScreensFile))
-                    {
-                        _screenCollection.SaveToXmlFile(Settings, FileSystem, Log);
-                    }
-
-                    // Save the region collection if the regions data file (regions.xml) cannot be found. This will create the default regions.
-                    if (!FileSystem.FileExists(FileSystem.RegionsFile))
-                    {
-                        _regionCollection.SaveToXmlFile(Settings, FileSystem, Log);
-                    }
-
-                    // Save the editor collection if the editors data file (editors.xml) cannot be found. This will create the default editors.
-                    if (!FileSystem.FileExists(FileSystem.EditorsFile))
-                    {
-                        _editorCollection.SaveToXmlFile(Settings, FileSystem, Log);
-                    }
-
-                    // Save the schedule collection if the schedules data file (schedules.xml) cannot be found. This will create the default schedules.
-                    if (!FileSystem.FileExists(FileSystem.SchedulesFile))
-                    {
-                        _scheduleCollection.SaveToXmlFile(Settings, FileSystem, Log);
-                    }
-
-                    // Save the macro tag collection if the macro tags data file (macrotags.xml) cannot be found. This will create the default macro tags.
-                    if (!FileSystem.FileExists(FileSystem.MacroTagsFile))
-                    {
-                        _macroTagCollection.SaveToXmlFile(this, FileSystem, Log);
-                    }
-
-                    // Save the trigger collection if the triggers data file (triggers.xml) cannot be found. This will create the default triggers.
-                    if (!FileSystem.FileExists(FileSystem.TriggersFile))
-                    {
-                        _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
-                    }
-
-                    Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
-
-                    Settings.VersionManager.OldUserSettings = Settings.User.Clone();
-
-                    Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
-
-                    Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
-
-                    Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
-
-                    Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
-
-                    return true;
+                    // Create the default "autoscreen.conf" file from the Visual Studio solution
+                    // (that we've added to Properties.Resources) and then attempt to load it.
+                    File.WriteAllBytes(fileSystem.ConfigFile, Properties.Resources.autoscreen_conf);
                 }
 
-                return false;
+                // Assume we're on the current version of the application unless otherwise specified in the configuration file.
+                string version = Settings.ApplicationVersion;
+
+                // Look for the version we should be using.
+                foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
+                {
+                    // Ignore any empty lines or comments in the configuration file.
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_VERSION))
+                    {
+                        version = Regex.Match(line, REGEX_VERSION).Groups["Version"].Value;
+                    }
+                }
+
+                // We need to parse and load all default macro tags before parsing the paths used for files and folders
+                // because they may have macro tags in the paths.
+                ParseMacroTagDefinitions();
+
+                // Read each line of the configuration file looking for the filepaths of the application, user, SFTP, and SMTP settings files.
+                foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
+                {
+                    // Ignore any empty lines or comments in the configuration file.
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    // Acquire the filepath for !autoscreen\settings\application.xml and create any sub-folders (that may contain macro tags).
+                    if (Regex.IsMatch(line, REGEX_APPLICATION_SETTINGS_FILE))
+                    {
+                        fileSystem.ApplicationSettingsFile = ProcessPath(Regex.Match(line, REGEX_APPLICATION_SETTINGS_FILE).Groups["Path"].Value);
+                    }
+
+                    // Acquire the filepath for !autoscreen\settings\user.xml and create any sub-folders (that may contain macro tags).
+                    if (Regex.IsMatch(line, REGEX_USER_SETTINGS_FILE))
+                    {
+                        fileSystem.UserSettingsFile = ProcessPath(Regex.Match(line, REGEX_USER_SETTINGS_FILE).Groups["Path"].Value);
+                    }
+
+                    // Acquire the filepath for !autoscreen\settings\sftp.xml and create any sub-folders (that may contain macro tags).
+                    if (Regex.IsMatch(line, REGEX_SFTP_SETTINGS_FILE))
+                    {
+                        fileSystem.SftpSettingsFile = ProcessPath(Regex.Match(line, REGEX_SFTP_SETTINGS_FILE).Groups["Path"].Value);
+                    }
+
+                    // Acquire the filepath for !autoscreen\settings\smtp.xml and create any sub-folders (that may contain macro tags).
+                    if (Regex.IsMatch(line, REGEX_SMTP_SETTINGS_FILE))
+                    {
+                        fileSystem.SmtpSettingsFile = ProcessPath(Regex.Match(line, REGEX_SMTP_SETTINGS_FILE).Groups["Path"].Value);
+                    }
+                }
+
+                // Now that we have the File System setup with the filepaths for application, user, SFTP, and SMTP settings we can initialize settings.
+                Settings.Initialize(fileSystem);
+
+                if (fileSystem.FileExists(fileSystem.ApplicationSettingsFile))
+                {
+                    // Load existing application settings.
+                    Settings.Application.Load(Settings, FileSystem);
+
+                    // Check if this is an old version of the application settings.
+                    // If so then we're likely handling the old format of the configuration file so parse it "the old way".
+                    if (Settings.Application.AppCodename.Equals("Blade"))
+                    {
+                        UpgradeConfig();
+                    }
+                }
+                else
+                {
+                    // Acquire default application settings.
+                    ParseDefaultApplicationSettings();
+
+                    Settings.Application.AppCodename = Settings.ApplicationCodename;
+                    Settings.Application.AppVersion = version;
+                    Settings.Application.Save(Settings, FileSystem);
+                }
+
+                // The folders for errors and logs are in the application settings collection.
+                fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
+                fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
+
+                // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
+                fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
+                fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
+                fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
+                fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
+                fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
+                fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
+                fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
+                fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
+
+                if (fileSystem.FileExists(fileSystem.UserSettingsFile))
+                {
+                    // Load existing user settings.
+                    Settings.User.Load(Settings, FileSystem);
+                }
+                else
+                {
+                    // Acquire default user settings.
+                    // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
+                    ParseDefaultUserSettings();
+
+                    Settings.User.AppCodename = Settings.ApplicationCodename;
+                    Settings.User.AppVersion = version;
+                    Settings.User.Save(Settings, FileSystem);
+                }
+
+                // Something fun to include.
+                Setting sneakyPastaSnake = Settings.User.GetByKey("SneakyPastaSnake");
+
+                if (sneakyPastaSnake != null && sneakyPastaSnake.Value.ToString().Equals("True"))
+                {
+                    Settings.User.SetValueByKey("ShowInterface", false);
+                    Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
+                }
+
+                // The screenshots folder is from user settings.
+                fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
+
+                if (fileSystem.FileExists(fileSystem.SftpSettingsFile))
+                {
+                    // Load existing SFTP settings.
+                    Settings.SFTP.Load(Settings, FileSystem);
+                }
+                else
+                {
+                    // Acquire default SFTP settings.
+                    ParseDefaultSFTPSettings();
+
+                    Settings.SFTP.AppCodename = Settings.ApplicationCodename;
+                    Settings.SFTP.AppVersion = version;
+                    Settings.SFTP.Save(Settings, FileSystem);
+                }
+
+                if (fileSystem.FileExists(fileSystem.SmtpSettingsFile))
+                {
+                    // Load existing SMTP settings.
+                    Settings.SMTP.Load(Settings, FileSystem);
+                }
+                else
+                {
+                    // Acquire default SMTP settings.
+                    ParseDefaultSMTPSettings();
+
+                    Settings.SMTP.AppCodename = Settings.ApplicationCodename;
+                    Settings.SMTP.AppVersion = version;
+                    Settings.SMTP.Save(Settings, FileSystem);
+                }
+
+                Log = new Log(Settings, fileSystem, MacroParser);
+                ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
+                Security security = new Security(fileSystem);
+
+                // Parse all the definitions in the configuration file for the various types of modules.
+                ParseScreenDefinitions();
+                ParseRegionDefinitions();
+                ParseEditorDefinitions();
+                ParseScheduleDefinitions();
+                ParseTriggerDefinitions();
+
+                // Save the data for each collection that's been loaded from the configuration file.
+
+                // Save the screen collection if the screens data file (screens.xml) cannot be found. This will create the default screens.
+                if (!FileSystem.FileExists(FileSystem.ScreensFile))
+                {
+                    _screenCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                }
+
+                // Save the region collection if the regions data file (regions.xml) cannot be found. This will create the default regions.
+                if (!FileSystem.FileExists(FileSystem.RegionsFile))
+                {
+                    _regionCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                }
+
+                // Save the editor collection if the editors data file (editors.xml) cannot be found. This will create the default editors.
+                if (!FileSystem.FileExists(FileSystem.EditorsFile))
+                {
+                    _editorCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                }
+
+                // Save the schedule collection if the schedules data file (schedules.xml) cannot be found. This will create the default schedules.
+                if (!FileSystem.FileExists(FileSystem.SchedulesFile))
+                {
+                    _scheduleCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                }
+
+                // Save the macro tag collection if the macro tags data file (macrotags.xml) cannot be found. This will create the default macro tags.
+                if (!FileSystem.FileExists(FileSystem.MacroTagsFile))
+                {
+                    _macroTagCollection.SaveToXmlFile(this, FileSystem, Log);
+                }
+
+                // Save the trigger collection if the triggers data file (triggers.xml) cannot be found. This will create the default triggers.
+                if (!FileSystem.FileExists(FileSystem.TriggersFile))
+                {
+                    _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
+                }
+
+                Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
+
+                Settings.VersionManager.OldUserSettings = Settings.User.Clone();
+
+                Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
+
+                Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
+
+                Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
+
+                Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
+
+                return true;
             }
             catch (Exception)
             {

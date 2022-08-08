@@ -286,4 +286,7 @@
   <data name="triggers" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\triggers.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="autoscreen_conf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\autoscreen.conf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
