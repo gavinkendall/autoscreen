@@ -173,7 +173,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormCommandDeck";
-            this.Text = "Command Deck";
+            this.Text = "Auto Screen Capture";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRegionSelectCommandDeck_FormClosing);
             this.Load += new System.EventHandler(this.FormRegionSelectCommandDeck_Load);
