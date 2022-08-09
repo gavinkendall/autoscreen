@@ -38,12 +38,14 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelFormat = new System.Windows.Forms.Label();
             this.comboBoxFormat = new System.Windows.Forms.ComboBox();
+            this.groupBoxRegionSelectOptionsAutoSave = new System.Windows.Forms.GroupBox();
+            this.groupBoxRegionSelectOptionsAutoSave.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonBrowseFolder
             // 
             this.buttonBrowseFolder.Image = global::AutoScreenCapture.Properties.Resources.openfolder;
-            this.buttonBrowseFolder.Location = new System.Drawing.Point(455, 7);
+            this.buttonBrowseFolder.Location = new System.Drawing.Point(437, 15);
             this.buttonBrowseFolder.Name = "buttonBrowseFolder";
             this.buttonBrowseFolder.Size = new System.Drawing.Size(27, 23);
             this.buttonBrowseFolder.TabIndex = 2;
@@ -53,7 +55,7 @@
             // labelAutoSaveMacro
             // 
             this.labelAutoSaveMacro.AutoSize = true;
-            this.labelAutoSaveMacro.Location = new System.Drawing.Point(12, 38);
+            this.labelAutoSaveMacro.Location = new System.Drawing.Point(6, 46);
             this.labelAutoSaveMacro.Name = "labelAutoSaveMacro";
             this.labelAutoSaveMacro.Size = new System.Drawing.Size(40, 13);
             this.labelAutoSaveMacro.TabIndex = 0;
@@ -62,7 +64,7 @@
             // labelAutoSaveFolder
             // 
             this.labelAutoSaveFolder.AutoSize = true;
-            this.labelAutoSaveFolder.Location = new System.Drawing.Point(12, 12);
+            this.labelAutoSaveFolder.Location = new System.Drawing.Point(7, 20);
             this.labelAutoSaveFolder.Name = "labelAutoSaveFolder";
             this.labelAutoSaveFolder.Size = new System.Drawing.Size(39, 13);
             this.labelAutoSaveFolder.TabIndex = 0;
@@ -70,16 +72,16 @@
             // 
             // textBoxAutoSaveMacro
             // 
-            this.textBoxAutoSaveMacro.Location = new System.Drawing.Point(58, 35);
+            this.textBoxAutoSaveMacro.Location = new System.Drawing.Point(52, 43);
             this.textBoxAutoSaveMacro.Name = "textBoxAutoSaveMacro";
-            this.textBoxAutoSaveMacro.Size = new System.Drawing.Size(424, 20);
+            this.textBoxAutoSaveMacro.Size = new System.Drawing.Size(412, 20);
             this.textBoxAutoSaveMacro.TabIndex = 3;
             // 
             // textBoxAutoSaveFolder
             // 
-            this.textBoxAutoSaveFolder.Location = new System.Drawing.Point(58, 9);
+            this.textBoxAutoSaveFolder.Location = new System.Drawing.Point(52, 17);
             this.textBoxAutoSaveFolder.Name = "textBoxAutoSaveFolder";
-            this.textBoxAutoSaveFolder.Size = new System.Drawing.Size(391, 20);
+            this.textBoxAutoSaveFolder.Size = new System.Drawing.Size(379, 20);
             this.textBoxAutoSaveFolder.TabIndex = 1;
             // 
             // buttonSave
@@ -106,7 +108,7 @@
             // labelFormat
             // 
             this.labelFormat.AutoSize = true;
-            this.labelFormat.Location = new System.Drawing.Point(12, 64);
+            this.labelFormat.Location = new System.Drawing.Point(18, 89);
             this.labelFormat.Name = "labelFormat";
             this.labelFormat.Size = new System.Drawing.Size(42, 13);
             this.labelFormat.TabIndex = 0;
@@ -117,10 +119,24 @@
             this.comboBoxFormat.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormat.FormattingEnabled = true;
-            this.comboBoxFormat.Location = new System.Drawing.Point(58, 61);
+            this.comboBoxFormat.Location = new System.Drawing.Point(64, 86);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(51, 21);
             this.comboBoxFormat.TabIndex = 4;
+            // 
+            // groupBoxRegionSelectOptionsAutoSave
+            // 
+            this.groupBoxRegionSelectOptionsAutoSave.Controls.Add(this.labelAutoSaveMacro);
+            this.groupBoxRegionSelectOptionsAutoSave.Controls.Add(this.textBoxAutoSaveMacro);
+            this.groupBoxRegionSelectOptionsAutoSave.Controls.Add(this.labelAutoSaveFolder);
+            this.groupBoxRegionSelectOptionsAutoSave.Controls.Add(this.textBoxAutoSaveFolder);
+            this.groupBoxRegionSelectOptionsAutoSave.Controls.Add(this.buttonBrowseFolder);
+            this.groupBoxRegionSelectOptionsAutoSave.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxRegionSelectOptionsAutoSave.Name = "groupBoxRegionSelectOptionsAutoSave";
+            this.groupBoxRegionSelectOptionsAutoSave.Size = new System.Drawing.Size(470, 68);
+            this.groupBoxRegionSelectOptionsAutoSave.TabIndex = 7;
+            this.groupBoxRegionSelectOptionsAutoSave.TabStop = false;
+            this.groupBoxRegionSelectOptionsAutoSave.Text = "Auto Save";
             // 
             // FormRegionSelectOptions
             // 
@@ -133,11 +149,7 @@
             this.Controls.Add(this.comboBoxFormat);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
-            this.Controls.Add(this.buttonBrowseFolder);
-            this.Controls.Add(this.labelAutoSaveMacro);
-            this.Controls.Add(this.labelAutoSaveFolder);
-            this.Controls.Add(this.textBoxAutoSaveMacro);
-            this.Controls.Add(this.textBoxAutoSaveFolder);
+            this.Controls.Add(this.groupBoxRegionSelectOptionsAutoSave);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -146,6 +158,8 @@
             this.ShowInTaskbar = false;
             this.Text = "Region Select Options";
             this.Load += new System.EventHandler(this.FormRegionSelectOptions_Load);
+            this.groupBoxRegionSelectOptionsAutoSave.ResumeLayout(false);
+            this.groupBoxRegionSelectOptionsAutoSave.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,5 +176,6 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelFormat;
         private System.Windows.Forms.ComboBox comboBoxFormat;
+        private System.Windows.Forms.GroupBox groupBoxRegionSelectOptionsAutoSave;
     }
 }

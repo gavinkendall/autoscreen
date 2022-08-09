@@ -105,7 +105,7 @@ namespace AutoScreenCapture
                 _formHelp = new FormHelp();
                 _formDynamicRegexValidator = new FormDynamicRegexValidator();
                 _formScreenshotMetadata = new FormScreenshotMetadata();
-                _formLabelSwitcher = new FormLabelSwitcher(_config, _fileSystem);
+                _formScreenCaptureStatusWithLabelSwitcher = new FormScreenCaptureStatusWithLabelSwitcher(_config, _fileSystem);
                 _formMacroTag = new FormMacroTag(_macroParser);
                 _formRegion = new FormRegion(_screenCapture, _macroParser, _fileSystem, _config, _log);
                 _formScreen = new FormScreen(_screenCapture, _macroParser, _fileSystem, _config, _log);
@@ -119,17 +119,56 @@ namespace AutoScreenCapture
                 _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
 
-                // Event Handlers
+                // Command Deck
+                _formCommandDeck = new FormCommandDeck();
+
+                // Command Deck Event Handlers
+                _formCommandDeck.Clipboard += toolStripMenuItemRegionSelectClipboard_Click;
+                _formCommandDeck.ClipboardAutoSave += toolStripMenuItemRegionSelectClipboardAutoSave_Click;
+                _formCommandDeck.ClipboardAutoSaveEdit += toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click;
+                _formCommandDeck.ClipboardFloatingScreenshot += toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click;
+                _formCommandDeck.FloatingScreenshot += toolStripMenuItemRegionSelectFloatingScreenshot_Click;
+                _formCommandDeck.AddRegion += toolStripMenuItemRegionSelectAddRegion_Click;
+
+                // Start/Stop Schedule Event Handlers
                 _formSchedule.StartSchedule += _formSchedule_StartSchedule;
                 _formSchedule.StopSchedule += _formSchedule_StopSchedule;
-                _formScreenCaptureStatus.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click; // Screen Capture Status
-                _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click; // Screen Capture Status With Label Switcher
+
+                // Start/Stop Button Event Handlers for Command Deck, Screen Capture Status, and Screen Capture Status With Label Switcher
+                _formCommandDeck.buttonStartStopScreenCapture.Click += buttonStartStopScreenCapture_Click; // Command Deck
+                _formScreenCaptureStatus.buttonStartStopScreenCapture.Click += buttonStartStopScreenCapture_Click; // Screen Capture Status
+                _formScreenCaptureStatusWithLabelSwitcher.buttonStartStopScreenCapture.Click += buttonStartStopScreenCapture_Click; // Screen Capture Status With Label Switcher
+
+                // Start/Stop Button Tool Tips
+                ToolTip toolTipButtonStartStopScreenCaptureCommandDeck = new ToolTip();
+                toolTipButtonStartStopScreenCaptureCommandDeck.SetToolTip(_formCommandDeck.buttonStartStopScreenCapture, "Start/Stop Screen Capture");
 
                 ToolTip toolTipButtonStartStopScreenCaptureScreenCaptureStatus = new ToolTip();
                 toolTipButtonStartStopScreenCaptureScreenCaptureStatus.SetToolTip(_formScreenCaptureStatus.buttonStartStopScreenCapture, "Start/Stop Screen Capture");
 
                 ToolTip toolTipButtonStartStopScreenCaptureLabelSwitcher = new ToolTip();
-                toolTipButtonStartStopScreenCaptureLabelSwitcher.SetToolTip(_formLabelSwitcher.buttonStartStopScreenCapture, "Start/Stop Screen Capture");
+                toolTipButtonStartStopScreenCaptureLabelSwitcher.SetToolTip(_formScreenCaptureStatusWithLabelSwitcher.buttonStartStopScreenCapture, "Start/Stop Screen Capture");
+
+                // Capture Now / Archive Button Event Handler for Command Deck
+                _formCommandDeck.buttonCaptureNow.Click += toolStripMenuItemCaptureNowArchive_Click;
+
+                // Capture Now / Edit Button Event Handler for Command Deck
+                _formCommandDeck.buttonCaptureNowEdit.Click += toolStripMenuItemCaptureNowEdit_Click;
+
+                // Capture Now / Archive Tool Tip
+                ToolTip toolTipButtonCaptureNowCommandDeck = new ToolTip();
+                toolTipButtonCaptureNowCommandDeck.SetToolTip(_formCommandDeck.buttonCaptureNow, "Capture Now / Archive");
+
+                // Capture Now / Edit Tool Tip
+                ToolTip toolTipButtonCaptureNowEditCommandDeck = new ToolTip();
+                toolTipButtonCaptureNowEditCommandDeck.SetToolTip(_formCommandDeck.buttonCaptureNowEdit, "Capture Now / Edit");
+
+                // Exit for Command Deck
+                _formCommandDeck.buttonExit.Click += toolStripMenuItemExit_Click;
+
+                // Exit Tool Tip
+                ToolTip toolTipButtonExit = new ToolTip();
+                toolTipButtonExit.SetToolTip(_formCommandDeck.buttonExit, "Exit");
 
                 _log.WriteDebugMessage("Initializing email manager");
                 _emailManager = new EmailManager(_log);
@@ -315,9 +354,6 @@ namespace AutoScreenCapture
                 _formEncryptorDecryptor.screenshotsEncrypted += ScreenshotsEncrypted;
                 _formEncryptorDecryptor.screenshotsDecrypted += ScreenshotsDecrypted;
 
-                // Region Select Command Deck
-                _formRegionSelectCommandDeck = new FormRegionSelectCommandDeck();
-
                 int screenCaptureInterval = Convert.ToInt32(_config.Settings.User.GetByKey("ScreenCaptureInterval").Value);
                 _log.WriteDebugMessage("ScreenCaptureInterval = " + screenCaptureInterval);
 
@@ -336,7 +372,7 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Seconds = " + screenCaptureIntervalSeconds);
 
                 // Setup
-                _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser, _screenshotCollection);
+                _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formScreenCaptureStatusWithLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser, _screenshotCollection);
 
                 _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;

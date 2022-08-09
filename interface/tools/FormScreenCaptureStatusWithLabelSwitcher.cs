@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FormLabelSwitcher.cs" company="Gavin Kendall">
+// <copyright file="FormScreenCaptureStatusWithLabelSwitcher.cs" company="Gavin Kendall">
 //     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
@@ -26,7 +26,7 @@ namespace AutoScreenCapture
     /// <summary>
     /// The Label Switcher tool.
     /// </summary>
-    public partial class FormLabelSwitcher : Form
+    public partial class FormScreenCaptureStatusWithLabelSwitcher : Form
     {
         private Config _config;
         private FileSystem _fileSystem;
@@ -36,7 +36,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="config">Configuration.</param>
         /// <param name="fileSystem">File system.</param>
-        public FormLabelSwitcher(Config config, FileSystem fileSystem)
+        public FormScreenCaptureStatusWithLabelSwitcher(Config config, FileSystem fileSystem)
         {
             InitializeComponent();
 

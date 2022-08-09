@@ -55,12 +55,12 @@ namespace AutoScreenCapture
                     _formSetup.listBoxScreenshotLabel.SelectedItem = label;
 
                     // The list of labels on the Label Switcher tool.
-                    if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(label))
+                    if (!_formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Contains(label))
                     {
-                        _formLabelSwitcher.comboBoxLabels.Items.Add(label);
+                        _formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Add(label);
                     }
 
-                    _formLabelSwitcher.comboBoxLabels.SelectedItem = label;
+                    _formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.SelectedItem = label;
                 }
             }
         }
@@ -86,9 +86,9 @@ namespace AutoScreenCapture
                         _formSetup.listBoxScreenshotLabel.Items.Add(label);
                     }
 
-                    if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(label))
+                    if (!_formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Contains(label))
                     {
-                        _formLabelSwitcher.comboBoxLabels.Items.Add(label);
+                        _formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Add(label);
                     }
                 }
 
@@ -101,13 +101,13 @@ namespace AutoScreenCapture
                         _formSetup.listBoxScreenshotLabel.Items.Add(screenshotLabel);
                     }
 
-                    if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(screenshotLabel))
+                    if (!_formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Contains(screenshotLabel))
                     {
-                        _formLabelSwitcher.comboBoxLabels.Items.Add(screenshotLabel);
+                        _formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Add(screenshotLabel);
                     }
 
                     _formSetup.listBoxScreenshotLabel.SelectedItem = screenshotLabel;
-                    _formLabelSwitcher.comboBoxLabels.SelectedItem = screenshotLabel;
+                    _formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.SelectedItem = screenshotLabel;
                 }
 
                 if (_screenCapture.LockScreenCaptureSession || _formSetup.listBoxScreenshotLabel.Items.Count == 0)
@@ -175,12 +175,12 @@ namespace AutoScreenCapture
                 _formSetup.listBoxScreenshotLabel.SelectedItem = label;
 
                 // The list of labels on the Label Switcher tool.
-                if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(label))
+                if (!_formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Contains(label))
                 {
-                    _formLabelSwitcher.comboBoxLabels.Items.Add(label);
+                    _formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.Items.Add(label);
                 }
 
-                _formLabelSwitcher.comboBoxLabels.SelectedItem = label;
+                _formScreenCaptureStatusWithLabelSwitcher.comboBoxLabels.SelectedItem = label;
             }
         }
     }

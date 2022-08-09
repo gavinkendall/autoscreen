@@ -88,14 +88,14 @@ namespace AutoScreenCapture
         // The Dynamic Regex Validator tool.
         private FormDynamicRegexValidator _formDynamicRegexValidator;
 
-        // The Label Switcher tool.
-        private FormLabelSwitcher _formLabelSwitcher;
+        // The Screen Capture Status With Label Switcher tool.
+        private FormScreenCaptureStatusWithLabelSwitcher _formScreenCaptureStatusWithLabelSwitcher;
 
         // Encryptor / Decryptor tool.
         private FormEncryptorDecryptor _formEncryptorDecryptor;
 
-        // Region Select Command Deck
-        private FormRegionSelectCommandDeck _formRegionSelectCommandDeck;
+        // Command Deck
+        private FormCommandDeck _formCommandDeck;
 
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap;
@@ -696,30 +696,30 @@ namespace AutoScreenCapture
         {
             PopulateLabelList();
 
-            if (!_formLabelSwitcher.Visible)
+            if (!_formScreenCaptureStatusWithLabelSwitcher.Visible)
             {
-                _formLabelSwitcher.Show();
+                _formScreenCaptureStatusWithLabelSwitcher.Show();
             }
             else
             {
-                _formLabelSwitcher.Activate();
+                _formScreenCaptureStatusWithLabelSwitcher.Activate();
             }
         }
 
         /// <summary>
-        /// Shows the "Region Select Command Deck" tool.
+        /// Shows the "Command Deck" tool.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemRegionSelectCommandDeck_Click(object sender, EventArgs e)
+        private void toolStripMenuItemCommandDeck_Click(object sender, EventArgs e)
         {
-            if (!_formRegionSelectCommandDeck.Visible)
+            if (!_formCommandDeck.Visible)
             {
-                _formRegionSelectCommandDeck.Show();
+                _formCommandDeck.Show();
             }
             else
             {
-                _formRegionSelectCommandDeck.Activate();
+                _formCommandDeck.Activate();
             }
         }
 

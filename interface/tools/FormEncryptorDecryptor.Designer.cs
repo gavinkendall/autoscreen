@@ -45,6 +45,8 @@
             this.labelScreenshotsStartDateTimeRange = new System.Windows.Forms.Label();
             this.dateTimePickerScreenshotsStartDateRange = new System.Windows.Forms.DateTimePicker();
             this.tabPageFile = new System.Windows.Forms.TabPage();
+            this.labelHistory = new System.Windows.Forms.Label();
+            this.listBoxHistory = new System.Windows.Forms.ListBox();
             this.buttonDecryptFile = new System.Windows.Forms.Button();
             this.buttonEncryptFile = new System.Windows.Forms.Button();
             this.textBoxFileKey = new System.Windows.Forms.TextBox();
@@ -62,8 +64,6 @@
             this.labelTextHelp = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.listBoxHistory = new System.Windows.Forms.ListBox();
-            this.labelHistory = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPageScreenshots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScreenshots)).BeginInit();
@@ -278,6 +278,29 @@
             this.tabPageFile.Text = "File";
             this.tabPageFile.UseVisualStyleBackColor = true;
             // 
+            // labelHistory
+            // 
+            this.labelHistory.AutoSize = true;
+            this.labelHistory.Location = new System.Drawing.Point(6, 99);
+            this.labelHistory.Name = "labelHistory";
+            this.labelHistory.Size = new System.Drawing.Size(42, 13);
+            this.labelHistory.TabIndex = 43;
+            this.labelHistory.Text = "History:";
+            // 
+            // listBoxHistory
+            // 
+            this.listBoxHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxHistory.FormattingEnabled = true;
+            this.listBoxHistory.HorizontalScrollbar = true;
+            this.listBoxHistory.Location = new System.Drawing.Point(6, 115);
+            this.listBoxHistory.Name = "listBoxHistory";
+            this.listBoxHistory.ScrollAlwaysVisible = true;
+            this.listBoxHistory.Size = new System.Drawing.Size(831, 277);
+            this.listBoxHistory.TabIndex = 42;
+            this.listBoxHistory.TabStop = false;
+            // 
             // buttonDecryptFile
             // 
             this.buttonDecryptFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -469,29 +492,6 @@
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // listBoxHistory
-            // 
-            this.listBoxHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBoxHistory.FormattingEnabled = true;
-            this.listBoxHistory.HorizontalScrollbar = true;
-            this.listBoxHistory.Location = new System.Drawing.Point(6, 115);
-            this.listBoxHistory.Name = "listBoxHistory";
-            this.listBoxHistory.ScrollAlwaysVisible = true;
-            this.listBoxHistory.Size = new System.Drawing.Size(831, 277);
-            this.listBoxHistory.TabIndex = 42;
-            this.listBoxHistory.TabStop = false;
-            // 
-            // labelHistory
-            // 
-            this.labelHistory.AutoSize = true;
-            this.labelHistory.Location = new System.Drawing.Point(6, 99);
-            this.labelHistory.Name = "labelHistory";
-            this.labelHistory.Size = new System.Drawing.Size(42, 13);
-            this.labelHistory.TabIndex = 43;
-            this.labelHistory.Text = "History:";
-            // 
             // FormEncryptorDecryptor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,7 +502,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(869, 513);
             this.Name = "FormEncryptorDecryptor";
-            this.Text = "Auto Screen Capture - Encryptor / Decryptor";
+            this.Text = "Encryptor / Decryptor";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEncryptorDecryptor_FormClosing);
             this.Load += new System.EventHandler(this.FormEncryptorDecryptor_Load);

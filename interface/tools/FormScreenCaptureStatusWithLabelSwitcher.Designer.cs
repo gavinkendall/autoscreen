@@ -1,6 +1,6 @@
 ﻿namespace AutoScreenCapture
 {
-    partial class FormLabelSwitcher
+    partial class FormScreenCaptureStatusWithLabelSwitcher
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLabelSwitcher));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreenCaptureStatusWithLabelSwitcher));
             this.comboBoxLabels = new System.Windows.Forms.ComboBox();
             this.buttonStartStopScreenCapture = new System.Windows.Forms.Button();
             this.labelScreenCaptureStatus = new System.Windows.Forms.Label();
@@ -79,7 +79,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormLabelSwitcher";
-            this.Text = "Auto Screen Capture - Screen Capture Status With Label Switcher";
+            this.Text = "Screen Capture Status With Label Switcher";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLabelSwitcher_FormClosing);
             this.ResumeLayout(false);

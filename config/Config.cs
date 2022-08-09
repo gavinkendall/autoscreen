@@ -274,6 +274,8 @@ namespace AutoScreenCapture
                     Settings.User.Save(Settings, FileSystem);
                 }
 
+                ScreenCapture.ImageFormat = Settings.User.GetByKey("ImageFormat").Value.ToString();
+
                 if (hide)
                 {
                     Settings.User.SetValueByKey("SneakyPastaSnake", true);

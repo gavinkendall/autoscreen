@@ -243,8 +243,9 @@ namespace AutoScreenCapture
                     _screenCapture.Running = true;
                     _screenCapture.ApplicationWarning = false;
 
+                    _formCommandDeck.buttonStartStopScreenCapture.Image = Properties.Resources.stop_screen_capture;
                     _formScreenCaptureStatus.buttonStartStopScreenCapture.Image = Properties.Resources.stop_screen_capture;
-                    _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.stop_screen_capture;
+                    _formScreenCaptureStatusWithLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.stop_screen_capture;
 
                     _screenCapture.DateTimeStartCapture = DateTime.Now;
 
@@ -322,8 +323,9 @@ namespace AutoScreenCapture
                     timerScreenCapture.Stop();
                     timerScreenCapture.Enabled = false;
 
+                    _formCommandDeck.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
                     _formScreenCaptureStatus.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
-                    _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
+                    _formScreenCaptureStatusWithLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
 
                     SearchFilterValues();
                     SearchDates();
@@ -921,7 +923,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void _formLabelSwitcher_buttonStartStopScreenCapture_Click(object sender, EventArgs e)
+        private void buttonStartStopScreenCapture_Click(object sender, EventArgs e)
         {
             if (_screenCapture.Running)
             {

@@ -197,7 +197,12 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemExit_Click(object sender, EventArgs e)
         {
-            ExitApplication();
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit Auto Screen Capture?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+            if (dialogResult == DialogResult.Yes)
+            {
+                ExitApplication();
+            }            
         }
 
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -317,7 +322,7 @@ namespace AutoScreenCapture
                 toolStripCycleCount.Text = $"Cycle: {_screenCapture.CycleCount}";
                 toolStripInfo.Text = notifyIcon.Text;
 
-                _formLabelSwitcher.labelScreenCaptureStatus.Text = notifyIcon.Text;
+                _formScreenCaptureStatusWithLabelSwitcher.labelScreenCaptureStatus.Text = notifyIcon.Text;
                 _formScreenCaptureStatus.labelScreenCaptureStatus.Text = notifyIcon.Text;
             }
             catch (Exception)

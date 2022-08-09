@@ -36,7 +36,7 @@ namespace AutoScreenCapture
         private Config _config;
         private FileSystem _fileSystem;
         private ScreenCapture _screenCapture;
-        private FormLabelSwitcher _formLabelSwitcher;
+        private FormScreenCaptureStatusWithLabelSwitcher _formLabelSwitcher;
         private FormScreen _formScreen;
         private FormRegion _formRegion;
         private MacroTagCollection _macroTagCollection;
@@ -57,7 +57,7 @@ namespace AutoScreenCapture
         /// <param name="macroTagCollection">The macro tags collection to use.</param>
         /// <param name="macroParser">The macro parser to use.</param>
         /// <param name="screenshotCollection">The screenshot collection to use.</param>
-        public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion, MacroTagCollection macroTagCollection, MacroParser macroParser, ScreenshotCollection screenshotCollection)
+        public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormScreenCaptureStatusWithLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion, MacroTagCollection macroTagCollection, MacroParser macroParser, ScreenshotCollection screenshotCollection)
         {
             InitializeComponent();
 
