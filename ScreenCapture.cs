@@ -950,15 +950,26 @@ namespace AutoScreenCapture
                     {
                         if (_fileSystem.DriveReady(screenshot.FilePath))
                         {
-                            // The low disk mode we want to use (either check by percentage (0) or check the number of available bytes (1)).
-                            int lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode").Value);
+                            // To maintain backwards compatibility with 2.4 when upgrading from 2.4 to 2.5 and using an old 2.4 version of autoscreen.conf
+                            int lowDiskMode = 0;
+                            int lowDiskPercentageThreshold = 1; // 1%
+                            long lowDiskBytesThreshold = 50000000; // 50 MB
 
-                            // Low disk space threshold by percentage.
-                            int lowDiskPercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold").Value);
+                            Setting lowDiskModeSetting = _config.Settings.Application.GetByKey("LowDiskMode");
+
+                            if (lowDiskModeSetting != null)
+                            {
+                                // The low disk mode we want to use (either check by percentage (0) or check the number of available bytes (1)).
+                                lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode").Value);
+
+                                // Low disk space threshold by percentage.
+                                lowDiskPercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold").Value);
+
+                                // Low disk space threshold in bytes.
+                                lowDiskBytesThreshold = Convert.ToInt64(_config.Settings.Application.GetByKey("LowDiskBytesThreshold").Value);
+                            }
+
                             double freeDiskSpacePercentage = _fileSystem.FreeDiskSpacePercentage(screenshot.FilePath);
-
-                            // Low disk space threshold in bytes.
-                            long lowDiskBytesThreshold = Convert.ToInt64(_config.Settings.Application.GetByKey("LowDiskBytesThreshold").Value);
                             long freeDiskSpaceBytes = _fileSystem.FreeDiskSpace(screenshot.FilePath);
 
                             _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.FilePath + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskPercentageThreshold + "%");

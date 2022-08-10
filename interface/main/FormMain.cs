@@ -240,13 +240,13 @@ namespace AutoScreenCapture
             if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings").Value))
             {
                 toolStripMenuItemEmailSettings.Enabled = false;
-                toolStripMenuItemEmailSettingsFromStatusBar.Enabled = false;
+                toolStripMainMenuItemEmailSettings.Enabled = false;
             }
 
             if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings").Value))
             {
                 toolStripMenuItemFileTransferSettings.Enabled = false;
-                toolStripMenuItemFileTransferSettingsFromStatusBar.Enabled = false;
+                toolStripMainMenuItemFileTransferSettings.Enabled = false;
             }
         }
 

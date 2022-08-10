@@ -116,69 +116,77 @@ namespace AutoScreenCapture
         /// <param name="initiatedByUser">Determines if the screen capture was initiated by the user.</param>
         private void TakeScreenshot(string scope = "All Screens and Regions", bool captureNow = false, bool initiatedByUser = false)
         {
-            // Test to see if we can get images of the screen before continuing.
-            if (_screenCapture.GetScreenImages(0, 0, 0, autoAdapt: false, 0, 0, 0, 0, 0, false, out _))
+            try
             {
-                _macroParser.screenCapture = _screenCapture;
-
-                _screenCapture.CycleCount++;
-                _screenCapture.Scope = scope;
-                _screenCapture.CaptureNow = captureNow;
-
-                // We can use this to override the value of any macro from a screen or region (if we need to).
-                // At the moment it's being used by the Capture Now Macro from Capture Now Options.
-                string macroOverride = string.Empty;
-
-                // Whenever the user selects "Capture Now / Archive" or "Capture Now / Edit".
-                if (captureNow && initiatedByUser)
+                // Test to see if we can get images of the screen before continuing.
+                if (_screenCapture.GetScreenImages(0, 0, 0, autoAdapt: false, 0, 0, 0, 0, 0, false, out _))
                 {
-                    string captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
+                    _macroParser.screenCapture = _screenCapture;
 
-                    if (!string.IsNullOrEmpty(captureNowMacro))
+                    _screenCapture.CycleCount++;
+                    _screenCapture.Scope = scope;
+                    _screenCapture.CaptureNow = captureNow;
+
+                    // We can use this to override the value of any macro from a screen or region (if we need to).
+                    // At the moment it's being used by the Capture Now Macro from Capture Now Options.
+                    string macroOverride = string.Empty;
+
+                    // Whenever the user selects "Capture Now / Archive" or "Capture Now / Edit".
+                    if (captureNow && initiatedByUser)
                     {
-                        macroOverride = captureNowMacro;
+                        string captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
+
+                        if (!string.IsNullOrEmpty(captureNowMacro))
+                        {
+                            macroOverride = captureNowMacro;
+                        }
+
+                        // Keep a count of how many times the user has used "Capture Now" so we can include it in a Macro Tag.
+                        _screenCapture.CaptureNowCount++;
                     }
 
-                    // Keep a count of how many times the user has used "Capture Now" so we can include it in a Macro Tag.
-                    _screenCapture.CaptureNowCount++;
-                }
+                    DateTime dtNow = DateTime.Now;
 
-                DateTime dtNow = DateTime.Now;
+                    _screenCapture.DateTimeScreenshotsTaken = dtNow;
 
-                _screenCapture.DateTimeScreenshotsTaken = dtNow;
-
-                if (!captureNow)
-                {
-                    _screenCapture.DateTimePreviousCycle = dtNow;
-                }
-
-                _formSetup.DoApplicationFocus();
-
-                _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
-
-                _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
-
-                if (!string.IsNullOrEmpty(_formSetup.textBoxActiveWindowTitle.Text))
-                {
-                    if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
+                    if (!captureNow)
                     {
-                        return;
+                        _screenCapture.DateTimePreviousCycle = dtNow;
                     }
 
-                    if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
+                    _formSetup.DoApplicationFocus();
+
+                    _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
+
+                    _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
+
+                    if (!string.IsNullOrEmpty(_formSetup.textBoxActiveWindowTitle.Text))
                     {
-                        return;
+                        if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
+                        {
+                            return;
+                        }
+
+                        if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
+                        {
+                            return;
+                        }
                     }
+
+                    RunRegionCaptures(scope, macroOverride);
+
+                    RunScreenCaptures(scope, macroOverride);
                 }
 
-                RunRegionCaptures(scope, macroOverride);
+                _log.WriteDebugMessage("Running triggers of condition type CaptureCycleElapsed");
 
-                RunScreenCaptures(scope, macroOverride);
+                RunTriggersOfConditionType(TriggerConditionType.CaptureCycleElapsed);
             }
-
-            _log.WriteDebugMessage("Running triggers of condition type CaptureCycleElapsed");
-
-            RunTriggersOfConditionType(TriggerConditionType.CaptureCycleElapsed);
+            catch (Exception ex)
+            {
+                _screenCapture.ApplicationError = true;
+                _log.WriteExceptionMessage("FormMain-ScreenCapture::TakeScreenshot", ex);
+            }
         }
 
         /// <summary>
@@ -304,6 +312,8 @@ namespace AutoScreenCapture
                         if (_formEnterPassphrase.DialogResult != DialogResult.OK)
                         {
                             _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot stop screen capture session. Screen capture session has been locked. Interface is now hidden");
+
+                            HideInterface();
 
                             return;
                         }

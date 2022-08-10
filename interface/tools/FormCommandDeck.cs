@@ -68,12 +68,7 @@ namespace AutoScreenCapture
 
         private void FormRegionSelectCommandDeck_Load(object sender, EventArgs e)
         {
-            //Clipboard = new EventHandler(buttonRegionSelectClipboard_Click);
-            //ClipboardAutoSave = new EventHandler(buttonRegionSelectClipboardAutoSave_Click);
-            //ClipboardAutoSaveEdit = new EventHandler(buttonRegionSelectClipboardAutoSaveEdit_Click);
-            //ClipboardFloatingScreenshot = new EventHandler(buttonRegionSelectClipboardFloatingScreenshot_Click);
-            //FloatingScreenshot = new EventHandler(buttonRegionSelectFloatingScreenshot_Click);
-            //AddRegion = new EventHandler(buttonRegionSelectAddRegion_Click);
+            Height = 87;
         }
 
         private void FormRegionSelectCommandDeck_FormClosing(object sender, FormClosingEventArgs e)
@@ -110,6 +105,18 @@ namespace AutoScreenCapture
         private void buttonRegionSelectAddRegion_Click(object sender, EventArgs e)
         {
             AddRegion.Invoke(sender, e);
+        }
+
+        private void buttonShowHideRegionSelect_Click(object sender, EventArgs e)
+        {
+            if (Height == 87)
+            {
+                Height = 286;
+            }
+            else if (Height == 286)
+            {
+                Height = 87;
+            }
         }
     }
 }

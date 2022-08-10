@@ -188,8 +188,15 @@ namespace AutoScreenCapture
 
             // Security
             textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase").Value.ToString();
-            string passphraseLastUpdated = _config.Settings.User.GetByKey("PassphraseLastUpdated").Value.ToString();
-            labelLastUpdated.Text = "Last updated: " + passphraseLastUpdated;
+
+            Setting passphraseLastUpdatedSetting = _config.Settings.User.GetByKey("PassphraseLastUpdated");
+
+            // To maintain backwards compatibility with 2.4 when upgrading from 2.4 to 2.5 and using an old 2.4 version of autoscreen.conf
+            if (passphraseLastUpdatedSetting != null)
+            {
+                string passphraseLastUpdated = _config.Settings.User.GetByKey("PassphraseLastUpdated").Value.ToString();
+                labelLastUpdated.Text = "Last updated: " + passphraseLastUpdated;
+            }
 
             // Optimize Screen Capture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
@@ -225,7 +232,14 @@ namespace AutoScreenCapture
                 listBoxScreenshotLabel.SelectedItem = screenshotLabel;
             }
 
-            string imageFormat = _config.Settings.User.GetByKey("ImageFormat").Value.ToString();
+            // To maintain backwards compatibility with 2.4 when upgrading from 2.4 to 2.5 and using an old 2.4 version of autoscreen.conf
+            string imageFormat = "JPEG";
+            Setting imageFormatSetting = _config.Settings.User.GetByKey("ImageFormat");
+
+            if (imageFormatSetting != null)
+            {
+                imageFormat = _config.Settings.User.GetByKey("ImageFormat").Value.ToString();
+            }
 
             // Image Format
             switch (imageFormat)
@@ -441,7 +455,13 @@ namespace AutoScreenCapture
 
             if (string.IsNullOrEmpty(applicationFocus))
             {
+                checkBoxEnableApplicationFocus.Checked = false;
+
                 return;
+            }
+            else
+            {
+                checkBoxEnableApplicationFocus.Checked = true;
             }
 
             if (!listBoxProcessList.Items.Contains(applicationFocus))
@@ -456,7 +476,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Perform application focus.
         /// </summary>
         public void DoApplicationFocus()
         {
@@ -482,9 +502,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Sets the application focus on a particular application.
         /// </summary>
-        /// <param name="applicationFocus"></param>
+        /// <param name="applicationFocus">The name of the application to force focus on.</param>
         public void SetApplicationFocus(string applicationFocus)
         {
             if (string.IsNullOrEmpty(applicationFocus))

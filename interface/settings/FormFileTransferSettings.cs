@@ -50,7 +50,18 @@ namespace AutoScreenCapture
             numericUpDownPort.Value = Convert.ToInt32(_config.Settings.SFTP.GetByKey("FileTransferServerPort").Value);
             textBoxUsername.Text = _config.Settings.SFTP.GetByKey("FileTransferClientUsername").Value.ToString();
             textBoxPassword.Text = _config.Settings.SFTP.GetByKey("FileTransferClientPassword").Value.ToString();
-            checkBoxIsLinux.Checked = Convert.ToBoolean(_config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer").Value);
+
+            // To maintain backwards compatibility with 2.4 when upgrading from 2.4 to 2.5 and using an old 2.4 version of autoscreen.conf
+            Setting fileTransferIsLinuxServerSetting = _config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer");
+
+            if (fileTransferIsLinuxServerSetting != null)
+            {
+                checkBoxIsLinux.Checked = Convert.ToBoolean(_config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer").Value);
+            }
+            else
+            {
+                checkBoxIsLinux.Checked = true;
+            }
 
             checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload").Value);
             checkBoxKeepFailedUploads.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads").Value);

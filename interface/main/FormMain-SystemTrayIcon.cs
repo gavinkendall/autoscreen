@@ -155,7 +155,7 @@ namespace AutoScreenCapture
                 toolStripMenuItemTools.Visible = false;
                 toolStripSeparatorTools.Visible = false;
                 toolStripMenuItemHelp.Visible = false;
-                toolStripMenuItemRegionSelectAddRegion.Visible = false;
+                toolStripMenuItemRegionSelect.Visible = false;
 
                 // Hide the "Capture Now" memu items.
                 toolStripMenuItemCaptureNowOptions.Visible = false;
@@ -177,7 +177,7 @@ namespace AutoScreenCapture
                 toolStripMenuItemEmailSettings.Visible = true;
                 toolStripMenuItemSettings.Visible = true;
                 toolStripMenuItemFileTransferSettings.Visible = true;
-                toolStripMenuItemRegionSelectAddRegion.Visible = true;
+                toolStripMenuItemRegionSelect.Visible = true;
 
                 toolStripMenuItemTools.Visible = true;
                 toolStripSeparatorTools.Visible = true;
@@ -248,6 +248,7 @@ namespace AutoScreenCapture
                 if (_screenCapture.LockScreenCaptureSession)
                 {
                     notifyIcon.Text = string.Empty;
+                    notifyIcon.Icon = Resources.autoscreen;
 
                     return;
                 }
@@ -259,12 +260,20 @@ namespace AutoScreenCapture
                     (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial capture] " : string.Empty) +
                     (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
 
+                _formCommandDeck.toolStripStatusLabel.Text = "Ready " +
+                    (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
+
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
                     if (_screenCapture.ApplicationError)
                     {
-                        notifyIcon.Icon = Resources.autoscreen_error;
-                        notifyIcon.Text = "The application encountered an error";
+                        if (!_screenCapture.LockScreenCaptureSession)
+                        {
+                            notifyIcon.Icon = Resources.autoscreen_error;
+                            notifyIcon.Text = "The application encountered an error";
+                        }
+
+                        _formCommandDeck.toolStripStatusLabel.Text = "Error";
 
                         labelHelp.Image = Resources.warning;
                         labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
@@ -272,8 +281,11 @@ namespace AutoScreenCapture
                     }
                     else if (_screenCapture.ApplicationWarning)
                     {
-                        notifyIcon.Icon = Resources.autoscreen_warning;
-                        notifyIcon.Text = "Disk drive is running low on free disk space";
+                        if (!_screenCapture.LockScreenCaptureSession)
+                        {
+                            notifyIcon.Icon = Resources.autoscreen_warning;
+                            notifyIcon.Text = "Disk drive is running low on free disk space";
+                        }
                     }
                 }
                 else
@@ -286,14 +298,18 @@ namespace AutoScreenCapture
                         {
                             // System tray icon is green if taking optimized screenshots.
                             takingScreenshotsMessage = "Taking screenshots [optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]";
+
                             notifyIcon.Icon = Resources.autoscreen_running_optimized;
                         }
                         else
                         {
                             // System tray icon is blue if not taking optimized screenshots.
                             takingScreenshotsMessage = "Taking screenshots [not optimized]";
+
                             notifyIcon.Icon = Resources.autoscreen_running_not_optimized;
                         }
+
+                        _formCommandDeck.toolStripStatusLabel.Text = "Taking screenshots";
 
                         if (!_screenCapture.CaptureError)
                         {
@@ -325,6 +341,20 @@ namespace AutoScreenCapture
                                 }
 
                                 notifyIcon.Text = remainingTimeStr;
+
+                                _formCommandDeck.toolStripStatusLabel.Text =
+                                    remainingHours.ToString("00") + ":" +
+                                    remainingMinutes.ToString("00") + ":" +
+                                    remainingSeconds.ToString("00");
+
+                                if (_screenCapture.OptimizeScreenCapture)
+                                {
+                                    _formCommandDeck.toolStripStatusLabel.Text += " [optimized]";
+                                }
+                                else
+                                {
+                                    _formCommandDeck.toolStripStatusLabel.Text += " [not optimized]";
+                                }
                             }
                         }
                     }

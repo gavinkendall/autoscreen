@@ -39,8 +39,11 @@
             this.buttonStartStopScreenCapture = new System.Windows.Forms.Button();
             this.buttonCaptureNow = new System.Windows.Forms.Button();
             this.buttonCaptureNowEdit = new System.Windows.Forms.Button();
-            this.buttonExit = new System.Windows.Forms.Button();
+            this.buttonShowHideRegionSelect = new System.Windows.Forms.Button();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBoxRegionSelect.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonRegionSelectClipboard
@@ -148,22 +151,39 @@
             this.buttonCaptureNowEdit.TabStop = false;
             this.buttonCaptureNowEdit.UseVisualStyleBackColor = true;
             // 
-            // buttonExit
+            // buttonShowHideRegionSelect
             // 
-            this.buttonExit.Image = global::AutoScreenCapture.Properties.Resources.exit;
-            this.buttonExit.Location = new System.Drawing.Point(140, 6);
-            this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(37, 24);
-            this.buttonExit.TabIndex = 10;
-            this.buttonExit.TabStop = false;
-            this.buttonExit.UseVisualStyleBackColor = true;
+            this.buttonShowHideRegionSelect.Image = global::AutoScreenCapture.Properties.Resources.region;
+            this.buttonShowHideRegionSelect.Location = new System.Drawing.Point(140, 6);
+            this.buttonShowHideRegionSelect.Name = "buttonShowHideRegionSelect";
+            this.buttonShowHideRegionSelect.Size = new System.Drawing.Size(37, 24);
+            this.buttonShowHideRegionSelect.TabIndex = 10;
+            this.buttonShowHideRegionSelect.TabStop = false;
+            this.buttonShowHideRegionSelect.UseVisualStyleBackColor = true;
+            this.buttonShowHideRegionSelect.Click += new System.EventHandler(this.buttonShowHideRegionSelect_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 231);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(189, 22);
+            this.statusStrip.SizingGrip = false;
+            this.statusStrip.TabIndex = 6;
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // FormCommandDeck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(189, 230);
-            this.Controls.Add(this.buttonExit);
+            this.ClientSize = new System.Drawing.Size(189, 253);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.buttonShowHideRegionSelect);
             this.Controls.Add(this.buttonCaptureNowEdit);
             this.Controls.Add(this.buttonCaptureNow);
             this.Controls.Add(this.buttonStartStopScreenCapture);
@@ -178,7 +198,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRegionSelectCommandDeck_FormClosing);
             this.Load += new System.EventHandler(this.FormRegionSelectCommandDeck_Load);
             this.groupBoxRegionSelect.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -191,6 +214,7 @@
         private System.Windows.Forms.Button buttonRegionSelectFloatingScreenshot;
         private System.Windows.Forms.Button buttonRegionSelectAddRegion;
         private System.Windows.Forms.GroupBox groupBoxRegionSelect;
+        private System.Windows.Forms.StatusStrip statusStrip;
 
         /// <summary>
         /// A button for either starting a screen capture session or stopping the currently running screen capture session.
@@ -208,8 +232,13 @@
         public System.Windows.Forms.Button buttonCaptureNowEdit;
 
         /// <summary>
-        /// A button for exiting the application.
+        /// The status label for the Command Deck window.
         /// </summary>
-        public System.Windows.Forms.Button buttonExit;
+        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+
+        /// <summary>
+        /// The Region Select group control shows and hides with this toggle button.
+        /// </summary>
+        public System.Windows.Forms.Button buttonShowHideRegionSelect;
     }
 }

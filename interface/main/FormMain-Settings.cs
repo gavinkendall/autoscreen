@@ -155,20 +155,17 @@ namespace AutoScreenCapture
                 // Capture Now / Edit Button Event Handler for Command Deck
                 _formCommandDeck.buttonCaptureNowEdit.Click += toolStripMenuItemCaptureNowEdit_Click;
 
-                // Capture Now / Archive Tool Tip
+                // Capture Now / Archive Tool Tip for Command Deck
                 ToolTip toolTipButtonCaptureNowCommandDeck = new ToolTip();
                 toolTipButtonCaptureNowCommandDeck.SetToolTip(_formCommandDeck.buttonCaptureNow, "Capture Now / Archive");
 
-                // Capture Now / Edit Tool Tip
+                // Capture Now / Edit Tool Tip for Command Deck
                 ToolTip toolTipButtonCaptureNowEditCommandDeck = new ToolTip();
                 toolTipButtonCaptureNowEditCommandDeck.SetToolTip(_formCommandDeck.buttonCaptureNowEdit, "Capture Now / Edit");
 
-                // Exit for Command Deck
-                _formCommandDeck.buttonExit.Click += toolStripMenuItemExit_Click;
-
-                // Exit Tool Tip
-                ToolTip toolTipButtonExit = new ToolTip();
-                toolTipButtonExit.SetToolTip(_formCommandDeck.buttonExit, "Exit");
+                // Region Select Tool Tip for Command Deck
+                ToolTip toolTipShowHideRegionSelectCommandDeck = new ToolTip();
+                toolTipShowHideRegionSelectCommandDeck.SetToolTip(_formCommandDeck.buttonShowHideRegionSelect, "Show/Hide Region Select");
 
                 _log.WriteDebugMessage("Initializing email manager");
                 _emailManager = new EmailManager(_log);
@@ -250,6 +247,13 @@ namespace AutoScreenCapture
                             {
                                 _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", true);
                             }
+                        }
+
+                        // Make sure to save the ShowInterface and ShowSystemTrayIcon settings
+                        // so that the interface and system tray icon appear on the next run of the application.
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
                         }
                     }
 
