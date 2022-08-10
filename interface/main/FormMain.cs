@@ -911,15 +911,5 @@ namespace AutoScreenCapture
                 _log.WriteExceptionMessage("Unable to open program folder", ex);
             }
         }
-
-        /// <summary>
-        /// Exits the application.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolStripDropDownButtonExit_Click(object sender, EventArgs e)
-        {
-            ExitApplication();
-        }
     }
 }

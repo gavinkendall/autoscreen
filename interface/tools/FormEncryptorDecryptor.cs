@@ -119,16 +119,10 @@ namespace AutoScreenCapture
 
             dateTimePickerScreenshotsEndDateRange.Value = DateTime.Now;
 
-            dateTimePickerScreenshotsStartTimeRange.Value = DateTime.Parse("00:00:00.000");
-            dateTimePickerScreenshotsEndTimeRange.Value = DateTime.Parse("23:59:59.999");
-
             comboBoxFilterValue.SelectedIndexChanged += new EventHandler(control_ValueChanged);
 
             dateTimePickerScreenshotsStartDateRange.ValueChanged += new EventHandler(control_ValueChanged);
             dateTimePickerScreenshotsEndDateRange.ValueChanged += new EventHandler(control_ValueChanged);
-
-            dateTimePickerScreenshotsStartTimeRange.ValueChanged += new EventHandler(control_ValueChanged);
-            dateTimePickerScreenshotsEndTimeRange.ValueChanged += new EventHandler(control_ValueChanged);
 
             LoadScreenshots();
         }
@@ -152,6 +146,16 @@ namespace AutoScreenCapture
             {
                 runScreenshotLoad.RunWorkerAsync();
             }
+        }
+
+        /// <summary>
+        /// Loads the screenshots using the specified date range.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonLoadScreenshots_Click(object sender, EventArgs e)
+        {
+            LoadScreenshots();
         }
 
         /// <summary>
@@ -269,6 +273,8 @@ namespace AutoScreenCapture
             }
             else
             {
+                dataGridViewScreenshots.DataSource = null;
+
                 foreach (string dateStr in _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text))
                 {
                     if (DateTime.Parse(dateStr) >= dateTimePickerScreenshotsStartDateRange.Value &&
@@ -297,8 +303,8 @@ namespace AutoScreenCapture
 
                 dataGridViewScreenshots.DataSource = _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
                         dateTimePickerScreenshotsEndDateRange.Value,
-                        dateTimePickerScreenshotsStartTimeRange.Value,
-                        dateTimePickerScreenshotsEndTimeRange.Value,
+                        DateTime.Parse("00:00:00.000"),
+                        DateTime.Parse("23:59:59.999"),
                         comboBoxFilterType.Text, comboBoxFilterValue.Text);
 
                 for (int i = 0; i < dataGridViewScreenshots.Columns.Count; i++)
@@ -329,6 +335,7 @@ namespace AutoScreenCapture
                 dataGridViewScreenshots.Columns["WindowTitle"].DisplayIndex = 6;
                 dataGridViewScreenshots.Columns["Label"].DisplayIndex = 8; // This needs to be 8 so it appears after "Window Title". I tried 7 but it's doesn't work. I'm not sure why.
 
+                dataGridViewScreenshots.Columns["FilePath"].HeaderText = "File Path";
                 dataGridViewScreenshots.Columns["ProcessName"].HeaderText = "Process Name";
                 dataGridViewScreenshots.Columns["WindowTitle"].HeaderText = "Window Title";
             }
@@ -355,8 +362,8 @@ namespace AutoScreenCapture
             {
                 foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
                     dateTimePickerScreenshotsEndDateRange.Value,
-                    dateTimePickerScreenshotsStartTimeRange.Value,
-                    dateTimePickerScreenshotsEndTimeRange.Value,
+                    DateTime.Parse("00:00:00.000"),
+                    DateTime.Parse("23:59:59.999"),
                     comboBoxFilterType.Text,
                     comboBoxFilterValue.Text))
                 {
@@ -408,8 +415,8 @@ namespace AutoScreenCapture
             {
                 foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
                     dateTimePickerScreenshotsEndDateRange.Value,
-                    dateTimePickerScreenshotsStartTimeRange.Value,
-                    dateTimePickerScreenshotsEndTimeRange.Value,
+                    DateTime.Parse("00:00:00.000"),
+                    DateTime.Parse("23:59:59.999"),
                     comboBoxFilterType.Text,
                     comboBoxFilterValue.Text))
                 {

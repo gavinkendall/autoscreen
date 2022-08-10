@@ -31,11 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEncryptorDecryptor));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageScreenshots = new System.Windows.Forms.TabPage();
+            this.buttonLoadScreenshots = new System.Windows.Forms.Button();
             this.labelFilter = new System.Windows.Forms.Label();
             this.comboBoxFilterValue = new System.Windows.Forms.ComboBox();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
-            this.dateTimePickerScreenshotsEndTimeRange = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerScreenshotsStartTimeRange = new System.Windows.Forms.DateTimePicker();
             this.dataGridViewScreenshots = new System.Windows.Forms.DataGridView();
             this.labelScreenshotsHelp = new System.Windows.Forms.Label();
             this.buttonDecryptScreenshots = new System.Windows.Forms.Button();
@@ -81,17 +80,16 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(853, 452);
+            this.tabControl.Size = new System.Drawing.Size(698, 452);
             this.tabControl.TabIndex = 0;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabPageScreenshots
             // 
+            this.tabPageScreenshots.Controls.Add(this.buttonLoadScreenshots);
             this.tabPageScreenshots.Controls.Add(this.labelFilter);
             this.tabPageScreenshots.Controls.Add(this.comboBoxFilterValue);
             this.tabPageScreenshots.Controls.Add(this.comboBoxFilterType);
-            this.tabPageScreenshots.Controls.Add(this.dateTimePickerScreenshotsEndTimeRange);
-            this.tabPageScreenshots.Controls.Add(this.dateTimePickerScreenshotsStartTimeRange);
             this.tabPageScreenshots.Controls.Add(this.dataGridViewScreenshots);
             this.tabPageScreenshots.Controls.Add(this.labelScreenshotsHelp);
             this.tabPageScreenshots.Controls.Add(this.buttonDecryptScreenshots);
@@ -103,10 +101,22 @@
             this.tabPageScreenshots.Location = new System.Drawing.Point(4, 22);
             this.tabPageScreenshots.Name = "tabPageScreenshots";
             this.tabPageScreenshots.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageScreenshots.Size = new System.Drawing.Size(845, 426);
+            this.tabPageScreenshots.Size = new System.Drawing.Size(690, 426);
             this.tabPageScreenshots.TabIndex = 0;
             this.tabPageScreenshots.Text = "Screenshots";
             this.tabPageScreenshots.UseVisualStyleBackColor = true;
+            // 
+            // buttonLoadScreenshots
+            // 
+            this.buttonLoadScreenshots.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonLoadScreenshots.Location = new System.Drawing.Point(9, 397);
+            this.buttonLoadScreenshots.Name = "buttonLoadScreenshots";
+            this.buttonLoadScreenshots.Size = new System.Drawing.Size(150, 23);
+            this.buttonLoadScreenshots.TabIndex = 41;
+            this.buttonLoadScreenshots.TabStop = false;
+            this.buttonLoadScreenshots.Text = "Load Screenshots";
+            this.buttonLoadScreenshots.UseVisualStyleBackColor = true;
+            this.buttonLoadScreenshots.Click += new System.EventHandler(this.buttonLoadScreenshots_Click);
             // 
             // labelFilter
             // 
@@ -151,26 +161,6 @@
             this.comboBoxFilterType.TabStop = false;
             this.comboBoxFilterType.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterType_SelectedIndexChanged);
             // 
-            // dateTimePickerScreenshotsEndTimeRange
-            // 
-            this.dateTimePickerScreenshotsEndTimeRange.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScreenshotsEndTimeRange.Location = new System.Drawing.Point(745, 43);
-            this.dateTimePickerScreenshotsEndTimeRange.Name = "dateTimePickerScreenshotsEndTimeRange";
-            this.dateTimePickerScreenshotsEndTimeRange.ShowUpDown = true;
-            this.dateTimePickerScreenshotsEndTimeRange.Size = new System.Drawing.Size(92, 20);
-            this.dateTimePickerScreenshotsEndTimeRange.TabIndex = 37;
-            this.dateTimePickerScreenshotsEndTimeRange.TabStop = false;
-            // 
-            // dateTimePickerScreenshotsStartTimeRange
-            // 
-            this.dateTimePickerScreenshotsStartTimeRange.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScreenshotsStartTimeRange.Location = new System.Drawing.Point(441, 43);
-            this.dateTimePickerScreenshotsStartTimeRange.Name = "dateTimePickerScreenshotsStartTimeRange";
-            this.dateTimePickerScreenshotsStartTimeRange.ShowUpDown = true;
-            this.dateTimePickerScreenshotsStartTimeRange.Size = new System.Drawing.Size(92, 20);
-            this.dateTimePickerScreenshotsStartTimeRange.TabIndex = 36;
-            this.dateTimePickerScreenshotsStartTimeRange.TabStop = false;
-            // 
             // dataGridViewScreenshots
             // 
             this.dataGridViewScreenshots.AllowUserToAddRows = false;
@@ -185,7 +175,7 @@
             this.dataGridViewScreenshots.Name = "dataGridViewScreenshots";
             this.dataGridViewScreenshots.ReadOnly = true;
             this.dataGridViewScreenshots.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewScreenshots.Size = new System.Drawing.Size(826, 322);
+            this.dataGridViewScreenshots.Size = new System.Drawing.Size(671, 322);
             this.dataGridViewScreenshots.TabIndex = 35;
             this.dataGridViewScreenshots.TabStop = false;
             // 
@@ -196,15 +186,15 @@
             this.labelScreenshotsHelp.BackColor = System.Drawing.Color.LightYellow;
             this.labelScreenshotsHelp.Location = new System.Drawing.Point(6, 3);
             this.labelScreenshotsHelp.Name = "labelScreenshotsHelp";
-            this.labelScreenshotsHelp.Size = new System.Drawing.Size(833, 17);
+            this.labelScreenshotsHelp.Size = new System.Drawing.Size(678, 17);
             this.labelScreenshotsHelp.TabIndex = 34;
-            this.labelScreenshotsHelp.Text = "Select a filter (optional) and specify a date/time range to load screenshots then" +
-    " click either the Encrypt Screenshots or Decrypt Screenshots button";
+            this.labelScreenshotsHelp.Text = "Select a filter (optional) and specify a date range to load screenshots then clic" +
+    "k either the Encrypt Screenshots or Decrypt Screenshots button";
             // 
             // buttonDecryptScreenshots
             // 
             this.buttonDecryptScreenshots.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonDecryptScreenshots.Location = new System.Drawing.Point(167, 397);
+            this.buttonDecryptScreenshots.Location = new System.Drawing.Point(321, 397);
             this.buttonDecryptScreenshots.Name = "buttonDecryptScreenshots";
             this.buttonDecryptScreenshots.Size = new System.Drawing.Size(150, 23);
             this.buttonDecryptScreenshots.TabIndex = 5;
@@ -216,7 +206,7 @@
             // buttonEncryptScreenshots
             // 
             this.buttonEncryptScreenshots.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonEncryptScreenshots.Location = new System.Drawing.Point(11, 397);
+            this.buttonEncryptScreenshots.Location = new System.Drawing.Point(165, 397);
             this.buttonEncryptScreenshots.Name = "buttonEncryptScreenshots";
             this.buttonEncryptScreenshots.Size = new System.Drawing.Size(150, 23);
             this.buttonEncryptScreenshots.TabIndex = 4;
@@ -227,7 +217,7 @@
             // 
             // dateTimePickerScreenshotsEndDateRange
             // 
-            this.dateTimePickerScreenshotsEndDateRange.Location = new System.Drawing.Point(539, 43);
+            this.dateTimePickerScreenshotsEndDateRange.Location = new System.Drawing.Point(482, 43);
             this.dateTimePickerScreenshotsEndDateRange.Name = "dateTimePickerScreenshotsEndDateRange";
             this.dateTimePickerScreenshotsEndDateRange.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerScreenshotsEndDateRange.TabIndex = 3;
@@ -236,20 +226,20 @@
             // labelScreenshotsEndDateTimeRange
             // 
             this.labelScreenshotsEndDateTimeRange.AutoSize = true;
-            this.labelScreenshotsEndDateTimeRange.Location = new System.Drawing.Point(536, 27);
+            this.labelScreenshotsEndDateTimeRange.Location = new System.Drawing.Point(479, 27);
             this.labelScreenshotsEndDateTimeRange.Name = "labelScreenshotsEndDateTimeRange";
-            this.labelScreenshotsEndDateTimeRange.Size = new System.Drawing.Size(118, 13);
+            this.labelScreenshotsEndDateTimeRange.Size = new System.Drawing.Size(90, 13);
             this.labelScreenshotsEndDateTimeRange.TabIndex = 2;
-            this.labelScreenshotsEndDateTimeRange.Text = "End Date/Time Range:";
+            this.labelScreenshotsEndDateTimeRange.Text = "End Date Range:";
             // 
             // labelScreenshotsStartDateTimeRange
             // 
             this.labelScreenshotsStartDateTimeRange.AutoSize = true;
             this.labelScreenshotsStartDateTimeRange.Location = new System.Drawing.Point(232, 27);
             this.labelScreenshotsStartDateTimeRange.Name = "labelScreenshotsStartDateTimeRange";
-            this.labelScreenshotsStartDateTimeRange.Size = new System.Drawing.Size(121, 13);
+            this.labelScreenshotsStartDateTimeRange.Size = new System.Drawing.Size(93, 13);
             this.labelScreenshotsStartDateTimeRange.TabIndex = 1;
-            this.labelScreenshotsStartDateTimeRange.Text = "Start Date/Time Range:";
+            this.labelScreenshotsStartDateTimeRange.Text = "Start Date Range:";
             // 
             // dateTimePickerScreenshotsStartDateRange
             // 
@@ -273,7 +263,7 @@
             this.tabPageFile.Location = new System.Drawing.Point(4, 22);
             this.tabPageFile.Name = "tabPageFile";
             this.tabPageFile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFile.Size = new System.Drawing.Size(845, 426);
+            this.tabPageFile.Size = new System.Drawing.Size(690, 426);
             this.tabPageFile.TabIndex = 1;
             this.tabPageFile.Text = "File";
             this.tabPageFile.UseVisualStyleBackColor = true;
@@ -297,7 +287,7 @@
             this.listBoxHistory.Location = new System.Drawing.Point(6, 115);
             this.listBoxHistory.Name = "listBoxHistory";
             this.listBoxHistory.ScrollAlwaysVisible = true;
-            this.listBoxHistory.Size = new System.Drawing.Size(831, 277);
+            this.listBoxHistory.Size = new System.Drawing.Size(676, 277);
             this.listBoxHistory.TabIndex = 42;
             this.listBoxHistory.TabStop = false;
             // 
@@ -332,7 +322,7 @@
             this.textBoxFileKey.Font = new System.Drawing.Font("Consolas", 11.25F);
             this.textBoxFileKey.Location = new System.Drawing.Point(59, 23);
             this.textBoxFileKey.Name = "textBoxFileKey";
-            this.textBoxFileKey.Size = new System.Drawing.Size(778, 25);
+            this.textBoxFileKey.Size = new System.Drawing.Size(623, 25);
             this.textBoxFileKey.TabIndex = 39;
             this.textBoxFileKey.TabStop = false;
             // 
@@ -361,7 +351,7 @@
             this.textBoxFilepath.Font = new System.Drawing.Font("Consolas", 11.25F);
             this.textBoxFilepath.Location = new System.Drawing.Point(59, 54);
             this.textBoxFilepath.Name = "textBoxFilepath";
-            this.textBoxFilepath.Size = new System.Drawing.Size(778, 25);
+            this.textBoxFilepath.Size = new System.Drawing.Size(623, 25);
             this.textBoxFilepath.TabIndex = 36;
             this.textBoxFilepath.TabStop = false;
             // 
@@ -372,11 +362,10 @@
             this.labelFileHelp.BackColor = System.Drawing.Color.LightYellow;
             this.labelFileHelp.Location = new System.Drawing.Point(6, 3);
             this.labelFileHelp.Name = "labelFileHelp";
-            this.labelFileHelp.Size = new System.Drawing.Size(833, 17);
+            this.labelFileHelp.Size = new System.Drawing.Size(678, 17);
             this.labelFileHelp.TabIndex = 35;
-            this.labelFileHelp.Text = "Give the filepath to a file then click Encrypt File. A key will be generated (and" +
-    " will not be saved so please remember it). Use the same key for decrypting the f" +
-    "ile";
+            this.labelFileHelp.Text = "Give the filepath to a file then click Encrypt File. A key will be generated. Use" +
+    " the same key for decrypting the file";
             // 
             // tabPageText
             // 
@@ -389,7 +378,7 @@
             this.tabPageText.Controls.Add(this.labelTextHelp);
             this.tabPageText.Location = new System.Drawing.Point(4, 22);
             this.tabPageText.Name = "tabPageText";
-            this.tabPageText.Size = new System.Drawing.Size(845, 426);
+            this.tabPageText.Size = new System.Drawing.Size(690, 426);
             this.tabPageText.TabIndex = 2;
             this.tabPageText.Text = "Text";
             this.tabPageText.UseVisualStyleBackColor = true;
@@ -413,7 +402,7 @@
             this.textBoxText.Multiline = true;
             this.textBoxText.Name = "textBoxText";
             this.textBoxText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxText.Size = new System.Drawing.Size(826, 317);
+            this.textBoxText.Size = new System.Drawing.Size(671, 317);
             this.textBoxText.TabIndex = 45;
             this.textBoxText.TabStop = false;
             this.textBoxText.WordWrap = false;
@@ -425,7 +414,7 @@
             this.textBoxTextKey.Font = new System.Drawing.Font("Consolas", 11.25F);
             this.textBoxTextKey.Location = new System.Drawing.Point(59, 23);
             this.textBoxTextKey.Name = "textBoxTextKey";
-            this.textBoxTextKey.Size = new System.Drawing.Size(778, 25);
+            this.textBoxTextKey.Size = new System.Drawing.Size(623, 25);
             this.textBoxTextKey.TabIndex = 44;
             this.textBoxTextKey.TabStop = false;
             // 
@@ -469,10 +458,10 @@
             this.labelTextHelp.BackColor = System.Drawing.Color.LightYellow;
             this.labelTextHelp.Location = new System.Drawing.Point(6, 3);
             this.labelTextHelp.Name = "labelTextHelp";
-            this.labelTextHelp.Size = new System.Drawing.Size(833, 17);
+            this.labelTextHelp.Size = new System.Drawing.Size(678, 17);
             this.labelTextHelp.TabIndex = 35;
-            this.labelTextHelp.Text = "Type some text in the Key field to use for your \"key\". Type some text in the Text" +
-    " field and click Encrypt Text. Use the same key to decrypt encrypted text";
+            this.labelTextHelp.Text = "Type text in the Key field to use for your \"key\". Type text in the Text field and" +
+    " click Encrypt Text. Use same key to decrypt encrypted text";
             // 
             // statusStrip
             // 
@@ -482,7 +471,7 @@
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStrip.Location = new System.Drawing.Point(0, 452);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(853, 22);
+            this.statusStrip.Size = new System.Drawing.Size(698, 22);
             this.statusStrip.Stretch = false;
             this.statusStrip.TabIndex = 6;
             this.statusStrip.Text = "statusStrip1";
@@ -496,11 +485,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 474);
+            this.ClientSize = new System.Drawing.Size(698, 474);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(869, 513);
+            this.MinimumSize = new System.Drawing.Size(714, 513);
             this.Name = "FormEncryptorDecryptor";
             this.Text = "Encryptor / Decryptor";
             this.TopMost = true;
@@ -536,8 +525,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.Label labelScreenshotsHelp;
         private System.Windows.Forms.DataGridView dataGridViewScreenshots;
-        private System.Windows.Forms.DateTimePicker dateTimePickerScreenshotsEndTimeRange;
-        private System.Windows.Forms.DateTimePicker dateTimePickerScreenshotsStartTimeRange;
         private System.Windows.Forms.ComboBox comboBoxFilterType;
         private System.Windows.Forms.ComboBox comboBoxFilterValue;
         private System.Windows.Forms.Label labelFilter;
@@ -557,5 +544,6 @@
         private System.Windows.Forms.TextBox textBoxText;
         private System.Windows.Forms.Label labelHistory;
         private System.Windows.Forms.ListBox listBoxHistory;
+        private System.Windows.Forms.Button buttonLoadScreenshots;
     }
 }

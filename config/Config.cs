@@ -274,7 +274,16 @@ namespace AutoScreenCapture
                     Settings.User.Save(Settings, FileSystem);
                 }
 
-                ScreenCapture.ImageFormat = Settings.User.GetByKey("ImageFormat").Value.ToString();
+                Setting imageFormatSetting = Settings.User.GetByKey("ImageFormat");
+
+                if (imageFormatSetting != null)
+                {
+                    ScreenCapture.ImageFormat = imageFormatSetting.Value.ToString();
+                }
+                else
+                {
+                    ScreenCapture.ImageFormat = "JPEG";
+                }
 
                 if (hide)
                 {

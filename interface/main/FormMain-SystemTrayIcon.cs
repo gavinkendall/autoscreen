@@ -197,12 +197,30 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemExit_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit Auto Screen Capture?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            
-            if (dialogResult == DialogResult.Yes)
+            Setting confirmExitSetting = _config.Settings.User.GetByKey("ConfirmExit");
+
+            if (confirmExitSetting != null)
+            {
+                bool confirmExit = Convert.ToBoolean(confirmExitSetting.Value);
+
+                if (confirmExit)
+                {
+                    DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit Auto Screen Capture?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        ExitApplication();
+                    }
+                }
+                else
+                {
+                    ExitApplication();
+                }
+            }
+            else
             {
                 ExitApplication();
-            }            
+            }
         }
 
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)

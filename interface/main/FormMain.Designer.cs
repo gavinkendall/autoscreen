@@ -1191,7 +1191,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemExit.Name = "toolStripMainMenuItemExit";
             this.toolStripMainMenuItemExit.Size = new System.Drawing.Size(188, 22);
             this.toolStripMainMenuItemExit.Text = "Exit";
-            this.toolStripMainMenuItemExit.Click += new System.EventHandler(this.toolStripDropDownButtonExit_Click);
+            this.toolStripMainMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
             // toolStripMainMenuItemSetup
             // 

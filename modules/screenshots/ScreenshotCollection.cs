@@ -44,6 +44,7 @@ namespace AutoScreenCapture
         private readonly List<Slide> _slideList;
         private readonly List<string> _slideNameList;
         private readonly List<Screenshot> _screenshotList;
+        private readonly List<Guid> _screenshotIdList;
         private readonly ImageFormatCollection _imageFormatCollection;
 
         private readonly FileSystem _fileSystem;
@@ -182,6 +183,9 @@ namespace AutoScreenCapture
             _screenshotList = new List<Screenshot>();
             _log.WriteDebugMessage("Initialized screenshot list");
 
+            _screenshotIdList = new List<Guid>();
+            _log.WriteDebugMessage("Initialized screenshot ID list");
+
             _slideList = new List<Slide>();
             _log.WriteDebugMessage("Initialized slide list");
 
@@ -218,30 +222,35 @@ namespace AutoScreenCapture
                 // Add the screenshot to the screenshot collection.
                 if (screenshot != null && !string.IsNullOrEmpty(screenshot.FilePath))
                 {
-                    _screenshotList.Add(screenshot);
-
-                    // Slides are a little different because a single slide can potentially have many screenshots associated with it
-                    // depending on the number of screens and regions that were used when screenshots were taken at the time.
-                    // So you're likely going to see multiple screenshots with the same "slide name".
-                    if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
+                    if (!_screenshotList.Contains(screenshot) && !_screenshotIdList.Contains(screenshot.Id))
                     {
-                        if (!_slideNameList.Contains(screenshot.Slide.Name))
+                        _screenshotList.Add(screenshot);
+
+                        _screenshotIdList.Add(screenshot.Id);
+
+                        // Slides are a little different because a single slide can potentially have many screenshots associated with it
+                        // depending on the number of screens and regions that were used when screenshots were taken at the time.
+                        // So you're likely going to see multiple screenshots with the same "slide name".
+                        if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
                         {
-                            _slideNameList.Add(screenshot.Slide.Name);
+                            if (!_slideNameList.Contains(screenshot.Slide.Name))
+                            {
+                                _slideNameList.Add(screenshot.Slide.Name);
 
-                            // Make sure that "Slide" gets the same data as what "screenshot" has
-                            // so we can display the appropriate information in the screenshots list
-                            // based on the Filter selection.
-                            screenshot.Slide.ImageFormat = screenshot.Format.Name;
-                            screenshot.Slide.Label = screenshot.Label;
-                            screenshot.Slide.ProcessName = screenshot.ProcessName;
-                            screenshot.Slide.WindowTitle = screenshot.WindowTitle;
+                                // Make sure that "Slide" gets the same data as what "screenshot" has
+                                // so we can display the appropriate information in the screenshots list
+                                // based on the Filter selection.
+                                screenshot.Slide.ImageFormat = screenshot.Format.Name;
+                                screenshot.Slide.Label = screenshot.Label;
+                                screenshot.Slide.ProcessName = screenshot.ProcessName;
+                                screenshot.Slide.WindowTitle = screenshot.WindowTitle;
 
-                            _slideList.Add(screenshot.Slide);
+                                _slideList.Add(screenshot.Slide);
+                            }
                         }
-                    }
 
-                    LastViewId = screenshot.ViewId;
+                        LastViewId = screenshot.ViewId;
+                    }
                 }
             }
         }

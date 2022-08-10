@@ -427,8 +427,28 @@ namespace AutoScreenCapture
             {
                 macroPath = _macroParser.ParseTags(preview: false, macroOverride, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log);
             }
+
             // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
             string screenshotPath = folderPath + macroPath;
+
+            if (!string.IsNullOrEmpty(screenshotPath))
+            {
+                int filepathLengthLimit = Convert.ToInt32(_config.Settings.Application.GetByKey("FilepathLengthLimit").Value);
+
+                if (!string.IsNullOrEmpty(screenshotPath))
+                {
+                    if (screenshotPath.Length >= filepathLengthLimit)
+                    {
+                        _log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
+                        
+                        // Truncate the full path in such a way that we can still view the image in the appropriate image format.
+                        // For example, if this was a JPEG image then the extension would be ".jpeg" so truncate considering the length of the extension
+                        // and then append the extension to the end of the truncated filepath.
+                        screenshotPath = screenshotPath.Substring(0, filepathLengthLimit - format.Extension.Length);
+                        screenshotPath += format.Extension;
+                    }
+                }
+            }
 
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {

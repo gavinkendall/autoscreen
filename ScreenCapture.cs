@@ -943,16 +943,8 @@ namespace AutoScreenCapture
 
             try
             {
-                int filepathLengthLimit = Convert.ToInt32(_config.Settings.Application.GetByKey("FilepathLengthLimit").Value);
-
                 if (!string.IsNullOrEmpty(screenshot.FilePath))
                 {
-                    if (screenshot.FilePath.Length > filepathLengthLimit)
-                    {
-                        _log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
-                        screenshot.FilePath = screenshot.FilePath.Substring(0, filepathLengthLimit);
-                    }
-
                     // This is a normal path used in Windows (such as "C:\screenshots\").
                     if (!screenshot.FilePath.StartsWith(_fileSystem.PathDelimiter))
                     {
