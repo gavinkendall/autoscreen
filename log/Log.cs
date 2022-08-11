@@ -54,8 +54,36 @@ namespace AutoScreenCapture
             _fileSystem = fileSystem;
             _macroParser = macroParser;
 
-            DebugMode = Convert.ToBoolean(settings.Application.GetByKey("DebugMode").Value);
-            LoggingEnabled = Convert.ToBoolean(settings.Application.GetByKey("Logging").Value);
+            // This could happen if we haven't been able to load application settings yet.
+            if (settings.Application == null)
+            {
+                DebugMode = false;
+                LoggingEnabled = true;
+            }
+            else
+            {
+                Setting debugModeSetting = settings.Application.GetByKey("DebugMode");
+
+                if (debugModeSetting == null)
+                {
+                    DebugMode = false;
+                }
+                else
+                {
+                    DebugMode = Convert.ToBoolean(settings.Application.GetByKey("DebugMode").Value);
+                }
+
+                Setting loggingSetting = settings.Application.GetByKey("Logging");
+
+                if (loggingSetting == null)
+                {
+                    LoggingEnabled = true;
+                }
+                else
+                {
+                    LoggingEnabled = Convert.ToBoolean(settings.Application.GetByKey("Logging").Value);
+                }
+            }
         }
 
         /// <summary>
@@ -122,7 +150,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(_fileSystem.LogsFolder))
                 {
-                    _fileSystem.LogsFolder = _fileSystem.LogsFolder + "logs" + _fileSystem.PathDelimiter;
+                    _fileSystem.LogsFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + _fileSystem.PathDelimiter + "logs" + _fileSystem.PathDelimiter;
                 }
 
                 if (!_fileSystem.DirectoryExists(_fileSystem.ErrorsFolder))
@@ -169,6 +197,26 @@ namespace AutoScreenCapture
                     // Write to a log file within a directory representing the day when the message was logged.
                     _fileSystem.AppendToFile(_fileSystem.LogsFolder + DateTime.Now.ToString(_macroParser.DateFormat) + _fileSystem.PathDelimiter + _fileSystem.LogFile + "_" + DateTime.Now.ToString(_macroParser.DateFormat) + ".txt", appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message);
                 }
+            }
+            finally
+            {
+                _mutexWriteFile.ReleaseMutex();
+            }
+        }
+
+        /// <summary>
+        /// Writes to the "autoscreen_startup_log.txt" file. This contains information on what's being loaded from the configuration file.
+        /// </summary>
+        /// <param name="message">The message to write to the startup log file.</param>
+        public void WriteStartupMessage(string message)
+        {
+            try
+            {
+                _mutexWriteFile.WaitOne();
+
+                string appVersion = "[(v" + _settings.ApplicationVersion + ") ";
+
+                _fileSystem.AppendToFile(AppDomain.CurrentDomain.BaseDirectory + "autoscreen_startup_log.txt", appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message);
             }
             finally
             {

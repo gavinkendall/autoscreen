@@ -73,6 +73,7 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
+            this.labelTolerance = new System.Windows.Forms.Label();
             this.labelSelectedImageDiffTolerance = new System.Windows.Forms.Label();
             this.labelImageDifference = new System.Windows.Forms.Label();
             this.trackBarImageDiffTolerance = new System.Windows.Forms.TrackBar();
@@ -150,7 +151,6 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.labelTolerance = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
@@ -668,11 +668,20 @@
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
             // 
-            // labelImageDifferenceSelected
+            // labelTolerance
+            // 
+            this.labelTolerance.AutoSize = true;
+            this.labelTolerance.Location = new System.Drawing.Point(6, 151);
+            this.labelTolerance.Name = "labelTolerance";
+            this.labelTolerance.Size = new System.Drawing.Size(58, 13);
+            this.labelTolerance.TabIndex = 4;
+            this.labelTolerance.Text = "Tolerance:";
+            // 
+            // labelSelectedImageDiffTolerance
             // 
             this.labelSelectedImageDiffTolerance.AutoSize = true;
             this.labelSelectedImageDiffTolerance.Location = new System.Drawing.Point(70, 151);
-            this.labelSelectedImageDiffTolerance.Name = "labelImageDifferenceSelected";
+            this.labelSelectedImageDiffTolerance.Name = "labelSelectedImageDiffTolerance";
             this.labelSelectedImageDiffTolerance.Size = new System.Drawing.Size(0, 13);
             this.labelSelectedImageDiffTolerance.TabIndex = 3;
             // 
@@ -686,11 +695,11 @@
             this.labelImageDifference.Text = "Percentage of acceptable difference between the new image captured and the previo" +
     "us image captured (from 0% to 100%):";
             // 
-            // trackBarImageDifference
+            // trackBarImageDiffTolerance
             // 
             this.trackBarImageDiffTolerance.Location = new System.Drawing.Point(6, 103);
             this.trackBarImageDiffTolerance.Maximum = 100;
-            this.trackBarImageDiffTolerance.Name = "trackBarImageDifference";
+            this.trackBarImageDiffTolerance.Name = "trackBarImageDiffTolerance";
             this.trackBarImageDiffTolerance.Size = new System.Drawing.Size(665, 45);
             this.trackBarImageDiffTolerance.TabIndex = 1;
             this.trackBarImageDiffTolerance.TabStop = false;
@@ -1475,6 +1484,7 @@
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
             this.buttonOK.TabIndex = 31;
+            this.buttonOK.TabStop = false;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -1493,15 +1503,6 @@
             this.labelHelp.Size = new System.Drawing.Size(685, 17);
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelTolerance
-            // 
-            this.labelTolerance.AutoSize = true;
-            this.labelTolerance.Location = new System.Drawing.Point(6, 151);
-            this.labelTolerance.Name = "labelTolerance";
-            this.labelTolerance.Size = new System.Drawing.Size(58, 13);
-            this.labelTolerance.TabIndex = 4;
-            this.labelTolerance.Text = "Tolerance:";
             // 
             // FormSetup
             // 

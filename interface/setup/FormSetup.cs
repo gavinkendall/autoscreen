@@ -836,8 +836,6 @@ namespace AutoScreenCapture
             }
 
             _config.Settings.User.GetByKey("ApplicationFocus").Value = listBoxProcessList.SelectedItem.ToString();
-            _config.Settings.User.GetByKey("ApplicationFocusDelayBefore").Value = (int)numericUpDownApplicationFocusDelayBefore.Value;
-            _config.Settings.User.GetByKey("ApplicationFocusDelayAfter").Value = (int)numericUpDownApplicationFocusDelayAfter.Value;
         }
 
         private void buttonScreenshotsFolderBrowseFolder_Click(object sender, EventArgs e)

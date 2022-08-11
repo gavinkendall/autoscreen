@@ -34,29 +34,6 @@ namespace AutoScreenCapture
             {
                 _macroParser = _config.MacroParser;
 
-                _log.WriteMessage("*** Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\") ***");
-                _log.WriteMessage("Starting application");
-                _log.WriteDebugMessage("At this point the application should be able to run normally");
-                _log.WriteDebugMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
-                _log.WriteDebugMessage("Your autoscreen.conf file is \"" + _fileSystem.ConfigFile + "\"");
-                _log.WriteDebugMessage("The name and location of it can be changed with the -config command line argument:");
-                _log.WriteDebugMessage("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
-                _log.WriteDebugMessage("Checking what we loaded from your autoscreen.conf file ...");
-                _log.WriteDebugMessage("ApplicationSettingsFile=" + _fileSystem.ApplicationSettingsFile);
-                _log.WriteDebugMessage("UserSettingsFile=" + _fileSystem.UserSettingsFile);
-                _log.WriteDebugMessage("ErrorsFolder=" + _fileSystem.ErrorsFolder);
-                _log.WriteDebugMessage("LogsFolder=" + _fileSystem.LogsFolder);
-                _log.WriteDebugMessage("CommandFile=" + _fileSystem.CommandFile);
-                _log.WriteDebugMessage("ScreenshotsFolder=" + _fileSystem.ScreenshotsFolder);
-                _log.WriteDebugMessage("ScreenshotsFile=" + _fileSystem.ScreenshotsFile);
-                _log.WriteDebugMessage("TriggersFile=" + _fileSystem.TriggersFile);
-                _log.WriteDebugMessage("ScreensFile=" + _fileSystem.ScreensFile);
-                _log.WriteDebugMessage("RegionsFile=" + _fileSystem.RegionsFile);
-                _log.WriteDebugMessage("EditorsFile=" + _fileSystem.EditorsFile);
-                _log.WriteDebugMessage("MacroTagsFile=" + _fileSystem.MacroTagsFile);
-                _log.WriteDebugMessage("FilenamePattern=" + _fileSystem.FilenamePattern);
-                _log.WriteDebugMessage("ImageFormat=" + ScreenCapture.ImageFormat);
-
                 _log.WriteDebugMessage("It looks like the application successfully parsed your \"" + _fileSystem.ConfigFile + "\" file");
 
                 _log.WriteDebugMessage("Checking for a user-defined screenshots folder path in user settings and if it differs from the path set by autoscreen.conf");

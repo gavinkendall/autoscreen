@@ -149,6 +149,8 @@ namespace AutoScreenCapture
                 Settings = new Settings();
                 MacroParser = new MacroParser(Settings);
 
+                Log = new Log(Settings, fileSystem, MacroParser);
+
                 string configDirectory = fileSystem.GetDirectoryName(fileSystem.ConfigFile);
 
                 if (!string.IsNullOrEmpty(configDirectory) && !fileSystem.DirectoryExists(configDirectory))
@@ -163,8 +165,16 @@ namespace AutoScreenCapture
                     File.WriteAllBytes(fileSystem.ConfigFile, Properties.Resources.autoscreen_conf);
                 }
 
-                // Assume we're on the current version of the application unless otherwise specified in the configuration file.
-                string version = Settings.ApplicationVersion;
+                string version = string.Empty;
+
+                Log.WriteStartupMessage("*** Welcome to Auto Screen Capture " + Settings.ApplicationVersion + " ***");
+                Log.WriteStartupMessage("Starting application");
+                Log.WriteStartupMessage("At this point the application should be able to run normally");
+                Log.WriteStartupMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
+                Log.WriteStartupMessage("Your autoscreen.conf file is \"" + FileSystem.ConfigFile + "\"");
+                Log.WriteStartupMessage("The name and location of it can be changed with the -config command line argument:");
+                Log.WriteStartupMessage("autoscreen.exe -config=\"C:\\My Configuration File.conf\"");
+                Log.WriteStartupMessage("Checking configuration file version");
 
                 // Look for the version we should be using.
                 foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
@@ -178,12 +188,47 @@ namespace AutoScreenCapture
                     if (Regex.IsMatch(line, REGEX_VERSION))
                     {
                         version = Regex.Match(line, REGEX_VERSION).Groups["Version"].Value;
+
+                        break;
                     }
                 }
 
-                // We need to parse and load all default macro tags before parsing the paths used for files and folders
-                // because they may have macro tags in the paths.
-                ParseMacroTagDefinitions();
+                if (string.IsNullOrEmpty(version))
+                {
+                    Log.WriteStartupMessage("The version could not be determined. You might be using a configuration file that's older than version 2.5 so some of the application's functionality may not work as expected");
+                }
+                else
+                {
+                    Log.WriteStartupMessage("Auto Screen Capture is using version " + version + " of the configuration file. This needs to match with the version of autoscreen.exe to avoid application errors and weird application behaviour");
+                }
+
+                Log.WriteStartupMessage("Version of autoscreen.exe: " + Settings.ApplicationVersion);
+                Log.WriteStartupMessage("Version of autoscreen.conf: " + (string.IsNullOrEmpty(version) ? "???? (I'm guessing you're using an old configuration file that was created by a version of Auto Screen Capture that was older than 2.5.0.0)" : version));
+
+                if (!string.IsNullOrEmpty(version) && !Settings.ApplicationVersion.Equals(version))
+                {
+                    Log.WriteStartupMessage("The versions are different. Was this intentional?");
+                    Log.WriteStartupMessage("It's highly recommended that the application and its corresponding configuration file is using the same version");
+                }
+
+                Log.WriteStartupMessage("Initializing Macro Tag collection in preparation for macro tags that might be available when processing folder paths and filepaths");
+
+                _macroTagCollection = new MacroTagCollection();
+
+                if (!string.IsNullOrEmpty(version))
+                {
+                    Log.WriteStartupMessage("Parsing configuration file for MacroTag definitions");
+
+                    // We need to parse and load all default macro tags before parsing the paths used for files and folders
+                    // because they may have macro tags in the paths.
+                    ParseMacroTagDefinitions();
+                }
+                else
+                {
+                    Log.WriteStartupMessage("Normally, if this was a version of the configuration file that was 2.5 (or higher), we would be parsing Macro Tag definitions but because we couldn't determine the version of the configuration file macro tags may or may not be avaialble for the application");
+                }
+
+                Log.WriteStartupMessage("Processing filepaths");
 
                 // Read each line of the configuration file looking for the filepaths of the application, user, SFTP, and SMTP settings files.
                 foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
@@ -219,23 +264,54 @@ namespace AutoScreenCapture
                     }
                 }
 
+                Log.WriteStartupMessage("Initializing settings");
+
                 // Now that we have the File System setup with the filepaths for application, user, SFTP, and SMTP settings we can initialize settings.
                 Settings.Initialize(fileSystem);
 
+                Log.WriteStartupMessage("Loading application settings");
+
                 if (fileSystem.FileExists(fileSystem.ApplicationSettingsFile))
                 {
+                    Log.WriteStartupMessage("An existing application settings file was found at " + fileSystem.ApplicationSettingsFile);
+
+                    Log.WriteStartupMessage("Application settings will be loaded from the application settings file");
+
+                    Log.WriteStartupMessage("Loading application settings from " + fileSystem.ApplicationSettingsFile);
+
                     // Load existing application settings.
                     Settings.Application.Load(Settings, FileSystem);
 
+                    Log.WriteStartupMessage("Version of autoscreen.exe: " + Settings.ApplicationVersion);
+                    Log.WriteStartupMessage("Version of application settings: " + Settings.Application.AppVersion);
+
+                    if (!Settings.Application.AppVersion.Equals(Settings.ApplicationVersion))
+                    {
+                        Log.WriteStartupMessage("WARNING! The version of the application settings do not match with the version of autoscreen.exe so ... good luck!");
+                    }
+
                     // Check if this is an old version of the application settings.
                     // If so then we're likely handling the old format of the configuration file so parse it "the old way".
-                    if (Settings.Application.AppCodename.Equals("Blade"))
+                    Version thisVersionOfApplication = Settings.VersionManager.Versions.Get(Settings.ApplicationCodename, Settings.ApplicationVersion);
+                    Version versionInApplicationSettings = Settings.VersionManager.Versions.Get(Settings.Application.AppCodename, Settings.Application.AppVersion);
+
+                    if (versionInApplicationSettings.VersionNumber < thisVersionOfApplication.VersionNumber)
                     {
+                        Log.WriteStartupMessage("WARNING! It looks like you're using application settings that are older than the application itself so be aware that some of the application's functionality may not work as expected");
+
+                        Log.WriteStartupMessage("Attempting to parse the configuration file using the old format (from before 2.5) so we can use features that are available in version " + Settings.ApplicationVersion);
+
                         UpgradeConfig();
                     }
                 }
                 else
                 {
+                    Log.WriteStartupMessage("An existing application settings file was not found at " + fileSystem.ApplicationSettingsFile);
+
+                    Log.WriteStartupMessage("Application settings will be loaded from the configuration file");
+
+                    Log.WriteStartupMessage("Loading application settings from " + fileSystem.ConfigFile);
+
                     // Acquire default application settings.
                     ParseDefaultApplicationSettings();
 
@@ -248,6 +324,9 @@ namespace AutoScreenCapture
                 fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
                 fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
 
+                Log.WriteStartupMessage("ErrorsFolder=" + fileSystem.ErrorsFolder);
+                Log.WriteStartupMessage("LogsFolder=" + fileSystem.LogsFolder);
+
                 // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
                 fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
                 fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
@@ -258,13 +337,36 @@ namespace AutoScreenCapture
                 fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
                 fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
 
+                Log.WriteStartupMessage("CommandFile=" + fileSystem.CommandFile);
+                Log.WriteStartupMessage("ScreenshotsFile=" + fileSystem.ScreenshotsFile);
+                Log.WriteStartupMessage("ScreensFile=" + fileSystem.ScreensFile);
+                Log.WriteStartupMessage("RegionsFile=" + fileSystem.RegionsFile);
+                Log.WriteStartupMessage("EditorsFile=" + fileSystem.EditorsFile);
+                Log.WriteStartupMessage("SchedulesFile=" + fileSystem.SchedulesFile);
+                Log.WriteStartupMessage("MacroTagsFile=" + fileSystem.MacroTagsFile);
+                Log.WriteStartupMessage("TriggersFile=" + FileSystem.TriggersFile);
+
+                Log.WriteStartupMessage("Loading user settings");
+
                 if (fileSystem.FileExists(fileSystem.UserSettingsFile))
                 {
+                    Log.WriteStartupMessage("An existing user settings file was found at " + fileSystem.UserSettingsFile);
+
+                    Log.WriteStartupMessage("User settings will be loaded from the user settings file");
+
+                    Log.WriteStartupMessage("Loading user settings from " + fileSystem.UserSettingsFile);
+
                     // Load existing user settings.
                     Settings.User.Load(Settings, FileSystem);
                 }
                 else
                 {
+                    Log.WriteStartupMessage("An existing user settings file was not found at " + fileSystem.UserSettingsFile);
+
+                    Log.WriteStartupMessage("User settings will be loaded from the configuration file");
+
+                    Log.WriteStartupMessage("Loading user settings from " + fileSystem.ConfigFile);
+
                     // Acquire default user settings.
                     // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
                     ParseDefaultUserSettings();
@@ -274,6 +376,8 @@ namespace AutoScreenCapture
                     Settings.User.Save(Settings, FileSystem);
                 }
 
+                Log.WriteStartupMessage("Getting default image format");
+
                 Setting imageFormatSetting = Settings.User.GetByKey("ImageFormat");
 
                 if (imageFormatSetting != null)
@@ -282,11 +386,17 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    Log.WriteStartupMessage("The specified default image format could not be found so JPEG is going to be used as the default image format");
+
                     ScreenCapture.ImageFormat = "JPEG";
                 }
 
+                Log.WriteStartupMessage("ImageFormat=" + ScreenCapture.ImageFormat);
+
                 if (hide)
                 {
+                    Log.WriteStartupMessage("It looks like you want to be a sneaky pasta snake. Interface and system tray icon will be hidden");
+
                     Settings.User.SetValueByKey("SneakyPastaSnake", true);
                 }
                 
@@ -298,16 +408,34 @@ namespace AutoScreenCapture
                     Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
                 }
 
+                Log.WriteStartupMessage("Getting default screenshots folder");
+
                 // The screenshots folder is from user settings.
                 fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
 
+                Log.WriteStartupMessage("The default screenshots folder is " + fileSystem.ScreenshotsFolder);
+
+                Log.WriteStartupMessage("Loading SFTP settings (for file transfer operations since we can use SFTP to upload screenshots to a file server)");
+
                 if (fileSystem.FileExists(fileSystem.SftpSettingsFile))
                 {
+                    Log.WriteStartupMessage("An existing SFTP settings file was found at " + fileSystem.SftpSettingsFile);
+
+                    Log.WriteStartupMessage("SFTP settings will be loaded from the SFTP settings file");
+
+                    Log.WriteStartupMessage("Loading SFTP settings from " + fileSystem.SftpSettingsFile);
+
                     // Load existing SFTP settings.
                     Settings.SFTP.Load(Settings, FileSystem);
                 }
                 else
                 {
+                    Log.WriteStartupMessage("An existing SFTP settings file was not found at " + fileSystem.SftpSettingsFile);
+
+                    Log.WriteStartupMessage("SFTP settings will be loaded from the configuration file");
+
+                    Log.WriteStartupMessage("Loading SFTP settings from " + fileSystem.ConfigFile);
+
                     // Acquire default SFTP settings.
                     ParseDefaultSFTPSettings();
 
@@ -316,13 +444,27 @@ namespace AutoScreenCapture
                     Settings.SFTP.Save(Settings, FileSystem);
                 }
 
+                Log.WriteStartupMessage("Loading SMTP settings (for emailing screenshots using an email server or email host)");
+
                 if (fileSystem.FileExists(fileSystem.SmtpSettingsFile))
                 {
+                    Log.WriteStartupMessage("An existing SMTP settings file was found at " + fileSystem.SmtpSettingsFile);
+
+                    Log.WriteStartupMessage("SMTP settings will be loaded from the SMTP settings file");
+
+                    Log.WriteStartupMessage("Loading SMTP settings from " + fileSystem.SmtpSettingsFile);
+
                     // Load existing SMTP settings.
                     Settings.SMTP.Load(Settings, FileSystem);
                 }
                 else
                 {
+                    Log.WriteStartupMessage("An existing SMTP settings file was not found at " + fileSystem.SmtpSettingsFile);
+
+                    Log.WriteStartupMessage("SMTP settings will be loaded from the configuration file");
+
+                    Log.WriteStartupMessage("Loading SMTP settings from " + fileSystem.ConfigFile);
+
                     // Acquire default SMTP settings.
                     ParseDefaultSMTPSettings();
 
@@ -331,53 +473,80 @@ namespace AutoScreenCapture
                     Settings.SMTP.Save(Settings, FileSystem);
                 }
 
-                Log = new Log(Settings, fileSystem, MacroParser);
+                Log.WriteStartupMessage("Initializing Screen Capture class (this provides methods for capturing screens and saving screenshots)");
+
                 ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
+
+                Log.WriteStartupMessage("Initializing Security class (we use this for hashing the passphrase, encrypting screenshots, and decrypting screenshots)");
+
                 Security security = new Security(fileSystem);
 
                 // Parse all the definitions in the configuration file for the various types of modules.
-                ParseScreenDefinitions();
-                ParseRegionDefinitions();
-                ParseEditorDefinitions();
-                ParseScheduleDefinitions();
-                ParseTriggerDefinitions();
 
-                // Save the data for each collection that's been loaded from the configuration file.
-
-                // Save the screen collection if the screens data file (screens.xml) cannot be found. This will create the default screens.
-                if (!FileSystem.FileExists(FileSystem.ScreensFile))
+                if (!string.IsNullOrEmpty(version))
                 {
-                    _screenCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    Log.WriteStartupMessage("Parsing configuration file for Screen definitions");
+                    ParseScreenDefinitions();
+
+                    Log.WriteStartupMessage("Parsing configuration file for Region definitions");
+                    ParseRegionDefinitions();
+
+                    Log.WriteStartupMessage("Parsing configuration file for Editor definitions");
+                    ParseEditorDefinitions();
+
+                    Log.WriteStartupMessage("Parsing configuration file for Schedule definitions");
+                    ParseScheduleDefinitions();
+
+                    Log.WriteStartupMessage("Parsing configuration file for Trigger definitions");
+                    ParseTriggerDefinitions();
+
+                    // Save the data for each collection that's been loaded from the configuration file.
+
+                    // Save the screen collection if the screens data file (screens.xml) cannot be found. This will create the default screens.
+                    if (!FileSystem.FileExists(FileSystem.ScreensFile))
+                    {
+                        Log.WriteStartupMessage("The Screens XML data file (" + FileSystem.ScreensFile + ") could not be found so we're going to use the default Screens from the configuration file");
+                        _screenCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
+
+                    // Save the region collection if the regions data file (regions.xml) cannot be found. This will create the default regions.
+                    if (!FileSystem.FileExists(FileSystem.RegionsFile))
+                    {
+                        Log.WriteStartupMessage("The Regions XML data file (" + FileSystem.RegionsFile  + ") could not be found so we're going to use the default Regions from the configuration file");
+                        _regionCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
+
+                    // Save the editor collection if the editors data file (editors.xml) cannot be found. This will create the default editors.
+                    if (!FileSystem.FileExists(FileSystem.EditorsFile))
+                    {
+                        Log.WriteStartupMessage("The Editors XML data file (" + FileSystem.EditorsFile + ") could not be found so we're going to use the default Editors from the configuration file");
+                        _editorCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
+
+                    // Save the schedule collection if the schedules data file (schedules.xml) cannot be found. This will create the default schedules.
+                    if (!FileSystem.FileExists(FileSystem.SchedulesFile))
+                    {
+                        Log.WriteStartupMessage("The Schedules XML data file (" + FileSystem.SchedulesFile + ") could not be found so we're going to use the default Schedules from the configuration file");
+                        _scheduleCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
+
+                    // Save the macro tag collection if the macro tags data file (macrotags.xml) cannot be found. This will create the default macro tags.
+                    if (!FileSystem.FileExists(FileSystem.MacroTagsFile))
+                    {
+                        Log.WriteStartupMessage("The Macro Tags XML data file (" + FileSystem.MacroTagsFile + ") could not be found so we're going to use the default Macro Tags from the configuration file");
+                        _macroTagCollection.SaveToXmlFile(this, FileSystem, Log);
+                    }
+
+                    // Save the trigger collection if the triggers data file (triggers.xml) cannot be found. This will create the default triggers.
+                    if (!FileSystem.FileExists(FileSystem.TriggersFile))
+                    {
+                        Log.WriteStartupMessage("The Triggers XML data file (" + FileSystem.TriggersFile + ") could not be found so we're going to use the default Triggers from the configuration file");
+                        _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
+                    }
                 }
-
-                // Save the region collection if the regions data file (regions.xml) cannot be found. This will create the default regions.
-                if (!FileSystem.FileExists(FileSystem.RegionsFile))
+                else
                 {
-                    _regionCollection.SaveToXmlFile(Settings, FileSystem, Log);
-                }
-
-                // Save the editor collection if the editors data file (editors.xml) cannot be found. This will create the default editors.
-                if (!FileSystem.FileExists(FileSystem.EditorsFile))
-                {
-                    _editorCollection.SaveToXmlFile(Settings, FileSystem, Log);
-                }
-
-                // Save the schedule collection if the schedules data file (schedules.xml) cannot be found. This will create the default schedules.
-                if (!FileSystem.FileExists(FileSystem.SchedulesFile))
-                {
-                    _scheduleCollection.SaveToXmlFile(Settings, FileSystem, Log);
-                }
-
-                // Save the macro tag collection if the macro tags data file (macrotags.xml) cannot be found. This will create the default macro tags.
-                if (!FileSystem.FileExists(FileSystem.MacroTagsFile))
-                {
-                    _macroTagCollection.SaveToXmlFile(this, FileSystem, Log);
-                }
-
-                // Save the trigger collection if the triggers data file (triggers.xml) cannot be found. This will create the default triggers.
-                if (!FileSystem.FileExists(FileSystem.TriggersFile))
-                {
-                    _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
+                    Log.WriteStartupMessage("We couldn't determine the version of the configuration file (it might be older than version 2.5) so we didn't try to parse it for definitions to create default Screens, Regions, Editors, Schedules, Macro Tags, and Triggers (which is something we can do with version 2.5 of the configuration file)");
                 }
 
                 Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
@@ -394,8 +563,12 @@ namespace AutoScreenCapture
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.WriteStartupMessage("An error with the application was encountered when loading the configuration file at " + FileSystem.ConfigFile);
+                Log.WriteStartupMessage(ex.Message);
+                Log.WriteStartupMessage(ex.StackTrace);
+
                 return false;
             }
         }
@@ -852,8 +1025,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                _macroTagCollection = new MacroTagCollection();
-
                 foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
                 {
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
