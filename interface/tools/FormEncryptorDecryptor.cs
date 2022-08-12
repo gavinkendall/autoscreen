@@ -369,7 +369,7 @@ namespace AutoScreenCapture
                 {
                     if (!screenshot.Encrypted)
                     {
-                        string key = _security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
+                        string key = _security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-e");
 
                         if (!string.IsNullOrEmpty(key))
                         {
@@ -377,7 +377,7 @@ namespace AutoScreenCapture
                             {
                                 if (_fileSystem.DeleteFile(screenshot.FilePath))
                                 {
-                                    _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
+                                    _fileSystem.MoveFile(screenshot.FilePath + "-e", screenshot.FilePath);
 
                                     _screenshotCollection.GetScreenshot(screenshot.Id).Encrypted = true;
                                     _screenshotCollection.GetScreenshot(screenshot.Id).Key = key;
@@ -424,7 +424,7 @@ namespace AutoScreenCapture
                     {
                         try
                         {
-                            _security.DecryptFile(screenshot.FilePath, screenshot.FilePath + "-decrypted", screenshot.Key);
+                            _security.DecryptFile(screenshot.FilePath, screenshot.FilePath + "-d", screenshot.Key);
                         }
                         catch (Exception ex)
                         {
@@ -435,7 +435,7 @@ namespace AutoScreenCapture
                         {
                             if (_fileSystem.DeleteFile(screenshot.FilePath))
                             {
-                                _fileSystem.MoveFile(screenshot.FilePath + "-decrypted", screenshot.FilePath);
+                                _fileSystem.MoveFile(screenshot.FilePath + "-d", screenshot.FilePath);
 
                                 _screenshotCollection.GetScreenshot(screenshot.Id).Encrypted = false;
                                 _screenshotCollection.GetScreenshot(screenshot.Id).Key = string.Empty;
@@ -534,13 +534,13 @@ namespace AutoScreenCapture
 
             if (_fileSystem.FileExists(textBoxFilepath.Text))
             {
-                textBoxFileKey.Text = _security.EncryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-encrypted");
+                textBoxFileKey.Text = _security.EncryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-e");
 
                 if (_fileSystem.FileExists(textBoxFilepath.Text))
                 {
                     if (_fileSystem.DeleteFile(textBoxFilepath.Text))
                     {
-                        _fileSystem.MoveFile(textBoxFilepath.Text + "-encrypted", textBoxFilepath.Text);
+                        _fileSystem.MoveFile(textBoxFilepath.Text + "-e", textBoxFilepath.Text);
 
                         listBoxHistory.Items.Add("[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "] File \"" + textBoxFilepath.Text + "\" encrypted using key \"" + textBoxFileKey.Text + "\"");
 
@@ -572,13 +572,13 @@ namespace AutoScreenCapture
             {
                 try
                 {
-                    _security.DecryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-decrypted", textBoxFileKey.Text);
+                    _security.DecryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-d", textBoxFileKey.Text);
 
                     if (_fileSystem.FileExists(textBoxFilepath.Text))
                     {
                         if (_fileSystem.DeleteFile(textBoxFilepath.Text))
                         {
-                            _fileSystem.MoveFile(textBoxFilepath.Text + "-decrypted", textBoxFilepath.Text);
+                            _fileSystem.MoveFile(textBoxFilepath.Text + "-d", textBoxFilepath.Text);
 
                             listBoxHistory.Items.Add("[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "] File \"" + textBoxFilepath.Text + "\" decrypted using key \"" + textBoxFileKey.Text + "\"");
 

@@ -278,8 +278,6 @@ namespace AutoScreenCapture
                     // This is likely because we're taking the first screenshot of this view.
                     if (lastScreenshotOfThisView == null)
                     {
-                        Add(screenshot);
-
                         return true;
                     }
 
@@ -309,8 +307,6 @@ namespace AutoScreenCapture
                     // since we'll treat it as if we're not using Optimize Screen Capture.
                     if (imageDiff == -1)
                     {
-                        Add(screenshot);
-
                         return true;
                     }
 
@@ -322,17 +318,13 @@ namespace AutoScreenCapture
                     // Check if the image difference is greater than or equal to the user's selected "image diff tolerance".
                     if (screenshot.DiffPercentageWithPreviousImage >= imageDiffTolerance)
                     {
-                        Add(screenshot);
-
                         return true;
                     }
                 }
                 else
                 {
-                    // This is for when we don't care about OptimizeScreenCapture. We simply add the screenshot
-                    // to the collection regardless if it's the exact same image as the previous image.
-                    Add(screenshot);
-
+                    // This is for when we don't care about OptimizeScreenCapture. We simply return true
+                    // regardless if it's the exact same image as the previous image.
                     return true;
                 }
 
@@ -631,13 +623,9 @@ namespace AutoScreenCapture
                 {
                     lock (_screenshotList)
                     {
-                        foreach (Screenshot screenshot in _screenshotList.Where(x => x.ViewId.Equals(viewId)))
-                        {
-                            if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName))
-                            {
-                                return screenshot;
-                            }
-                        }
+                        Screenshot screenshot = (Screenshot)_screenshotList.Where(x => x.ViewId.Equals(viewId) && x.Slide.Name.Equals(slideName)).FirstOrDefault();
+
+                        return screenshot;
                     }
                 }
 

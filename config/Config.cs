@@ -167,7 +167,8 @@ namespace AutoScreenCapture
 
                 string version = string.Empty;
 
-                Log.WriteStartupMessage("*** Welcome to Auto Screen Capture " + Settings.ApplicationVersion + " ***");
+                Log.WriteStartupMessage("*** START " + DateTime.Now.ToLongTimeString() + " ***");
+                Log.WriteStartupMessage("*** Welcome to Auto Screen Capture ***");
                 Log.WriteStartupMessage("Starting application");
                 Log.WriteStartupMessage("At this point the application should be able to run normally");
                 Log.WriteStartupMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
@@ -560,6 +561,18 @@ namespace AutoScreenCapture
                 Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
 
                 Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
+
+                if (Convert.ToBoolean(Settings.Application.GetByKey("DebugMode").Value) ||
+                    Convert.ToBoolean(Settings.Application.GetByKey("Logging").Value))
+                {
+
+                    Log.WriteStartupMessage("It looks like you have Logging and/or DebugMode enabled so you should see log files in " + FileSystem.LogsFolder);
+                    Log.WriteStartupMessage("Please continue to follow the logging statements in the log files in that folder");
+                }
+
+                Log.WriteStartupMessage("If you're seeing this message then we have successfully loaded the application!");
+                Log.WriteStartupMessage("Enjoy Auto Screen Capture!");
+                Log.WriteStartupMessage("*** END " + DateTime.Now.ToLongTimeString() + " ***");
 
                 return true;
             }

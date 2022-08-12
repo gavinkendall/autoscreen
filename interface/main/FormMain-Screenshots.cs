@@ -459,8 +459,8 @@ namespace AutoScreenCapture
                                 {
                                     try
                                     {
-                                        _security.DecryptFile(selectedScreenshot.FilePath, selectedScreenshot.FilePath + "-decrypted", selectedScreenshot.Key);
-                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath + "-decrypted");
+                                        _security.DecryptFile(selectedScreenshot.FilePath, selectedScreenshot.FilePath + "-d", selectedScreenshot.Key);
+                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath + "-d");
                                     }
                                     catch (Exception ex)
                                     {
@@ -469,9 +469,9 @@ namespace AutoScreenCapture
                                         _log.Write($"Decryption failed for \"{selectedScreenshot.FilePath}\". Exception: {ex}", writeError: true, null);
                                     }
 
-                                    if (_fileSystem.FileExists(selectedScreenshot.FilePath + "-decrypted"))
+                                    if (_fileSystem.FileExists(selectedScreenshot.FilePath + "-d"))
                                     {
-                                        _fileSystem.DeleteFile(selectedScreenshot.FilePath + "-decrypted");
+                                        _fileSystem.DeleteFile(selectedScreenshot.FilePath + "-d");
                                     }
                                 }
                             }
@@ -618,8 +618,8 @@ namespace AutoScreenCapture
                                 {
                                     try
                                     {
-                                        _security.DecryptFile(selectedScreenshot.FilePath, selectedScreenshot.FilePath + "-decrypted", selectedScreenshot.Key);
-                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath + "-decrypted");
+                                        _security.DecryptFile(selectedScreenshot.FilePath, selectedScreenshot.FilePath + "-d", selectedScreenshot.Key);
+                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath + "-d");
                                     }
                                     catch (Exception ex)
                                     {
@@ -628,9 +628,9 @@ namespace AutoScreenCapture
                                         _log.Write($"Decryption failed for \"{selectedScreenshot.FilePath}\". Exception: {ex}", writeError: true, null);
                                     }
 
-                                    if (_fileSystem.FileExists(selectedScreenshot.FilePath + "-decrypted"))
+                                    if (_fileSystem.FileExists(selectedScreenshot.FilePath + "-d"))
                                     {
-                                        _fileSystem.DeleteFile(selectedScreenshot.FilePath + "-decrypted");
+                                        _fileSystem.DeleteFile(selectedScreenshot.FilePath + "-d");
                                     }
                                 }
                             }

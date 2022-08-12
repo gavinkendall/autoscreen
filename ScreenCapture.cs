@@ -479,7 +479,13 @@ namespace AutoScreenCapture
                 if (screenshotCollection.Process(screenshot))
                 {
                     // Save the screenshot to disk if it processed successfully.
-                    SaveToFile(screenshot, security, jpegQuality);
+                    // This method also handles the encryption of the screenshot so make sure we encrypt it (if needed) before adding it to the screenshot collection.
+                    Screenshot savedScreenshot = SaveToFile(screenshot, security, jpegQuality);
+
+                    if (savedScreenshot != null)
+                    {
+                        screenshotCollection.Add(screenshot);
+                    }
 
                     return returnFlag & (int)ScreenSavingErrorLevels.None;
                 }
@@ -500,7 +506,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SaveToFile(Screenshot screenshot, Security security, int jpegQuality)
+        private Screenshot SaveToFile(Screenshot screenshot, Security security, int jpegQuality)
         {
             try
             {
@@ -522,7 +528,7 @@ namespace AutoScreenCapture
 
                     if (screenshot.Encrypt)
                     {
-                        string key = security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
+                        string key = security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-e");
 
                         if (!string.IsNullOrEmpty(key))
                         {
@@ -530,7 +536,7 @@ namespace AutoScreenCapture
                             {
                                 if (_fileSystem.DeleteFile(screenshot.FilePath))
                                 {
-                                    _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
+                                    _fileSystem.MoveFile(screenshot.FilePath + "-e", screenshot.FilePath);
 
                                     screenshot.Key = key;
                                     screenshot.Encrypt = false;
@@ -547,12 +553,19 @@ namespace AutoScreenCapture
 
                     _log.WriteMessage("Screenshot (id = " + screenshot.Id + ", viewid = " + screenshot.ViewId + ", encrypted = " + screenshot.Encrypted.ToString() + ") saved to \"" + screenshot.FilePath + "\"");
                 }
+
+                return screenshot;
             }
             catch
             {
+                screenshot.Bitmap.Dispose();
+                screenshot.Bitmap = null;
+
                 // We want to write to the error file instead of writing an exception just in case the user
                 // has ExitOnError set and the exception causes the application to exit.
                 _log.WriteErrorMessage("There was an error encountered when saving the screenshot image");
+
+                return null;
             }
         }
 

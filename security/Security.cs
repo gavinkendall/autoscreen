@@ -98,9 +98,9 @@ namespace AutoScreenCapture
                 {
                     using (var destinationStream = File.Create(destination))
                     {
-                        using (var provider = new AesCryptoServiceProvider())
+                        using (var provider = new AesManaged())
                         {
-                            provider.Padding = PaddingMode.PKCS7;
+                            provider.Padding = PaddingMode.Zeros;
 
                             using (var cryptoTransform = provider.CreateEncryptor())
                             {
@@ -145,9 +145,9 @@ namespace AutoScreenCapture
                 {
                     using (var destinationStream = File.Create(destination))
                     {
-                        using (var provider = new AesCryptoServiceProvider())
+                        using (var provider = new AesManaged())
                         {
-                            provider.Padding = PaddingMode.PKCS7;
+                            provider.Padding = PaddingMode.Zeros;
 
                             var IV = new byte[provider.IV.Length];
                             sourceStream.Read(IV, 0, IV.Length);
@@ -178,7 +178,7 @@ namespace AutoScreenCapture
         {
             if (!screenshot.Encrypted)
             {
-                string key = EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
+                string key = EncryptFile(screenshot.FilePath, screenshot.FilePath + "-e");
 
                 if (!string.IsNullOrEmpty(key))
                 {
@@ -186,7 +186,7 @@ namespace AutoScreenCapture
                     {
                         if (_fileSystem.DeleteFile(screenshot.FilePath))
                         {
-                            _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
+                            _fileSystem.MoveFile(screenshot.FilePath + "-e", screenshot.FilePath);
 
                             screenshot.Key = key;
                             screenshot.Encrypt = false;
@@ -211,7 +211,7 @@ namespace AutoScreenCapture
             {
                 try
                 {
-                    DecryptFile(screenshot.FilePath, screenshot.FilePath + "-decrypted", screenshot.Key);
+                    DecryptFile(screenshot.FilePath, screenshot.FilePath + "-d", screenshot.Key);
                 }
                 catch
                 {
@@ -222,7 +222,7 @@ namespace AutoScreenCapture
                 {
                     if (_fileSystem.DeleteFile(screenshot.FilePath))
                     {
-                        _fileSystem.MoveFile(screenshot.FilePath + "-decrypted", screenshot.FilePath);
+                        _fileSystem.MoveFile(screenshot.FilePath + "-d", screenshot.FilePath);
 
                         screenshot.Key = string.Empty;
                         screenshot.Encrypted = false;

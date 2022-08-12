@@ -134,7 +134,16 @@ namespace AutoScreenCapture
                     // Whenever the user selects "Capture Now / Archive" or "Capture Now / Edit".
                     if (captureNow && initiatedByUser)
                     {
-                        string captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
+                        // The default Capture Now macro if we were unable to get the value from the CaptureNowMacro key
+                        // since this might be from an older version of the application when the CaptureNowMacro key didn't exist yet.
+                        string captureNowMacro = @"manual\%date%\%name%\%date%_%time%.%format%";
+
+                        Setting captureNowMacroSetting = _config.Settings.User.GetByKey("CaptureNowMacro");
+
+                        if (captureNowMacroSetting != null)
+                        {
+                            captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
+                        }
 
                         if (!string.IsNullOrEmpty(captureNowMacro))
                         {
@@ -454,7 +463,7 @@ namespace AutoScreenCapture
                         // Truncate the full path in such a way that we can still view the image in the appropriate image format.
                         // For example, if this was a JPEG image then the extension would be ".jpeg" so truncate considering the length of the extension
                         // and then append the extension to the end of the truncated filepath.
-                        screenshotPath = screenshotPath.Substring(0, filepathLengthLimit - format.Extension.Length);
+                        screenshotPath = screenshotPath.Substring(0, filepathLengthLimit - (format.Extension.Length + 2)); // The +2 is just in case we're handling an encrypted/decrypted version of the file (which could include "-e" (for encrypted) or "-d" (for decrypted) at the end of the filename).
                         screenshotPath += format.Extension;
                     }
                 }
@@ -704,7 +713,17 @@ namespace AutoScreenCapture
             {
                 string autoSaveFolder = _config.Settings.User.GetByKey("AutoSaveFolder").Value.ToString();
                 string autoSaveMacro = _config.Settings.User.GetByKey("AutoSaveMacro").Value.ToString();
-                string autoSaveFormat = _config.Settings.User.GetByKey("AutoSaveFormat").Value.ToString();
+
+                // We're about to get the value from the AutoSaveFormat key (which might not be available if we're using settings
+                // from an older version of the application) so default to whatever ScreenCapture.ImageFormat provides (most likely JPEG).
+                string autoSaveFormat = ScreenCapture.ImageFormat;
+
+                Setting autoSaveFormatSetting = _config.Settings.User.GetByKey("AutoSaveFormat");
+
+                if (autoSaveFormatSetting != null)
+                {
+                    autoSaveFormat = _config.Settings.User.GetByKey("AutoSaveFormat").Value.ToString();
+                }
 
                 ImageFormat imageFormat = new ImageFormat(autoSaveFormat, "." + autoSaveFormat.ToLower());
 
