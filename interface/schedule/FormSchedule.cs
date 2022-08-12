@@ -99,8 +99,17 @@ namespace AutoScreenCapture
                 textBoxName.Text = ScheduleObject.Name;
                 checkBoxEnable.Checked = ScheduleObject.Enable;
 
-                radioButtonOneTime.Checked = ScheduleObject.ModeOneTime;
-                radioButtonPeriod.Checked = ScheduleObject.ModePeriod;
+                if (ScheduleObject.ModeOneTime)
+                {
+                    radioButtonOneTime.Checked = true;
+                    radioButtonPeriod.Checked = false;
+                }
+
+                if (ScheduleObject.ModePeriod)
+                {
+                    radioButtonOneTime.Checked = false;
+                    radioButtonPeriod.Checked = true;
+                }
 
                 dateTimePickerCaptureAt.Value = ScheduleObject.CaptureAt;
                 dateTimePickerStartAt.Value = ScheduleObject.StartAt;
@@ -394,6 +403,17 @@ namespace AutoScreenCapture
         private void Okay()
         {
             ScheduleObject.Name = textBoxName.Text;
+
+            // Compare the Date/Time values of each Date/Time field and if they're different to
+            // what we currently have in ScheduleObject then set the IsProcessed flag to false
+            // so that timerScheduleCheck_Tick will pick it up on the next tick.
+            if (!ScheduleObject.CaptureAt.Equals(dateTimePickerCaptureAt.Value) ||
+                !ScheduleObject.StartAt.Equals(dateTimePickerStartAt.Value) ||
+                !ScheduleObject.StopAt.Equals(dateTimePickerStopAt.Value))
+            {
+                ScheduleObject.IsProcessed = false;
+            }
+
             ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
             ScheduleObject.StartAt = dateTimePickerStartAt.Value;
             ScheduleObject.StopAt = dateTimePickerStopAt.Value;
@@ -401,6 +421,7 @@ namespace AutoScreenCapture
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                 (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
 
+            ScheduleObject.Timer.Interval = screenCaptureInterval;
             ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
 
             DialogResult = DialogResult.OK;
@@ -516,7 +537,6 @@ namespace AutoScreenCapture
 
         private void buttonStartSchedule_Click(object sender, EventArgs e)
         {
-            groupBoxInterval.Enabled = false;
             buttonStartSchedule.Enabled = false;
             buttonStopSchedule.Enabled = true;
 
@@ -540,7 +560,6 @@ namespace AutoScreenCapture
 
         private void buttonStopSchedule_Click(object sender, EventArgs e)
         {
-            groupBoxInterval.Enabled = true;
             buttonStartSchedule.Enabled = true;
             buttonStopSchedule.Enabled = false;
 

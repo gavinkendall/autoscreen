@@ -115,6 +115,7 @@
             // dateTimePickerStartAt
             // 
             this.dateTimePickerStartAt.CustomFormat = "HH:mm";
+            this.dateTimePickerStartAt.Enabled = false;
             this.dateTimePickerStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerStartAt.Location = new System.Drawing.Point(247, 166);
             this.dateTimePickerStartAt.Name = "dateTimePickerStartAt";
@@ -125,6 +126,7 @@
             // dateTimePickerStopAt
             // 
             this.dateTimePickerStopAt.CustomFormat = "HH:mm";
+            this.dateTimePickerStopAt.Enabled = false;
             this.dateTimePickerStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerStopAt.Location = new System.Drawing.Point(398, 166);
             this.dateTimePickerStopAt.Name = "dateTimePickerStopAt";
@@ -296,6 +298,7 @@
             // labelTakeScreenshotsPeriod
             // 
             this.labelTakeScreenshotsPeriod.AutoSize = true;
+            this.labelTakeScreenshotsPeriod.Enabled = false;
             this.labelTakeScreenshotsPeriod.Location = new System.Drawing.Point(101, 169);
             this.labelTakeScreenshotsPeriod.Name = "labelTakeScreenshotsPeriod";
             this.labelTakeScreenshotsPeriod.Size = new System.Drawing.Size(141, 13);
@@ -305,6 +308,7 @@
             // labelAnd
             // 
             this.labelAnd.AutoSize = true;
+            this.labelAnd.Enabled = false;
             this.labelAnd.Location = new System.Drawing.Point(309, 169);
             this.labelAnd.Name = "labelAnd";
             this.labelAnd.Size = new System.Drawing.Size(80, 13);
@@ -393,6 +397,7 @@
             this.groupBoxInterval.Controls.Add(this.numericUpDownHoursInterval);
             this.groupBoxInterval.Controls.Add(this.numericUpDownMinutesInterval);
             this.groupBoxInterval.Controls.Add(this.numericUpDownSecondsInterval);
+            this.groupBoxInterval.Enabled = false;
             this.groupBoxInterval.Location = new System.Drawing.Point(493, 166);
             this.groupBoxInterval.Name = "groupBoxInterval";
             this.groupBoxInterval.Size = new System.Drawing.Size(189, 56);
@@ -440,6 +445,7 @@
             // comboBoxLogic
             // 
             this.comboBoxLogic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxLogic.Enabled = false;
             this.comboBoxLogic.FormattingEnabled = true;
             this.comboBoxLogic.Items.AddRange(new object[] {
             "Schedule controls main timer and overrides interval and scope",
@@ -453,6 +459,7 @@
             // labelLogic
             // 
             this.labelLogic.AutoSize = true;
+            this.labelLogic.Enabled = false;
             this.labelLogic.Location = new System.Drawing.Point(101, 204);
             this.labelLogic.Name = "labelLogic";
             this.labelLogic.Size = new System.Drawing.Size(36, 13);
@@ -462,6 +469,7 @@
             // buttonStartSchedule
             // 
             this.buttonStartSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonStartSchedule.Enabled = false;
             this.buttonStartSchedule.Location = new System.Drawing.Point(493, 228);
             this.buttonStartSchedule.Name = "buttonStartSchedule";
             this.buttonStartSchedule.Size = new System.Drawing.Size(90, 23);
@@ -473,6 +481,7 @@
             // buttonStopSchedule
             // 
             this.buttonStopSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonStopSchedule.Enabled = false;
             this.buttonStopSchedule.Location = new System.Drawing.Point(592, 228);
             this.buttonStopSchedule.Name = "buttonStopSchedule";
             this.buttonStopSchedule.Size = new System.Drawing.Size(90, 23);

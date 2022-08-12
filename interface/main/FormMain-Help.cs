@@ -32,7 +32,7 @@ namespace AutoScreenCapture
 
         private void LoadHelpTips()
         {
-            _helpTips.Add("Screen Capture Status shows you when the next set of screenshots will be captured");
+            _helpTips.Add("The \"Command Deck\" is a small floating window containing the application's most common controls. You can select it from either the Control or Tools menu");
             //_helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day. When you click on a day the list of screenshots for that day will be shown underneath");
             //_helpTips.Add("Below the calendar are the list of screenshots taken on the day selected from the calendar organized in chronological order");
             //_helpTips.Add("On the right side are modules. This includes Screens, Regions, Editors, Schedules, Macro Tags, and Triggers. You can add, configure, or remove various items in each module");

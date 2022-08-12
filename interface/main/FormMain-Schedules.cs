@@ -27,7 +27,7 @@ namespace AutoScreenCapture
     {
         /// <summary>
         /// The timer to check enabled Schedules.
-        /// This runs every minute.
+        /// This runs every second.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -72,7 +72,7 @@ namespace AutoScreenCapture
                 // Process the list of schedules we need to consider.
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
-                    if (!schedule.Enable)
+                    if (!schedule.Enable || schedule.IsProcessed)
                     {
                         continue;
                     }
@@ -91,6 +91,8 @@ namespace AutoScreenCapture
                                 (dtNow.Minute == schedule.CaptureAt.Minute))
                             {
                                 TakeScreenshot(schedule.Scope, captureNow: true);
+
+                                schedule.IsProcessed = true;
                             }
                         }
 
@@ -108,6 +110,8 @@ namespace AutoScreenCapture
                                     (dtNow.Minute == schedule.StopAt.Minute))
                                 {
                                     StopScreenCapture();
+
+                                    schedule.IsProcessed = true;
                                 }
                             }
 
@@ -123,6 +127,8 @@ namespace AutoScreenCapture
                                     (dtNow.Minute == schedule.StopAt.Minute))
                                 {
                                     StopSchedule(schedule);
+
+                                    schedule.IsProcessed = true;
                                 }
                             }
                         }
@@ -285,25 +291,28 @@ namespace AutoScreenCapture
                 // This schedule is being started with the intention that it runs with its own independent interval and scope.
                 if (schedule.Logic == 1)
                 {
-                    // Dynamically change the controls of the schedule in the Schedules module list.
-
-                    TextBox scheduleTextBox = (TextBox)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "textBoxObjectName"];
-                    scheduleTextBox.BackColor = System.Drawing.Color.PaleGreen;
-
-                    Button scheduleButton = (Button)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "buttonScheduleTimer"];
-                    scheduleButton.Image = Properties.Resources.stop_screen_capture;
-                    scheduleButton.Click += ScheduleModuleList_StopSchedule;
-
-                    // Subscribe to the Tick event only if the schedule is new.
-                    // Existing schedules would have already had their Tick events subscribed during LoadSettings.
-                    // If we subscribe to the Tick event again for an existing schedule we end up creating a duplicate screenshot for every tick.
-                    if (schedule.IsNew)
+                    if (!schedule.Timer.Enabled)
                     {
-                        schedule.Timer.Tick += ScheduleTimer_Tick;
-                    }
+                        // Dynamically change the controls of the schedule in the Schedules module list.
 
-                    schedule.Timer.Enabled = true;
-                    schedule.Timer.Start();
+                        TextBox scheduleTextBox = (TextBox)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "textBoxObjectName"];
+                        scheduleTextBox.BackColor = System.Drawing.Color.PaleGreen;
+
+                        Button scheduleButton = (Button)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "buttonScheduleTimer"];
+                        scheduleButton.Image = Properties.Resources.stop_screen_capture;
+                        scheduleButton.Click += ScheduleModuleList_StopSchedule;
+
+                        // Subscribe to the Tick event only if the schedule is new.
+                        // Existing schedules would have already had their Tick events subscribed during LoadSettings.
+                        // If we subscribe to the Tick event again for an existing schedule we end up creating a duplicate screenshot for every tick.
+                        if (schedule.IsNew)
+                        {
+                            schedule.Timer.Tick += ScheduleTimer_Tick;
+                        }
+
+                        schedule.Timer.Enabled = true;
+                        schedule.Timer.Start();
+                    }
                 }
             }
         }
@@ -321,22 +330,27 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    // Dynamically change the controls of the schedule in the Schedules module list.
-
-                    TextBox scheduleTextBox = (TextBox)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "textBoxObjectName"];
-                    scheduleTextBox.BackColor = System.Drawing.Color.LightYellow;
-
-                    Button scheduleButton = (Button)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "buttonScheduleTimer"];
-                    scheduleButton.Image = Properties.Resources.start_screen_capture;
-                    scheduleButton.Click += ScheduleModuleList_StartSchedule;
-
-                    schedule.Timer.Stop();
-                    schedule.Timer.Enabled = false;
-
-                    // Unsubscribe to the Tick event only if the schedule is new.
-                    if (schedule.IsNew)
+                    if (schedule.Timer.Enabled)
                     {
-                        schedule.Timer.Tick -= ScheduleTimer_Tick;
+                        // Dynamically change the controls of the schedule in the Schedules module list.
+
+                        TextBox scheduleTextBox = (TextBox)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "textBoxObjectName"];
+                        scheduleTextBox.BackColor = System.Drawing.Color.LightYellow;
+
+                        Button scheduleButton = (Button)tabControlModules.Controls["tabPageSchedules"].Controls[schedule.Name + "buttonScheduleTimer"];
+                        scheduleButton.Image = Properties.Resources.start_screen_capture;
+                        scheduleButton.Click += ScheduleModuleList_StartSchedule;
+
+                        _screenCapture.CycleCount = 0;
+
+                        schedule.Timer.Stop();
+                        schedule.Timer.Enabled = false;
+
+                        // Unsubscribe to the Tick event only if the schedule is new.
+                        if (schedule.IsNew)
+                        {
+                            schedule.Timer.Tick -= ScheduleTimer_Tick;
+                        }
                     }
                 }
             }

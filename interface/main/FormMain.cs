@@ -196,10 +196,9 @@ namespace AutoScreenCapture
 
             InitializeComponent();
 
-            // Make sure we have the schedule timer tick every minute at the top of every minute.
-            // https://itecnote.com/tecnote/c-net-event-every-minute-on-the-minute-is-a-timer-the-best-option/
             DateTime dtNow = DateTime.Now;
-            timerScheduleCheck.Interval = ((60 - dtNow.Second) * 1000 - dtNow.Millisecond);
+            timerScheduleCheck.Enabled = true;
+            timerScheduleCheck.Interval = 1000;
             timerScheduleCheck.Start();
 
             _security = new Security(_fileSystem);
@@ -225,7 +224,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            string welcome = "Welcome to Auto Screen Capture";
+            string welcome = "Welcome to Auto Screen Capture! Please read the documentation in Help if you're new to the application";
 
             HelpMessage(welcome);
 
@@ -909,6 +908,33 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _log.WriteExceptionMessage("Unable to open program folder", ex);
+            }
+        }
+
+        /// <summary>
+        /// Just something fun. We can hide and show the modules by clicking on this button docked to the right of the form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonResizeModulesPanel_Click(object sender, EventArgs e)
+        {
+            if (panelModules.Width == 274)
+            {
+                panelModules.Width = 0;
+
+                labelHelp.Width += 274;
+                tabControlViews.Width += 274;
+
+                buttonResizeModulesPanel.Text = "<";
+            }
+            else if (panelModules.Width == 0)
+            {
+                panelModules.Width = 274;
+
+                labelHelp.Width -= 274;
+                tabControlViews.Width -= 274;
+
+                buttonResizeModulesPanel.Text = ">";
             }
         }
     }

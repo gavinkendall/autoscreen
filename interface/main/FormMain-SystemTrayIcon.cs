@@ -245,6 +245,9 @@ namespace AutoScreenCapture
         {
             try
             {
+                toolStripCurrentDate.Text = DateTime.Now.ToLongDateString();
+                toolStripCurrentTime.Text = DateTime.Now.ToLongTimeString();
+
                 if (_screenCapture.LockScreenCaptureSession)
                 {
                     notifyIcon.Text = string.Empty;

@@ -554,7 +554,7 @@ namespace AutoScreenCapture
                         }
 
                         // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
-                        // So get the earliest screenshot of this view that has a valid path so we can still show something.
+                        // So get the earliest screenshot of this view (working backwards from the current index) that has a valid path so we can still show something.
                         if (selectedScreenshot == null)
                         {
                             for (int j = 0; (_slideShow.Index - j) >= 0; j++)
