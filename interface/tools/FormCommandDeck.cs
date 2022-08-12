@@ -59,6 +59,11 @@ namespace AutoScreenCapture
         public event EventHandler AddRegion;
 
         /// <summary>
+        /// Event handler for Region Select -> Add Region (Express)
+        /// </summary>
+        public event EventHandler AddRegionExpress;
+
+        /// <summary>
         /// Region Select Command Deck
         /// </summary>
         public FormCommandDeck()
@@ -107,13 +112,18 @@ namespace AutoScreenCapture
             AddRegion.Invoke(sender, e);
         }
 
+        private void buttonRegionSelectAddRegionExpress_Click(object sender, EventArgs e)
+        {
+            AddRegionExpress.Invoke(sender, e);
+        }
+
         private void buttonShowHideRegionSelect_Click(object sender, EventArgs e)
         {
             if (Height == 87)
             {
-                Height = 286;
+                Height = 319;
             }
-            else if (Height == 286)
+            else if (Height == 319)
             {
                 Height = 87;
             }

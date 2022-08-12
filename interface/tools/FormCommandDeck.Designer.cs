@@ -42,6 +42,7 @@
             this.buttonShowHideRegionSelect = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.buttonAddRegionExpress = new System.Windows.Forms.Button();
             this.groupBoxRegionSelect.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -108,6 +109,7 @@
             // 
             // groupBoxRegionSelect
             // 
+            this.groupBoxRegionSelect.Controls.Add(this.buttonAddRegionExpress);
             this.groupBoxRegionSelect.Controls.Add(this.buttonRegionSelectAddRegion);
             this.groupBoxRegionSelect.Controls.Add(this.buttonRegionSelectClipboard);
             this.groupBoxRegionSelect.Controls.Add(this.buttonRegionSelectFloatingScreenshot);
@@ -116,7 +118,7 @@
             this.groupBoxRegionSelect.Controls.Add(this.buttonRegionSelectClipboardAutoSaveEdit);
             this.groupBoxRegionSelect.Location = new System.Drawing.Point(5, 36);
             this.groupBoxRegionSelect.Name = "groupBoxRegionSelect";
-            this.groupBoxRegionSelect.Size = new System.Drawing.Size(179, 190);
+            this.groupBoxRegionSelect.Size = new System.Drawing.Size(179, 219);
             this.groupBoxRegionSelect.TabIndex = 6;
             this.groupBoxRegionSelect.TabStop = false;
             this.groupBoxRegionSelect.Text = "Region Select";
@@ -166,7 +168,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 231);
+            this.statusStrip.Location = new System.Drawing.Point(0, 258);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(189, 22);
             this.statusStrip.SizingGrip = false;
@@ -177,11 +179,21 @@
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
+            // buttonAddRegionExpress
+            // 
+            this.buttonAddRegionExpress.Location = new System.Drawing.Point(7, 191);
+            this.buttonAddRegionExpress.Name = "buttonAddRegionExpress";
+            this.buttonAddRegionExpress.Size = new System.Drawing.Size(165, 23);
+            this.buttonAddRegionExpress.TabIndex = 6;
+            this.buttonAddRegionExpress.Text = "Add Region (Express)";
+            this.buttonAddRegionExpress.UseVisualStyleBackColor = true;
+            this.buttonAddRegionExpress.Click += new System.EventHandler(this.buttonRegionSelectAddRegionExpress_Click);
+            // 
             // FormCommandDeck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(189, 253);
+            this.ClientSize = new System.Drawing.Size(189, 280);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.buttonShowHideRegionSelect);
             this.Controls.Add(this.buttonCaptureNowEdit);
@@ -240,5 +252,6 @@
         /// The Region Select group control shows and hides with this toggle button.
         /// </summary>
         public System.Windows.Forms.Button buttonShowHideRegionSelect;
+        private System.Windows.Forms.Button buttonAddRegionExpress;
     }
 }

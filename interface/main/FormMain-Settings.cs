@@ -106,6 +106,7 @@ namespace AutoScreenCapture
                 _formCommandDeck.ClipboardFloatingScreenshot += toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click;
                 _formCommandDeck.FloatingScreenshot += toolStripMenuItemRegionSelectFloatingScreenshot_Click;
                 _formCommandDeck.AddRegion += toolStripMenuItemRegionSelectAddRegion_Click;
+                _formCommandDeck.AddRegionExpress += toolStripMenuItemRegionSelectAddRegionExpress_Click;
 
                 // Start/Stop Schedule Event Handlers
                 _formSchedule.StartSchedule += _formSchedule_StartSchedule;

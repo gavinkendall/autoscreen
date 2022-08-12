@@ -684,6 +684,13 @@ namespace AutoScreenCapture
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
         }
 
+        private void toolStripMenuItemRegionSelectAddRegionExpress_Click(object sender, EventArgs e)
+        {
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_screenCapture);
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectAddRegionExpressMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
+        }
+
         /// <summary>
         /// The event method used by "Region Select -> Clipboard / Auto Save".
         /// </summary>
@@ -796,6 +803,44 @@ namespace AutoScreenCapture
                 _formRegion.Height = _formRegionSelectWithMouse.outputHeight;
 
                 addRegion_Click(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// The event method for "Region Select -> Add Region (Express)".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _formRegionSelectWithMouse_RegionSelectAddRegionExpressMouseSelectionCompleted(object sender, EventArgs e)
+        {
+            Bitmap bitmap = GetBitmapFromRegionSelect();
+
+            if (bitmap != null)
+            {
+                _formRegion.RegionCollection.Add(new Region()
+                {
+                    ViewId = Guid.NewGuid(),
+                    Name = "Region " + (_formRegion.RegionCollection.Count + 1),
+                    Folder = _fileSystem.ScreenshotsFolder,
+                    Macro = _fileSystem.FilenamePattern,
+                    Format = _imageFormatCollection.GetByName(ScreenCapture.ImageFormat),
+                    JpegQuality = 100,
+                    Mouse = true,
+                    X = _formRegionSelectWithMouse.outputX,
+                    Y = _formRegionSelectWithMouse.outputY,
+                    Width = _formRegionSelectWithMouse.outputWidth,
+                    Height = _formRegionSelectWithMouse.outputHeight,
+                    Enable = true,
+                    Encrypt = false
+                });
+
+                BuildRegionsModule();
+                BuildViewTabPages();
+
+                if (!_formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 

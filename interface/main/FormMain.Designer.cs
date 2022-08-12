@@ -107,6 +107,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectAddRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRegionSelectAddRegionExpress = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorRegionSelect = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorApplyLabel = new System.Windows.Forms.ToolStripSeparator();
@@ -166,6 +167,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemRegionSelectClipboardFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemRegionSelectFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemRegionSelectAddRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemRegionSelectAddRegionExpress = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemScreens = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemRegions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemEditors = new System.Windows.Forms.ToolStripMenuItem();
@@ -372,7 +374,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripSpacer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(227, 19);
+            this.toolStripSpacer.Size = new System.Drawing.Size(236, 19);
             this.toolStripSpacer.Spring = true;
             // 
             // toolStripCurrentDate
@@ -801,7 +803,8 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit,
             this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot,
             this.toolStripMenuItemRegionSelectFloatingScreenshot,
-            this.toolStripMenuItemRegionSelectAddRegion});
+            this.toolStripMenuItemRegionSelectAddRegion,
+            this.toolStripMenuItemRegionSelectAddRegionExpress});
             this.toolStripMenuItemRegionSelect.Image = global::AutoScreenCapture.Properties.Resources.region;
             this.toolStripMenuItemRegionSelect.Name = "toolStripMenuItemRegionSelect";
             this.toolStripMenuItemRegionSelect.Size = new System.Drawing.Size(219, 22);
@@ -867,6 +870,13 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectAddRegion.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItemRegionSelectAddRegion.Text = "Add Region";
             this.toolStripMenuItemRegionSelectAddRegion.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAddRegion_Click);
+            // 
+            // toolStripMenuItemRegionSelectAddRegionExpress
+            // 
+            this.toolStripMenuItemRegionSelectAddRegionExpress.Name = "toolStripMenuItemRegionSelectAddRegionExpress";
+            this.toolStripMenuItemRegionSelectAddRegionExpress.Size = new System.Drawing.Size(241, 22);
+            this.toolStripMenuItemRegionSelectAddRegionExpress.Text = "Add Region (Express)";
+            this.toolStripMenuItemRegionSelectAddRegionExpress.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAddRegionExpress_Click);
             // 
             // toolStripSeparatorRegionSelect
             // 
@@ -936,9 +946,9 @@ namespace AutoScreenCapture
             // 
             this.tabPageRegions.AutoScroll = true;
             this.tabPageRegions.AutoScrollMargin = new System.Drawing.Size(10, 0);
-            this.tabPageRegions.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
             this.tabPageRegions.Name = "tabPageRegions";
-            this.tabPageRegions.Size = new System.Drawing.Size(241, 870);
+            this.tabPageRegions.Size = new System.Drawing.Size(256, 556);
             this.tabPageRegions.TabIndex = 4;
             this.tabPageRegions.Text = "Regions";
             this.tabPageRegions.UseVisualStyleBackColor = true;
@@ -947,10 +957,10 @@ namespace AutoScreenCapture
             // 
             this.tabPageEditors.AutoScroll = true;
             this.tabPageEditors.AutoScrollMargin = new System.Drawing.Size(10, 0);
-            this.tabPageEditors.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 870);
+            this.tabPageEditors.Size = new System.Drawing.Size(256, 556);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
@@ -959,9 +969,9 @@ namespace AutoScreenCapture
             // 
             this.tabPageSchedules.AutoScroll = true;
             this.tabPageSchedules.AutoScrollMargin = new System.Drawing.Size(10, 0);
-            this.tabPageSchedules.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSchedules.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedules.Name = "tabPageSchedules";
-            this.tabPageSchedules.Size = new System.Drawing.Size(241, 870);
+            this.tabPageSchedules.Size = new System.Drawing.Size(256, 556);
             this.tabPageSchedules.TabIndex = 8;
             this.tabPageSchedules.Text = "Schedules";
             this.tabPageSchedules.UseVisualStyleBackColor = true;
@@ -972,7 +982,7 @@ namespace AutoScreenCapture
             this.tabPageMacroTags.AutoScrollMargin = new System.Drawing.Size(10, 0);
             this.tabPageMacroTags.Location = new System.Drawing.Point(4, 40);
             this.tabPageMacroTags.Name = "tabPageMacroTags";
-            this.tabPageMacroTags.Size = new System.Drawing.Size(241, 852);
+            this.tabPageMacroTags.Size = new System.Drawing.Size(256, 556);
             this.tabPageMacroTags.TabIndex = 7;
             this.tabPageMacroTags.Text = "Macro Tags";
             this.tabPageMacroTags.UseVisualStyleBackColor = true;
@@ -984,7 +994,7 @@ namespace AutoScreenCapture
             this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 852);
+            this.tabPageTriggers.Size = new System.Drawing.Size(256, 556);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
@@ -1337,7 +1347,8 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemRegionSelectClipboardAutoSaveEdit,
             this.toolStripMainMenuItemRegionSelectClipboardFloatingScreenshot,
             this.toolStripMainMenuItemRegionSelectFloatingScreenshot,
-            this.toolStripMainMenuItemRegionSelectAddRegion});
+            this.toolStripMainMenuItemRegionSelectAddRegion,
+            this.toolStripMainMenuItemRegionSelectAddRegionExpress});
             this.toolStripMainMenuItemRegionSelect.Name = "toolStripMainMenuItemRegionSelect";
             this.toolStripMainMenuItemRegionSelect.Size = new System.Drawing.Size(90, 20);
             this.toolStripMainMenuItemRegionSelect.Text = "Region Select";
@@ -1402,6 +1413,13 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemRegionSelectAddRegion.Size = new System.Drawing.Size(241, 22);
             this.toolStripMainMenuItemRegionSelectAddRegion.Text = "Add Region";
             this.toolStripMainMenuItemRegionSelectAddRegion.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAddRegion_Click);
+            // 
+            // toolStripMainMenuItemRegionSelectAddRegionExpress
+            // 
+            this.toolStripMainMenuItemRegionSelectAddRegionExpress.Name = "toolStripMainMenuItemRegionSelectAddRegionExpress";
+            this.toolStripMainMenuItemRegionSelectAddRegionExpress.Size = new System.Drawing.Size(241, 22);
+            this.toolStripMainMenuItemRegionSelectAddRegionExpress.Text = "Add Region (Express)";
+            this.toolStripMainMenuItemRegionSelectAddRegionExpress.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAddRegionExpress_Click);
             // 
             // toolStripMainMenuItemScreens
             // 
@@ -1843,5 +1861,7 @@ namespace AutoScreenCapture
         private ToolStripStatusLabel toolStripCurrentTime;
         private Panel panelModules;
         private Button buttonResizeModulesPanel;
+        private ToolStripMenuItem toolStripMainMenuItemRegionSelectAddRegionExpress;
+        private ToolStripMenuItem toolStripMenuItemRegionSelectAddRegionExpress;
     }
 }
