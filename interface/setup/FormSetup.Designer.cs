@@ -1519,7 +1519,7 @@
             this.MinimizeBox = false;
             this.Name = "FormSetup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Auto Screen Capture - Setup";
+            this.Text = "Setup";
             this.Load += new System.EventHandler(this.FormSetup_Load);
             this.Shown += new System.EventHandler(this.FormSetup_Shown);
             this.tabControlSetup.ResumeLayout(false);

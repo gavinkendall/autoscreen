@@ -395,8 +395,6 @@ namespace AutoScreenCapture
 
                 if (hide)
                 {
-                    Log.WriteStartupMessage("It looks like you want to be a sneaky pasta snake. Interface and system tray icon will be hidden");
-
                     Settings.User.SetValueByKey("SneakyPastaSnake", true);
                 }
                 
@@ -404,6 +402,8 @@ namespace AutoScreenCapture
 
                 if (sneakyPastaSnake != null && sneakyPastaSnake.Value.ToString().Equals("True"))
                 {
+                    Log.WriteStartupMessage("It looks like you want to be a sneaky pasta snake. Interface and system tray icon will be hidden");
+
                     Settings.User.SetValueByKey("ShowInterface", false);
                     Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
                 }
