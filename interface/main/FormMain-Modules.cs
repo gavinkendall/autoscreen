@@ -233,6 +233,7 @@ namespace AutoScreenCapture
                         buttonScheduleTimer.Image = Properties.Resources.stop_screen_capture;
 
                         // Add the Stop Schedule event to Click.
+                        buttonScheduleTimer.Click -= ScheduleModuleList_StartSchedule;
                         buttonScheduleTimer.Click += ScheduleModuleList_StopSchedule;
                     }
                     else
@@ -241,6 +242,7 @@ namespace AutoScreenCapture
                         buttonScheduleTimer.Image = Properties.Resources.start_screen_capture;
 
                         // Add the Start Schedule event to Click.
+                        buttonScheduleTimer.Click -= ScheduleModuleList_StopSchedule;
                         buttonScheduleTimer.Click += ScheduleModuleList_StartSchedule;
                     }
                 }
