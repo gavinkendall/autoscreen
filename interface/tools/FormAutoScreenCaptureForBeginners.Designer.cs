@@ -268,9 +268,9 @@
         private System.Windows.Forms.Button buttonScreenshotsFolderBrowseFolder;
         private System.Windows.Forms.Label labelInterval;
         private System.Windows.Forms.Label labelHoursInterval;
-        public System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
-        public System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
-        public System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
         private System.Windows.Forms.Label labelMinutesInterval;
         private System.Windows.Forms.Label labelSecondsInterval;
         private System.Windows.Forms.Label labelIntervalHelp;

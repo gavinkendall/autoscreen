@@ -285,11 +285,34 @@ namespace AutoScreenCapture
             {
                 Name = "flowLayoutPanel",
                 AutoScroll = true,
-                BackColor = Color.Black,
+                BackColor = Color.DarkGray,
                 Location = new Point(4, 29),
+                BackgroundImageLayout = ImageLayout.Stretch,
                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
             };
+
+            // Dashboard Wallpaper
+            Setting dashboardWallpaperSetting = _config.Settings.User.GetByKey("DashboardWallpaper");
+
+            if (dashboardWallpaperSetting == null || string.IsNullOrEmpty(dashboardWallpaperSetting.Value.ToString()))
+            {
+                flowLayoutPanel.BackgroundImage = Resources.space_cat_wallpaper;
+            }
+            else
+            {
+                if (_fileSystem.FileExists(dashboardWallpaperSetting.Value.ToString()))
+                {
+                    try
+                    {
+                        flowLayoutPanel.BackgroundImage = Image.FromFile(dashboardWallpaperSetting.Value.ToString());
+                    }
+                    catch
+                    {
+                        flowLayoutPanel.BackgroundImage = Resources.space_cat_wallpaper;
+                    }
+                }
+            }
 
             int i = 1;
 
@@ -363,13 +386,6 @@ namespace AutoScreenCapture
 
             tabPageDashboard.Controls.Add(toolStripDashboard);
             tabPageDashboard.Controls.Add(flowLayoutPanel);
-
-            if (_formScreen.ScreenCollection.Count == 0 &&
-                _formRegion.RegionCollection.Count == 0)
-            {
-                tabPageDashboard.BackgroundImage = Resources.space_cat_wallpaper;
-                tabPageDashboard.BackgroundImageLayout = ImageLayout.Stretch;
-            }
 
             tabControlViews.Controls.Add(tabPageDashboard);
 
@@ -452,29 +468,6 @@ namespace AutoScreenCapture
             if (tabControlViews.SelectedIndex >= tabControlViews.TabCount)
             {
                 tabControlViews.SelectedIndex = (tabControlViews.TabCount - 1);
-            }
-
-            if (tabControlViews.TabCount == 0)
-            {
-                //GroupBox groupBox = new GroupBox
-                //{
-                //    BackColor = Color.Black,
-                //    ForeColor = Color.Black,
-                //    Location = new Point(0, 0),
-                //    Dock = DockStyle.Fill
-                //};
-
-                //PictureBox pictureBox = new PictureBox
-                //{
-                //    BackColor = Color.Black,
-                //    Image = Properties.Resources.space_cat_wallpaper,
-                //    BorderStyle = BorderStyle.Fixed3D,
-                //    Dock = DockStyle.Fill,
-                //    SizeMode = PictureBoxSizeMode.StretchImage
-                //};
-
-                //groupBox.Controls.Add(pictureBox);
-                
             }
 
             ShowScreenshotBySlideIndex();
