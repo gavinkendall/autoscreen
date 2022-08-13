@@ -943,7 +943,7 @@ namespace AutoScreenCapture
 
                 // DeleteScreenshotsByDays
                 case 18:
-                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days. Use \"Days 0\" for today's date if you want to always delete screenshots. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete screenshots in date-stamped folders (and the folders themselves).";
+                    textBoxActionHelp.Text = "Delete screenshots that are older than a specified number of days from today's date. If you want to constantly keep 10 days of fresh screenshots then set the Days value to 10 so that each day's collection of screenshots older than 10 days ago will be deleted. Use 0 for the value of Days if you want to delete screenshots all the time. You can also delete a specified folder. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete screenshots in date-stamped folders.";
                     break;
 
                 // SetLabel
@@ -1028,12 +1028,12 @@ namespace AutoScreenCapture
 
                 // DeleteScreenshotsByCycleCount
                 case 35:
-                    textBoxActionHelp.Text = "Delete screenshots after a specified number of screen capture cycles. Each time a set of screenshots are taken (for multiple screens and/or regions) it represents a screen capture cycle. The screenshots are deleted in order from the oldest screen capture cycle to the newest screen capture cycle. This action will delete all screenshots when triggered.";
+                    textBoxActionHelp.Text = "\"Wiping the slate clean\". When combined with the Capture Cycle Elapsed condition this will constantly delete all screenshots after the specified number of screen capture cycles have elapsed during a running screen capture session. So with a Cycle Count of 10 and a screen capture interval of 1 second the effect is like watching screenshots being created until the 10th screenshot then seeing all of them getting wiped out every 10 seconds.";
                     break;
 
                 // DeleteScreenshotsFromOldestCaptureCycle
                 case 36:
-                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also use the Capture Cycle Elapsed condition. Run a screen capture session for a while first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
+                    textBoxActionHelp.Text = "\"Rolling delete; like a car's dash cam\". When combined with the Capture Cycle Elapsed condition this will perform a rolling delete during a running screen capture session. Run a screen capture session for a while first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
                     break;
             }
         }
