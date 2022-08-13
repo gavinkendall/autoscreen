@@ -382,7 +382,7 @@ namespace AutoScreenCapture
 
         private int MapModifierKeyFromUserSetting(ComboBox comboBox, string userSetting)
         {
-            AutoScreenCapture.ModifierKeys modifierKey = GetModifierKeyFromUserSetting(userSetting);
+            ModifierKeys modifierKey = GetModifierKeyFromUserSetting(userSetting);
 
             if (modifierKey != AutoScreenCapture.ModifierKeys.None)
             {
@@ -392,9 +392,9 @@ namespace AutoScreenCapture
             return 0;
         }
 
-        private AutoScreenCapture.ModifierKeys GetModifierKeyFromUserSetting(string userSetting)
+        private ModifierKeys GetModifierKeyFromUserSetting(string userSetting)
         {
-            AutoScreenCapture.ModifierKeys parsedModifierKey;
+            ModifierKeys parsedModifierKey;
 
             if (Enum.TryParse(userSetting, false, out parsedModifierKey))
             {

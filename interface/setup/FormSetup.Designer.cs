@@ -1600,7 +1600,6 @@
         private System.Windows.Forms.Label labelApplicationFocusHelp;
         private System.Windows.Forms.Label labelOptimizeScreenCaptureHelp;
         private System.Windows.Forms.TabPage tabPageScreenshotsFolder;
-        private System.Windows.Forms.TextBox textBoxScreenshotsFolder;
         private System.Windows.Forms.Button buttonScreenshotsFolderBrowseFolder;
         private System.Windows.Forms.Label labelScreenshotsFolderHelp;
         private System.Windows.Forms.Button buttonScreenshotsFolderApplyToAllRegions;
@@ -1609,7 +1608,6 @@
         private System.Windows.Forms.Label labelScreenshotsFolderApplyToAllScreens;
         private System.Windows.Forms.TabPage tabPageFilenamePattern;
         private System.Windows.Forms.TabPage tabPageImageFormat;
-        private System.Windows.Forms.TextBox textBoxFilenamePattern;
         private System.Windows.Forms.Label labelFilenamePatternHelp;
         private System.Windows.Forms.TextBox textBoxMacroPreview;
         private System.Windows.Forms.Button buttonFilenamePatternApplyToAllRegions;
@@ -1628,7 +1626,18 @@
         private System.Windows.Forms.Button buttonImageFormatApplyToAllScreens;
         private System.Windows.Forms.Label labelFilenamePatternPreview;
         private System.Windows.Forms.Label labelFilenamePatternFilename;
+        private System.Windows.Forms.Label labelTolerance;
         private System.Windows.Forms.Label labelImageDifference;
+
+        /// <summary>
+        /// Screenshots folder.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxScreenshotsFolder;
+
+        /// <summary>
+        /// Filename pattern
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxFilenamePattern;
 
         /// <summary>
         /// The label for ImageDiffTolerance.
@@ -1869,6 +1878,5 @@
         /// A trackbar control for the image difference percentage.
         /// </summary>
         public System.Windows.Forms.TrackBar trackBarImageDiffTolerance;
-        private System.Windows.Forms.Label labelTolerance;
     }
 }

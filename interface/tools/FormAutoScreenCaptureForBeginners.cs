@@ -18,24 +18,68 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
+using System;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
     public partial class FormAutoScreenCaptureForBeginners : Form
     {
+        private Config _config;
+
         /// <summary>
         /// A tool for people who are unfamiliar with Auto Screen Capture.
         /// </summary>
-        public FormAutoScreenCaptureForBeginners()
+        public FormAutoScreenCaptureForBeginners(Config config)
         {
             InitializeComponent();
+
+            _config = config;
+        }
+
+        private void FormAutoScreenCaptureForBeginners_Load(object sender, EventArgs e)
+        {
+            Setting showScreenCaptureStatusOnStartSetting = _config.Settings.User.GetByKey("ShowScreenCaptureStatusOnStart");
+
+            if (showScreenCaptureStatusOnStartSetting != null)
+            {
+                checkBoxShowScreenCaptureStatusOnStart.Checked = Convert.ToBoolean(showScreenCaptureStatusOnStartSetting.Value);
+            }
+
+            Setting showScreenshotsFolderOnStopSetting = _config.Settings.User.GetByKey("ShowScreenshotsFolderOnStop");
+
+            if (showScreenshotsFolderOnStopSetting != null)
+            {
+                checkBoxShowScreenshotsFolderOnStop.Checked = Convert.ToBoolean(showScreenshotsFolderOnStopSetting.Value);
+            }
         }
 
         private void FormAutoScreenCaptureForBeginners_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             Hide();
+        }
+
+        private void buttonScreenshotsFolderBrowseFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                textBoxScreenshotsFolder.Text = folderBrowser.SelectedPath;
+            }
+        }
+
+        private void checkBoxShowScreenCaptureStatusOnStart_CheckedChanged(object sender, EventArgs e)
+        {
+            _config.Settings.User.SetValueByKey("ShowScreenCaptureStatusOnStart", checkBoxShowScreenCaptureStatusOnStart.Checked);
+            _config.Settings.User.Save(_config.Settings, _config.FileSystem);
+        }
+
+        private void checkBoxShowScreenshotsFolderOnStop_CheckedChanged(object sender, EventArgs e)
+        {
+            _config.Settings.User.SetValueByKey("ShowScreenshotsFolderOnStop", checkBoxShowScreenshotsFolderOnStop.Checked);
+            _config.Settings.User.Save(_config.Settings, _config.FileSystem);
         }
     }
 }

@@ -100,7 +100,7 @@ namespace AutoScreenCapture
                 _formCommandDeck = new FormCommandDeck();
 
                 // Auto Screen Capture For Beginners
-                _formAutoScreenCaptureForBeginners = new FormAutoScreenCaptureForBeginners();
+                _formAutoScreenCaptureForBeginners = new FormAutoScreenCaptureForBeginners(_config);
 
                 // Command Deck Event Handlers
                 _formCommandDeck.Clipboard += toolStripMenuItemRegionSelectClipboard_Click;
@@ -147,6 +147,11 @@ namespace AutoScreenCapture
                 // Region Select Tool Tip for Command Deck
                 ToolTip toolTipShowHideRegionSelectCommandDeck = new ToolTip();
                 toolTipShowHideRegionSelectCommandDeck.SetToolTip(_formCommandDeck.buttonShowHideRegionSelect, "Show/Hide Region Select");
+
+                // Auto Screen Capture For Beginners
+                _formAutoScreenCaptureForBeginners.buttonStartScreenCapture.Click += buttonStartScreenCaptureForBeginners_Click;
+                _formAutoScreenCaptureForBeginners.buttonStopScreenCapture.Click += buttonStopScreenCaptureForBeginners_Click;
+                _formAutoScreenCaptureForBeginners.buttonExitApplication.Click += buttonExitAutoScreenCaptureForBeginners_Click;
 
                 _log.WriteDebugMessage("Initializing email manager");
                 _emailManager = new EmailManager(_log);
@@ -320,6 +325,32 @@ namespace AutoScreenCapture
                 // Set the module we want to look at.
                 tabControlModules.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedModuleIndex").Value);
 
+                Setting modulesPanelOpenSetting = _config.Settings.User.GetByKey("ModulesPanelOpen");
+
+                if (modulesPanelOpenSetting != null)
+                {
+                    bool modulesPanelOpen = Convert.ToBoolean(modulesPanelOpenSetting.Value);
+
+                    if (modulesPanelOpen)
+                    {
+                        panelModules.Width = 274;
+
+                        labelHelp.Width -= 274;
+                        tabControlViews.Width -= 274;
+
+                        buttonResizeModulesPanel.Text = ">";
+                    }
+                    else
+                    {
+                        panelModules.Width = 0;
+
+                        labelHelp.Width += 274;
+                        tabControlViews.Width += 274;
+
+                        buttonResizeModulesPanel.Text = "<";
+                    }
+                }
+
                 // Preview
                 _preview = Convert.ToBoolean(_config.Settings.User.GetByKey("Preview").Value);
                 _log.WriteDebugMessage("Preview = " + _preview.ToString());
@@ -355,6 +386,13 @@ namespace AutoScreenCapture
 
                 decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Seconds);
                 _log.WriteDebugMessage("Seconds = " + screenCaptureIntervalSeconds);
+
+                // Auto Screen Capture For Beginners
+                _formAutoScreenCaptureForBeginners.textBoxScreenshotsFolder.Text = _fileSystem.ScreenshotsFolder;
+                _formAutoScreenCaptureForBeginners.textBoxFilenamePattern.Text = _fileSystem.FilenamePattern;
+                _formAutoScreenCaptureForBeginners.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                _formAutoScreenCaptureForBeginners.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                _formAutoScreenCaptureForBeginners.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
 
                 // Setup
                 _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formScreenCaptureStatusWithLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser, _screenshotCollection);

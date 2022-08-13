@@ -883,7 +883,7 @@ namespace AutoScreenCapture
 
                 // EmailScreenshot
                 case 6:
-                    textBoxActionHelp.Text = "Email a screenshot using the configured email server settings.";
+                    textBoxActionHelp.Text = "Email the latest screenshot using the configured email server settings.";
                     break;
 
                 // SetScreenCaptureInterval
@@ -963,7 +963,7 @@ namespace AutoScreenCapture
 
                 // FileTransferScreenshot
                 case 22:
-                    textBoxActionHelp.Text = "Transfer screenshots to a file server using the configured File Transfer settings.";
+                    textBoxActionHelp.Text = "Transfer the latest screenshot to a file server using the configured File Transfer settings.";
                     break;
 
                 // SetActiveWindowTitleAsNoMatch

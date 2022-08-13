@@ -47,6 +47,12 @@
             this.labelIntervalHelp = new System.Windows.Forms.Label();
             this.buttonStartScreenCapture = new System.Windows.Forms.Button();
             this.buttonStopScreenCapture = new System.Windows.Forms.Button();
+            this.labelFilenamePattern = new System.Windows.Forms.Label();
+            this.textBoxFilenamePattern = new System.Windows.Forms.TextBox();
+            this.labelFilenamePatternHelp = new System.Windows.Forms.Label();
+            this.buttonExitApplication = new System.Windows.Forms.Button();
+            this.checkBoxShowScreenCaptureStatusOnStart = new System.Windows.Forms.CheckBox();
+            this.checkBoxShowScreenshotsFolderOnStop = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxButYoureAPanda)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
@@ -71,7 +77,7 @@
             this.labelScreenshotsFolderHelp.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelScreenshotsFolderHelp.Location = new System.Drawing.Point(285, 42);
             this.labelScreenshotsFolderHelp.Name = "labelScreenshotsFolderHelp";
-            this.labelScreenshotsFolderHelp.Size = new System.Drawing.Size(504, 40);
+            this.labelScreenshotsFolderHelp.Size = new System.Drawing.Size(537, 40);
             this.labelScreenshotsFolderHelp.TabIndex = 34;
             this.labelScreenshotsFolderHelp.Text = "This is the folder where all of your screenshots will be saved. Use the yellow fo" +
     "lder button to change it.";
@@ -81,7 +87,7 @@
             this.textBoxScreenshotsFolder.Font = new System.Drawing.Font("Consolas", 11.25F);
             this.textBoxScreenshotsFolder.Location = new System.Drawing.Point(285, 88);
             this.textBoxScreenshotsFolder.Name = "textBoxScreenshotsFolder";
-            this.textBoxScreenshotsFolder.Size = new System.Drawing.Size(470, 25);
+            this.textBoxScreenshotsFolder.Size = new System.Drawing.Size(504, 25);
             this.textBoxScreenshotsFolder.TabIndex = 35;
             this.textBoxScreenshotsFolder.TabStop = false;
             // 
@@ -99,18 +105,19 @@
             // 
             this.buttonScreenshotsFolderBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonScreenshotsFolderBrowseFolder.Image = global::AutoScreenCapture.Properties.Resources.openfolder;
-            this.buttonScreenshotsFolderBrowseFolder.Location = new System.Drawing.Point(761, 89);
+            this.buttonScreenshotsFolderBrowseFolder.Location = new System.Drawing.Point(796, 89);
             this.buttonScreenshotsFolderBrowseFolder.Name = "buttonScreenshotsFolderBrowseFolder";
             this.buttonScreenshotsFolderBrowseFolder.Size = new System.Drawing.Size(27, 23);
             this.buttonScreenshotsFolderBrowseFolder.TabIndex = 37;
             this.buttonScreenshotsFolderBrowseFolder.TabStop = false;
             this.buttonScreenshotsFolderBrowseFolder.UseVisualStyleBackColor = true;
+            this.buttonScreenshotsFolderBrowseFolder.Click += new System.EventHandler(this.buttonScreenshotsFolderBrowseFolder_Click);
             // 
             // labelInterval
             // 
             this.labelInterval.AutoSize = true;
             this.labelInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelInterval.Location = new System.Drawing.Point(285, 136);
+            this.labelInterval.Location = new System.Drawing.Point(285, 266);
             this.labelInterval.Name = "labelInterval";
             this.labelInterval.Size = new System.Drawing.Size(72, 18);
             this.labelInterval.TabIndex = 38;
@@ -120,7 +127,7 @@
             // 
             this.labelHoursInterval.AutoSize = true;
             this.labelHoursInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHoursInterval.Location = new System.Drawing.Point(336, 214);
+            this.labelHoursInterval.Location = new System.Drawing.Point(336, 344);
             this.labelHoursInterval.Name = "labelHoursInterval";
             this.labelHoursInterval.Size = new System.Drawing.Size(48, 18);
             this.labelHoursInterval.TabIndex = 39;
@@ -129,7 +136,7 @@
             // numericUpDownHoursInterval
             // 
             this.numericUpDownHoursInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(288, 212);
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(288, 342);
             this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
             23,
             0,
@@ -143,7 +150,7 @@
             // numericUpDownMinutesInterval
             // 
             this.numericUpDownMinutesInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(406, 212);
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(406, 342);
             this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -157,7 +164,7 @@
             // numericUpDownSecondsInterval
             // 
             this.numericUpDownSecondsInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(537, 212);
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(537, 342);
             this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -172,7 +179,7 @@
             // 
             this.labelMinutesInterval.AutoSize = true;
             this.labelMinutesInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMinutesInterval.Location = new System.Drawing.Point(454, 214);
+            this.labelMinutesInterval.Location = new System.Drawing.Point(454, 344);
             this.labelMinutesInterval.Name = "labelMinutesInterval";
             this.labelMinutesInterval.Size = new System.Drawing.Size(64, 18);
             this.labelMinutesInterval.TabIndex = 43;
@@ -182,7 +189,7 @@
             // 
             this.labelSecondsInterval.AutoSize = true;
             this.labelSecondsInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSecondsInterval.Location = new System.Drawing.Point(585, 214);
+            this.labelSecondsInterval.Location = new System.Drawing.Point(585, 344);
             this.labelSecondsInterval.Name = "labelSecondsInterval";
             this.labelSecondsInterval.Size = new System.Drawing.Size(64, 18);
             this.labelSecondsInterval.TabIndex = 44;
@@ -192,9 +199,9 @@
             // 
             this.labelIntervalHelp.BackColor = System.Drawing.Color.LightYellow;
             this.labelIntervalHelp.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelIntervalHelp.Location = new System.Drawing.Point(285, 165);
+            this.labelIntervalHelp.Location = new System.Drawing.Point(285, 295);
             this.labelIntervalHelp.Name = "labelIntervalHelp";
-            this.labelIntervalHelp.Size = new System.Drawing.Size(504, 40);
+            this.labelIntervalHelp.Size = new System.Drawing.Size(537, 40);
             this.labelIntervalHelp.TabIndex = 45;
             this.labelIntervalHelp.Text = "How slow or fast you want screenshots to be taken.";
             // 
@@ -202,9 +209,9 @@
             // 
             this.buttonStartScreenCapture.BackColor = System.Drawing.Color.PaleGreen;
             this.buttonStartScreenCapture.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStartScreenCapture.Location = new System.Drawing.Point(285, 392);
+            this.buttonStartScreenCapture.Location = new System.Drawing.Point(12, 444);
             this.buttonStartScreenCapture.Name = "buttonStartScreenCapture";
-            this.buttonStartScreenCapture.Size = new System.Drawing.Size(249, 46);
+            this.buttonStartScreenCapture.Size = new System.Drawing.Size(267, 46);
             this.buttonStartScreenCapture.TabIndex = 46;
             this.buttonStartScreenCapture.TabStop = false;
             this.buttonStartScreenCapture.Text = "Start Screen Capture";
@@ -213,21 +220,92 @@
             // buttonStopScreenCapture
             // 
             this.buttonStopScreenCapture.BackColor = System.Drawing.Color.PaleVioletRed;
-            this.buttonStopScreenCapture.Enabled = false;
             this.buttonStopScreenCapture.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStopScreenCapture.Location = new System.Drawing.Point(540, 392);
+            this.buttonStopScreenCapture.Location = new System.Drawing.Point(285, 444);
             this.buttonStopScreenCapture.Name = "buttonStopScreenCapture";
-            this.buttonStopScreenCapture.Size = new System.Drawing.Size(249, 46);
+            this.buttonStopScreenCapture.Size = new System.Drawing.Size(267, 46);
             this.buttonStopScreenCapture.TabIndex = 47;
             this.buttonStopScreenCapture.TabStop = false;
             this.buttonStopScreenCapture.Text = "Stop Screen Capture";
             this.buttonStopScreenCapture.UseVisualStyleBackColor = false;
             // 
+            // labelFilenamePattern
+            // 
+            this.labelFilenamePattern.AutoSize = true;
+            this.labelFilenamePattern.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFilenamePattern.Location = new System.Drawing.Point(285, 140);
+            this.labelFilenamePattern.Name = "labelFilenamePattern";
+            this.labelFilenamePattern.Size = new System.Drawing.Size(320, 18);
+            this.labelFilenamePattern.TabIndex = 48;
+            this.labelFilenamePattern.Text = "Filename Pattern (we call it a \"Macro\")";
+            // 
+            // textBoxFilenamePattern
+            // 
+            this.textBoxFilenamePattern.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.textBoxFilenamePattern.Location = new System.Drawing.Point(285, 216);
+            this.textBoxFilenamePattern.Name = "textBoxFilenamePattern";
+            this.textBoxFilenamePattern.Size = new System.Drawing.Size(537, 25);
+            this.textBoxFilenamePattern.TabIndex = 49;
+            this.textBoxFilenamePattern.TabStop = false;
+            // 
+            // labelFilenamePatternHelp
+            // 
+            this.labelFilenamePatternHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelFilenamePatternHelp.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFilenamePatternHelp.Location = new System.Drawing.Point(285, 169);
+            this.labelFilenamePatternHelp.Name = "labelFilenamePatternHelp";
+            this.labelFilenamePatternHelp.Size = new System.Drawing.Size(537, 40);
+            this.labelFilenamePatternHelp.TabIndex = 50;
+            this.labelFilenamePatternHelp.Text = "The filename pattern for each file that will be saved for each screenshot taken. " +
+    "The filepath is based on the pattern.";
+            // 
+            // buttonExitApplication
+            // 
+            this.buttonExitApplication.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonExitApplication.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonExitApplication.Location = new System.Drawing.Point(558, 444);
+            this.buttonExitApplication.Name = "buttonExitApplication";
+            this.buttonExitApplication.Size = new System.Drawing.Size(267, 46);
+            this.buttonExitApplication.TabIndex = 51;
+            this.buttonExitApplication.TabStop = false;
+            this.buttonExitApplication.Text = "Exit Auto Screen Capture";
+            this.buttonExitApplication.UseVisualStyleBackColor = false;
+            // 
+            // checkBoxShowScreenCaptureStatusOnStart
+            // 
+            this.checkBoxShowScreenCaptureStatusOnStart.AutoSize = true;
+            this.checkBoxShowScreenCaptureStatusOnStart.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxShowScreenCaptureStatusOnStart.Location = new System.Drawing.Point(285, 387);
+            this.checkBoxShowScreenCaptureStatusOnStart.Name = "checkBoxShowScreenCaptureStatusOnStart";
+            this.checkBoxShowScreenCaptureStatusOnStart.Size = new System.Drawing.Size(307, 22);
+            this.checkBoxShowScreenCaptureStatusOnStart.TabIndex = 52;
+            this.checkBoxShowScreenCaptureStatusOnStart.Text = "Show Screen Capture Status On Start";
+            this.checkBoxShowScreenCaptureStatusOnStart.UseVisualStyleBackColor = true;
+            this.checkBoxShowScreenCaptureStatusOnStart.CheckedChanged += new System.EventHandler(this.checkBoxShowScreenCaptureStatusOnStart_CheckedChanged);
+            // 
+            // checkBoxShowScreenshotsFolderOnStop
+            // 
+            this.checkBoxShowScreenshotsFolderOnStop.AutoSize = true;
+            this.checkBoxShowScreenshotsFolderOnStop.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxShowScreenshotsFolderOnStop.Location = new System.Drawing.Point(285, 415);
+            this.checkBoxShowScreenshotsFolderOnStop.Name = "checkBoxShowScreenshotsFolderOnStop";
+            this.checkBoxShowScreenshotsFolderOnStop.Size = new System.Drawing.Size(275, 22);
+            this.checkBoxShowScreenshotsFolderOnStop.TabIndex = 53;
+            this.checkBoxShowScreenshotsFolderOnStop.Text = "Show Screenshots Folder On Stop";
+            this.checkBoxShowScreenshotsFolderOnStop.UseVisualStyleBackColor = true;
+            this.checkBoxShowScreenshotsFolderOnStop.CheckedChanged += new System.EventHandler(this.checkBoxShowScreenshotsFolderOnStop_CheckedChanged);
+            // 
             // FormAutoScreenCaptureForBeginners
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(835, 499);
+            this.Controls.Add(this.checkBoxShowScreenshotsFolderOnStop);
+            this.Controls.Add(this.checkBoxShowScreenCaptureStatusOnStart);
+            this.Controls.Add(this.buttonExitApplication);
+            this.Controls.Add(this.labelFilenamePatternHelp);
+            this.Controls.Add(this.textBoxFilenamePattern);
+            this.Controls.Add(this.labelFilenamePattern);
             this.Controls.Add(this.buttonStopScreenCapture);
             this.Controls.Add(this.buttonStartScreenCapture);
             this.Controls.Add(this.labelIntervalHelp);
@@ -250,6 +328,7 @@
             this.Text = "Auto Screen Capture For Beginners";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAutoScreenCaptureForBeginners_FormClosing);
+            this.Load += new System.EventHandler(this.FormAutoScreenCaptureForBeginners_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxButYoureAPanda)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
@@ -263,18 +342,56 @@
 
         private System.Windows.Forms.PictureBox pictureBoxButYoureAPanda;
         private System.Windows.Forms.Label labelScreenshotsFolderHelp;
-        private System.Windows.Forms.TextBox textBoxScreenshotsFolder;
         private System.Windows.Forms.Label labelScreenshotsFolder;
         private System.Windows.Forms.Button buttonScreenshotsFolderBrowseFolder;
         private System.Windows.Forms.Label labelInterval;
         private System.Windows.Forms.Label labelHoursInterval;
-        private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
-        private System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
-        private System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
         private System.Windows.Forms.Label labelMinutesInterval;
         private System.Windows.Forms.Label labelSecondsInterval;
         private System.Windows.Forms.Label labelIntervalHelp;
-        private System.Windows.Forms.Button buttonStartScreenCapture;
-        private System.Windows.Forms.Button buttonStopScreenCapture;
+        private System.Windows.Forms.Label labelFilenamePattern;
+        private System.Windows.Forms.Label labelFilenamePatternHelp;
+
+        /// <summary>
+        /// The screenshots folder.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxScreenshotsFolder;
+
+        /// <summary>
+        /// The filename pattern.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxFilenamePattern;
+
+        /// <summary>
+        /// Hours.
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
+
+        /// <summary>
+        /// Minutes.
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
+
+        /// <summary>
+        /// Seconds.
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
+
+        /// <summary>
+        /// Start Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.Button buttonStartScreenCapture;
+
+        /// <summary>
+        /// Stop Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.Button buttonStopScreenCapture;
+
+        /// <summary>
+        /// Exit Auto Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.Button buttonExitApplication;
+        private System.Windows.Forms.CheckBox checkBoxShowScreenCaptureStatusOnStart;
+        private System.Windows.Forms.CheckBox checkBoxShowScreenshotsFolderOnStop;
     }
 }

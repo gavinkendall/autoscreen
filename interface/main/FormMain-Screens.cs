@@ -37,7 +37,7 @@ namespace AutoScreenCapture
 
             _formScreen.ScreenObject = null;
             _formScreen.ImageFormatCollection = _imageFormatCollection;
-            _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
+            _formScreen.MacroTagCollection = _formMacroTag.MacroTagCollection;
 
             if (!_formScreen.Visible)
             {
@@ -126,7 +126,7 @@ namespace AutoScreenCapture
 
             _formScreen.ScreenObject = screen;
             _formScreen.ImageFormatCollection = _imageFormatCollection;
-            _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
+            _formScreen.MacroTagCollection = _formMacroTag.MacroTagCollection;
 
             if (!_formScreen.Visible)
             {

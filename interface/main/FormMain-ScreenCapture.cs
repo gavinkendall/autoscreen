@@ -22,6 +22,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace AutoScreenCapture
 {
@@ -49,6 +50,8 @@ namespace AutoScreenCapture
                 toolStripDropDownButtonStartScreenCapture.Enabled = true;
                 toolStripMenuItemStartScreenCapture.Enabled = true;
                 toolStripMainMenuItemStartScreenCapture.Enabled = true;
+
+                _formAutoScreenCaptureForBeginners.buttonStartScreenCapture.Enabled = true;
             }
             else
             {
@@ -64,6 +67,8 @@ namespace AutoScreenCapture
             toolStripDropDownButtonStopScreenCapture.Enabled = true;
             toolStripMenuItemStopScreenCapture.Enabled = true;
             toolStripMainMenuItemStopScreenCapture.Enabled = true;
+
+            _formAutoScreenCaptureForBeginners.buttonStopScreenCapture.Enabled = true;
         }
 
         /// <summary>
@@ -74,6 +79,8 @@ namespace AutoScreenCapture
             toolStripDropDownButtonStopScreenCapture.Enabled = false;
             toolStripMenuItemStopScreenCapture.Enabled = false;
             toolStripMainMenuItemStopScreenCapture.Enabled = false;
+
+            _formAutoScreenCaptureForBeginners.buttonStopScreenCapture.Enabled = false;
         }
 
         /// <summary>
@@ -84,6 +91,8 @@ namespace AutoScreenCapture
             toolStripDropDownButtonStartScreenCapture.Enabled = false;
             toolStripMenuItemStartScreenCapture.Enabled = false;
             toolStripMainMenuItemStartScreenCapture.Enabled = false;
+
+            _formAutoScreenCaptureForBeginners.buttonStartScreenCapture.Enabled = false;
         }
 
         /// <summary>
@@ -1027,6 +1036,76 @@ namespace AutoScreenCapture
             {
                 StartScreenCapture();
             }
+        }
+
+        private void buttonStartScreenCaptureForBeginners_Click(object sender, EventArgs e)
+        {
+            _formSetup.textBoxScreenshotsFolder.Text = _formAutoScreenCaptureForBeginners.textBoxScreenshotsFolder.Text;
+            _formSetup.textBoxFilenamePattern.Text = _formAutoScreenCaptureForBeginners.textBoxFilenamePattern.Text;
+            _formSetup.numericUpDownHoursInterval.Value = _formAutoScreenCaptureForBeginners.numericUpDownHoursInterval.Value;
+            _formSetup.numericUpDownMinutesInterval.Value = _formAutoScreenCaptureForBeginners.numericUpDownMinutesInterval.Value;
+            _formSetup.numericUpDownSecondsInterval.Value = _formAutoScreenCaptureForBeginners.numericUpDownSecondsInterval.Value;
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                screen.Folder = _formSetup.textBoxScreenshotsFolder.Text;
+                screen.Macro = _formSetup.textBoxFilenamePattern.Text;
+            }
+
+            _formScreen.ScreenCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                region.Folder = _formSetup.textBoxScreenshotsFolder.Text;
+                region.Macro = _formSetup.textBoxFilenamePattern.Text;
+            }
+
+            _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            // Show the "Screen Capture Status" window.
+            Setting showScreenCaptureStatusOnStartSetting = _config.Settings.User.GetByKey("ShowScreenCaptureStatusOnStart");
+
+            if (showScreenCaptureStatusOnStartSetting != null)
+            {
+                bool showScreenCaptureStatusOnStart = Convert.ToBoolean(showScreenCaptureStatusOnStartSetting.Value);
+
+                if (showScreenCaptureStatusOnStart)
+                {
+                    toolStripMenuItemScreenCaptureStatus_Click(sender, e);
+                }
+            }
+
+            StartScreenCapture();
+        }
+
+        private void buttonStopScreenCaptureForBeginners_Click(object sender, EventArgs e)
+        {
+            StopScreenCapture();
+
+            Setting showScreenshotsFolderOnStopSetting = _config.Settings.User.GetByKey("ShowScreenshotsFolderOnStop");
+
+            if (showScreenshotsFolderOnStopSetting != null)
+            {
+                bool showScreenshotsFolderOnStop = Convert.ToBoolean(showScreenshotsFolderOnStopSetting.Value);
+
+                if (showScreenshotsFolderOnStop)
+                {
+                    ProcessStartInfo processStartInfo = new ProcessStartInfo("explorer.exe");
+                    processStartInfo.Arguments = _macroParser.ParseTags(_formAutoScreenCaptureForBeginners.textBoxScreenshotsFolder.Text, _formMacroTag.MacroTagCollection, _log);
+
+                    Process process = new Process
+                    {
+                        StartInfo = processStartInfo,
+                    };
+
+                    process.Start();
+                }
+            }
+        }
+
+        private void buttonExitAutoScreenCaptureForBeginners_Click(object sender, EventArgs e)
+        {
+            ExitApplication();
         }
     }
 }

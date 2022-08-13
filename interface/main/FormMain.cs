@@ -913,7 +913,7 @@ namespace AutoScreenCapture
 
                 // Triggers
                 case 5:
-                    labelModuleHelp.Text = "Triggers control the behaviour of the application. Each trigger reacts to a defined condition and performs a defined action based on that condition. You could run an editor after each screenshot is taken to edit that screenshot.";
+                    labelModuleHelp.Text = "Triggers control the behaviour of the application. Each trigger reacts to a defined condition and performs a defined action based on that condition. For example, a trigger with \"After Screenshot Taken\" as the Condition and \"Run Editor\" as the Action.";
                     break;
             }
         }
@@ -959,6 +959,13 @@ namespace AutoScreenCapture
                 tabControlViews.Width += 274;
 
                 buttonResizeModulesPanel.Text = "<";
+
+                _config.Settings.User.SetValueByKey("ModulesPanelOpen", false);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
             else if (panelModules.Width == 0)
             {
@@ -968,6 +975,13 @@ namespace AutoScreenCapture
                 tabControlViews.Width -= 274;
 
                 buttonResizeModulesPanel.Text = ">";
+
+                _config.Settings.User.SetValueByKey("ModulesPanelOpen", true);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
     }

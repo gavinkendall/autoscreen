@@ -65,7 +65,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// A collection of tags to be used for macro parsing.
         /// </summary>
-        public MacroTagCollection TagCollection { get; set; }
+        public MacroTagCollection MacroTagCollection { get; set; }
 
         /// <summary>
         /// Access to screen capture methods.
@@ -565,8 +565,8 @@ namespace AutoScreenCapture
 
             string label = _config.Settings.User.GetByKey("ScreenshotLabel").Value.ToString();
 
-            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFolder.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, label, TagCollection, _log) +
-                _macroParser.ParseTags(preview: true, textBoxMacro.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, label, TagCollection, _log);
+            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFolder.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, label, MacroTagCollection, _log) +
+                _macroParser.ParseTags(preview: true, textBoxMacro.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, label, MacroTagCollection, _log);
         }
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -627,7 +627,7 @@ namespace AutoScreenCapture
         {
             if (_formMacroTags == null || _formMacroTags.IsDisposed)
             {
-                _formMacroTags = new FormMacroTagsToolWindow(TagCollection, _macroParser, _log);
+                _formMacroTags = new FormMacroTagsToolWindow(MacroTagCollection, _macroParser, _log);
                 _formMacroTags.Show();
             }
             else
