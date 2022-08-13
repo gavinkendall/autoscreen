@@ -349,6 +349,11 @@ namespace AutoScreenCapture
             {
                 // Save the selected slide index.
                 _config.Settings.User.SetValueByKey("SelectedSlideIndex", listBoxScreenshots.SelectedIndex);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
 
             _slideShow.Index = listBoxScreenshots.SelectedIndex;
@@ -1246,6 +1251,11 @@ namespace AutoScreenCapture
             if (tabControlViews.TabCount == (screenTabCount + regionTabCount + 1))
             {
                 _config.Settings.User.SetValueByKey("SelectedTabPageIndex", tabControlViews.SelectedIndex);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
 
                 ShowScreenshotBySlideIndex();
             }

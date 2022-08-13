@@ -97,6 +97,9 @@ namespace AutoScreenCapture
         // Command Deck
         private FormCommandDeck _formCommandDeck;
 
+        // Auto Screen Capture For Beginners
+        private FormAutoScreenCaptureForBeginners _formAutoScreenCaptureForBeginners;
+
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap;
 
@@ -224,7 +227,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            string welcome = "Welcome to Auto Screen Capture! Please read the documentation in Help if you're new to the application";
+            string welcome = "Welcome to Auto Screen Capture! Please read the Help documentation if you're unfamiliar with the application. Most of the tips here highlight new features";
 
             HelpMessage(welcome);
 
@@ -723,6 +726,31 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Shows the "Auto Screen Capture For Beginners" tool.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemAutoScreenCaptureForBeginners_Click(object sender, EventArgs e)
+        {
+            if (!_formAutoScreenCaptureForBeginners.Visible)
+            {
+                _formAutoScreenCaptureForBeginners.Show();
+            }
+            else
+            {
+                _formAutoScreenCaptureForBeginners.Activate();
+            }
+
+            if (_formAutoScreenCaptureForBeginners.WindowState == FormWindowState.Minimized)
+            {
+                _formAutoScreenCaptureForBeginners.WindowState = FormWindowState.Normal;
+            }
+
+            _formAutoScreenCaptureForBeginners.BringToFront();
+            _formAutoScreenCaptureForBeginners.Focus();
+        }
+
+        /// <summary>
         /// Shows the "About" window.
         /// </summary>
         /// <param name="sender"></param>
@@ -850,6 +878,11 @@ namespace AutoScreenCapture
         private void tabControlModules_SelectedIndexChanged(object sender, EventArgs e)
         {
             _config.Settings.User.SetValueByKey("SelectedModuleIndex", tabControlModules.SelectedIndex);
+
+            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+            {
+                _screenCapture.ApplicationError = true;
+            }
 
             switch (tabControlModules.SelectedIndex)
             {

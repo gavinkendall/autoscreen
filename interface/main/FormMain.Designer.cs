@@ -88,6 +88,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemChangeTrigger = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemAutoScreenCaptureForBeginners = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCommandDeck = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,6 +176,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemMacroTags = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemTriggers = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginners = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemToolsCommandDeck = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
@@ -521,7 +523,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemHelp,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 442);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 464);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -722,6 +724,7 @@ namespace AutoScreenCapture
             // toolStripMenuItemTools
             // 
             this.toolStripMenuItemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemAutoScreenCaptureForBeginners,
             this.toolStripMenuItemCommandDeck,
             this.toolStripMenuItemDynamicRegexValidator,
             this.toolStripMenuItemEncryptorDecryptor,
@@ -730,6 +733,13 @@ namespace AutoScreenCapture
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
             this.toolStripMenuItemTools.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemTools.Text = "Tools";
+            // 
+            // toolStripMenuItemAutoScreenCaptureForBeginners
+            // 
+            this.toolStripMenuItemAutoScreenCaptureForBeginners.Name = "toolStripMenuItemAutoScreenCaptureForBeginners";
+            this.toolStripMenuItemAutoScreenCaptureForBeginners.Size = new System.Drawing.Size(296, 22);
+            this.toolStripMenuItemAutoScreenCaptureForBeginners.Text = "Auto Screen Capture For Beginners";
+            this.toolStripMenuItemAutoScreenCaptureForBeginners.Click += new System.EventHandler(this.toolStripMenuItemAutoScreenCaptureForBeginners_Click);
             // 
             // toolStripMenuItemCommandDeck
             // 
@@ -1460,6 +1470,7 @@ namespace AutoScreenCapture
             // toolStripMainMenuItemTools
             // 
             this.toolStripMainMenuItemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginners,
             this.toolStripMainMenuItemToolsCommandDeck,
             this.toolStripMainMenuItemDynamicRegexValidator,
             this.toolStripMainMenuItemEncryptorDecryptor,
@@ -1467,6 +1478,13 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemTools.Name = "toolStripMainMenuItemTools";
             this.toolStripMainMenuItemTools.Size = new System.Drawing.Size(47, 20);
             this.toolStripMainMenuItemTools.Text = "Tools";
+            // 
+            // toolStripMainMenuItemAutoScreenCaptureForBeginners
+            // 
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginners.Name = "toolStripMainMenuItemAutoScreenCaptureForBeginners";
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginners.Size = new System.Drawing.Size(296, 22);
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginners.Text = "Auto Screen Capture For Beginners";
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginners.Click += new System.EventHandler(this.toolStripMenuItemAutoScreenCaptureForBeginners_Click);
             // 
             // toolStripMainMenuItemToolsCommandDeck
             // 
@@ -1863,5 +1881,7 @@ namespace AutoScreenCapture
         private Button buttonResizeModulesPanel;
         private ToolStripMenuItem toolStripMainMenuItemRegionSelectAddRegionExpress;
         private ToolStripMenuItem toolStripMenuItemRegionSelectAddRegionExpress;
+        private ToolStripMenuItem toolStripMainMenuItemAutoScreenCaptureForBeginners;
+        private ToolStripMenuItem toolStripMenuItemAutoScreenCaptureForBeginners;
     }
 }

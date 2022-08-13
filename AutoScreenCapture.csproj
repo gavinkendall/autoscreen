@@ -136,6 +136,12 @@
     <Compile Include="interface\setup\FormSetup.Designer.cs">
       <DependentUpon>FormSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="interface\tools\FormAutoScreenCaptureForBeginners.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\tools\FormAutoScreenCaptureForBeginners.Designer.cs">
+      <DependentUpon>FormAutoScreenCaptureForBeginners.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\tools\FormDynamicRegexValidator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -359,6 +365,9 @@
     <EmbeddedResource Include="interface\setup\FormSetup.resx">
       <DependentUpon>FormSetup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="interface\tools\FormAutoScreenCaptureForBeginners.resx">
+      <DependentUpon>FormAutoScreenCaptureForBeginners.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="interface\tools\FormDynamicRegexValidator.resx">
       <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>
     </EmbeddedResource>
@@ -429,6 +438,8 @@
     <Content Include="images\about-2.png" />
     <Content Include="images\about-3.png" />
     <Content Include="images\about-4.png" />
+    <Content Include="images\kung-fu-panda-level-zero.png" />
+    <Content Include="images\space-cat-wallpaper.jpg" />
     <Content Include="images\tools.png" />
     <Content Include="images\zoom_in.png" />
     <Content Include="images\zoom_out.png" />

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFileTransferSettings));
             this.groupBoxServer = new System.Windows.Forms.GroupBox();
+            this.checkBoxIsLinux = new System.Windows.Forms.CheckBox();
             this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
             this.labelPort = new System.Windows.Forms.Label();
             this.textBoxHost = new System.Windows.Forms.TextBox();
@@ -44,7 +45,6 @@
             this.buttonTestConnection = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.checkBoxIsLinux = new System.Windows.Forms.CheckBox();
             this.groupBoxServer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.groupBoxClient.SuspendLayout();
@@ -63,6 +63,16 @@
             this.groupBoxServer.TabIndex = 1;
             this.groupBoxServer.TabStop = false;
             this.groupBoxServer.Text = "Server";
+            // 
+            // checkBoxIsLinux
+            // 
+            this.checkBoxIsLinux.AutoSize = true;
+            this.checkBoxIsLinux.Location = new System.Drawing.Point(411, 26);
+            this.checkBoxIsLinux.Name = "checkBoxIsLinux";
+            this.checkBoxIsLinux.Size = new System.Drawing.Size(161, 17);
+            this.checkBoxIsLinux.TabIndex = 6;
+            this.checkBoxIsLinux.Text = "Connecting to a Linux server";
+            this.checkBoxIsLinux.UseVisualStyleBackColor = true;
             // 
             // numericUpDownPort
             // 
@@ -214,16 +224,6 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // checkBoxIsLinux
-            // 
-            this.checkBoxIsLinux.AutoSize = true;
-            this.checkBoxIsLinux.Location = new System.Drawing.Point(411, 26);
-            this.checkBoxIsLinux.Name = "checkBoxIsLinux";
-            this.checkBoxIsLinux.Size = new System.Drawing.Size(161, 17);
-            this.checkBoxIsLinux.TabIndex = 6;
-            this.checkBoxIsLinux.Text = "Connecting to a Linux server";
-            this.checkBoxIsLinux.UseVisualStyleBackColor = true;
-            // 
             // FormFileTransferSettings
             // 
             this.AcceptButton = this.buttonOK;
@@ -242,7 +242,7 @@
             this.MinimumSize = new System.Drawing.Size(618, 240);
             this.Name = "FormFileTransferSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Auto Screen Capture - File Transfer Settings";
+            this.Text = "File Transfer Settings";
             this.Load += new System.EventHandler(this.FormFileTransferSettings_Load);
             this.groupBoxServer.ResumeLayout(false);
             this.groupBoxServer.PerformLayout();

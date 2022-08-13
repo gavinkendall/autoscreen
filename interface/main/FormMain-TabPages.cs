@@ -364,6 +364,13 @@ namespace AutoScreenCapture
             tabPageDashboard.Controls.Add(toolStripDashboard);
             tabPageDashboard.Controls.Add(flowLayoutPanel);
 
+            if (_formScreen.ScreenCollection.Count == 0 &&
+                _formRegion.RegionCollection.Count == 0)
+            {
+                tabPageDashboard.BackgroundImage = Resources.space_cat_wallpaper;
+                tabPageDashboard.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+
             tabControlViews.Controls.Add(tabPageDashboard);
 
             foreach (Screen screen in _formScreen.ScreenCollection)
@@ -445,6 +452,29 @@ namespace AutoScreenCapture
             if (tabControlViews.SelectedIndex >= tabControlViews.TabCount)
             {
                 tabControlViews.SelectedIndex = (tabControlViews.TabCount - 1);
+            }
+
+            if (tabControlViews.TabCount == 0)
+            {
+                //GroupBox groupBox = new GroupBox
+                //{
+                //    BackColor = Color.Black,
+                //    ForeColor = Color.Black,
+                //    Location = new Point(0, 0),
+                //    Dock = DockStyle.Fill
+                //};
+
+                //PictureBox pictureBox = new PictureBox
+                //{
+                //    BackColor = Color.Black,
+                //    Image = Properties.Resources.space_cat_wallpaper,
+                //    BorderStyle = BorderStyle.Fixed3D,
+                //    Dock = DockStyle.Fill,
+                //    SizeMode = PictureBoxSizeMode.StretchImage
+                //};
+
+                //groupBox.Controls.Add(pictureBox);
+                
             }
 
             ShowScreenshotBySlideIndex();
@@ -726,6 +756,11 @@ namespace AutoScreenCapture
                 }
 
                 _config.Settings.User.SetValueByKey("DashboardGroupBoxSize", _dashboardGroupBoxSize);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
     }

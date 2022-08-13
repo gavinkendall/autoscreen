@@ -99,6 +99,9 @@ namespace AutoScreenCapture
                 // Command Deck
                 _formCommandDeck = new FormCommandDeck();
 
+                // Auto Screen Capture For Beginners
+                _formAutoScreenCaptureForBeginners = new FormAutoScreenCaptureForBeginners();
+
                 // Command Deck Event Handlers
                 _formCommandDeck.Clipboard += toolStripMenuItemRegionSelectClipboard_Click;
                 _formCommandDeck.ClipboardAutoSave += toolStripMenuItemRegionSelectClipboardAutoSave_Click;

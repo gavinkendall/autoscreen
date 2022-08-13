@@ -412,7 +412,7 @@
             this.MinimumSize = new System.Drawing.Size(755, 522);
             this.Name = "FormEmailSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Auto Screen Capture - Email Settings";
+            this.Text = "Email Settings";
             this.Load += new System.EventHandler(this.FormEmailSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();
             this.groupBoxServer.ResumeLayout(false);

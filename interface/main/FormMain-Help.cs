@@ -32,7 +32,14 @@ namespace AutoScreenCapture
 
         private void LoadHelpTips()
         {
-            _helpTips.Add("The \"Command Deck\" is a small floating window containing the application's most common controls. You can select it from either the Control or Tools menu");
+            _helpTips.Add("\"Command Deck\" is a small floating window providing the application's most common controls such as \"Start/Stop Screen Capture\" and \"Capture Now / Archive\"");
+            _helpTips.Add("You can find \"Command Deck\" in either the Control, Region Select, or Tools menu. It's a useful tool that also displays the screen capture status");
+            _helpTips.Add("\"Screen Capture Status\" (from the Control menu) not only shows you the status of the application but now includes a \"Start/Stop Screen Capture\" button");
+            _helpTips.Add("If you also use labels then it's recommended to use the \"Screen Capture Status With Label Switcher\" tool. This is in the Control and Tools menu");
+            _helpTips.Add("The Command Deck provides Region Select options if you toggle the \"Region Select\" button. These are the same options available in the Region Select menu");
+            _helpTips.Add("The \"Add Region (Express)\" option immediately adds a new Region based on the selected area of a screen without showing the Add Region dialog window");
+            
+
             //_helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day. When you click on a day the list of screenshots for that day will be shown underneath");
             //_helpTips.Add("Below the calendar are the list of screenshots taken on the day selected from the calendar organized in chronological order");
             //_helpTips.Add("On the right side are modules. This includes Screens, Regions, Editors, Schedules, Macro Tags, and Triggers. You can add, configure, or remove various items in each module");
