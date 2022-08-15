@@ -184,13 +184,15 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemToolsScreenCaptureStatusWithLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemAboutAutoScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainSeparatorAbout = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainSeparatorWelcome = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMainMenuItemHelpWelcome = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpChangelog = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpQuickStart = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpGettingStarted = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpWhatsNew = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpScreens = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpRegions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpEditors = new System.Windows.Forms.ToolStripMenuItem();
@@ -198,11 +200,11 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpMacroTags = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpTriggers = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpCommandLine = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMainMenuItemCommonSetupScenarios = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMainMenuItemConfigurationFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpCommonSetupScenarios = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpConfigurationFile = new System.Windows.Forms.ToolStripMenuItem();
             this.panelModules = new System.Windows.Forms.Panel();
             this.buttonResizeModulesPanel = new System.Windows.Forms.Button();
-            this.toolStripMainSeparatorWelcome = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMainMenuItemHelpDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -1537,6 +1539,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpChangelog,
             this.toolStripMainMenuItemHelpQuickStart,
             this.toolStripMainMenuItemHelpGettingStarted,
+            this.toolStripMainMenuItemHelpWhatsNew,
             this.toolStripMainMenuItemHelpScreens,
             this.toolStripMainMenuItemHelpRegions,
             this.toolStripMainMenuItemHelpEditors,
@@ -1544,8 +1547,9 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpMacroTags,
             this.toolStripMainMenuItemHelpTriggers,
             this.toolStripMainMenuItemHelpCommandLine,
-            this.toolStripMainMenuItemCommonSetupScenarios,
-            this.toolStripMainMenuItemConfigurationFile});
+            this.toolStripMainMenuItemHelpCommonSetupScenarios,
+            this.toolStripMainMenuItemHelpConfigurationFile,
+            this.toolStripMainMenuItemHelpDynamicRegexValidator});
             this.toolStripMainMenuItemHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
             this.toolStripMainMenuItemHelp.Name = "toolStripMainMenuItemHelp";
             this.toolStripMainMenuItemHelp.Size = new System.Drawing.Size(60, 20);
@@ -1559,6 +1563,11 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemAboutAutoScreenCapture.Text = "About Auto Screen Capture";
             this.toolStripMainMenuItemAboutAutoScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
             // 
+            // toolStripMainSeparatorAbout
+            // 
+            this.toolStripMainSeparatorAbout.Name = "toolStripMainSeparatorAbout";
+            this.toolStripMainSeparatorAbout.Size = new System.Drawing.Size(255, 6);
+            // 
             // toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp
             // 
             this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Name = "toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp";
@@ -1566,10 +1575,10 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Text = "Auto Screen Capture For Beginners";
             this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Click += new System.EventHandler(this.toolStripMenuItemAutoScreenCaptureForBeginners_Click);
             // 
-            // toolStripMainSeparatorAbout
+            // toolStripMainSeparatorWelcome
             // 
-            this.toolStripMainSeparatorAbout.Name = "toolStripMainSeparatorAbout";
-            this.toolStripMainSeparatorAbout.Size = new System.Drawing.Size(255, 6);
+            this.toolStripMainSeparatorWelcome.Name = "toolStripMainSeparatorWelcome";
+            this.toolStripMainSeparatorWelcome.Size = new System.Drawing.Size(255, 6);
             // 
             // toolStripMainMenuItemHelpWelcome
             // 
@@ -1605,6 +1614,13 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpGettingStarted.Size = new System.Drawing.Size(258, 22);
             this.toolStripMainMenuItemHelpGettingStarted.Text = "Getting Started";
             this.toolStripMainMenuItemHelpGettingStarted.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
+            // 
+            // toolStripMainMenuItemHelpWhatsNew
+            // 
+            this.toolStripMainMenuItemHelpWhatsNew.Name = "toolStripMainMenuItemHelpWhatsNew";
+            this.toolStripMainMenuItemHelpWhatsNew.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemHelpWhatsNew.Text = "What\'s New";
+            this.toolStripMainMenuItemHelpWhatsNew.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
             // toolStripMainMenuItemHelpScreens
             // 
@@ -1655,19 +1671,19 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpCommandLine.Text = "Command Line";
             this.toolStripMainMenuItemHelpCommandLine.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
-            // toolStripMainMenuItemCommonSetupScenarios
+            // toolStripMainMenuItemHelpCommonSetupScenarios
             // 
-            this.toolStripMainMenuItemCommonSetupScenarios.Name = "toolStripMainMenuItemCommonSetupScenarios";
-            this.toolStripMainMenuItemCommonSetupScenarios.Size = new System.Drawing.Size(258, 22);
-            this.toolStripMainMenuItemCommonSetupScenarios.Text = "Common Setup Scenarios";
-            this.toolStripMainMenuItemCommonSetupScenarios.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
+            this.toolStripMainMenuItemHelpCommonSetupScenarios.Name = "toolStripMainMenuItemHelpCommonSetupScenarios";
+            this.toolStripMainMenuItemHelpCommonSetupScenarios.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemHelpCommonSetupScenarios.Text = "Common Setup Scenarios";
+            this.toolStripMainMenuItemHelpCommonSetupScenarios.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
-            // toolStripMainMenuItemConfigurationFile
+            // toolStripMainMenuItemHelpConfigurationFile
             // 
-            this.toolStripMainMenuItemConfigurationFile.Name = "toolStripMainMenuItemConfigurationFile";
-            this.toolStripMainMenuItemConfigurationFile.Size = new System.Drawing.Size(258, 22);
-            this.toolStripMainMenuItemConfigurationFile.Text = "Configuration File";
-            this.toolStripMainMenuItemConfigurationFile.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
+            this.toolStripMainMenuItemHelpConfigurationFile.Name = "toolStripMainMenuItemHelpConfigurationFile";
+            this.toolStripMainMenuItemHelpConfigurationFile.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemHelpConfigurationFile.Text = "Configuration File";
+            this.toolStripMainMenuItemHelpConfigurationFile.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
             // panelModules
             // 
@@ -1694,10 +1710,11 @@ namespace AutoScreenCapture
             this.buttonResizeModulesPanel.UseVisualStyleBackColor = true;
             this.buttonResizeModulesPanel.Click += new System.EventHandler(this.buttonResizeModulesPanel_Click);
             // 
-            // toolStripMainSeparatorWelcome
+            // toolStripMainMenuItemHelpDynamicRegexValidator
             // 
-            this.toolStripMainSeparatorWelcome.Name = "toolStripMainSeparatorWelcome";
-            this.toolStripMainSeparatorWelcome.Size = new System.Drawing.Size(255, 6);
+            this.toolStripMainMenuItemHelpDynamicRegexValidator.Name = "toolStripMainMenuItemHelpDynamicRegexValidator";
+            this.toolStripMainMenuItemHelpDynamicRegexValidator.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemHelpDynamicRegexValidator.Text = "Dynamic Regex Validator";
             // 
             // FormMain
             // 
@@ -1875,8 +1892,8 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMainMenuItemHelpMacroTags;
         private ToolStripMenuItem toolStripMainMenuItemHelpTriggers;
         private ToolStripMenuItem toolStripMainMenuItemHelpCommandLine;
-        private ToolStripMenuItem toolStripMainMenuItemCommonSetupScenarios;
-        private ToolStripMenuItem toolStripMainMenuItemConfigurationFile;
+        private ToolStripMenuItem toolStripMainMenuItemHelpCommonSetupScenarios;
+        private ToolStripMenuItem toolStripMainMenuItemHelpConfigurationFile;
         private ToolStripMenuItem toolStripMainMenuItemRegionSelect;
         private ToolStripMenuItem toolStripMainMenuItemRegionSelectOptions;
         private ToolStripMenuItem toolStripMainMenuItemCommandDeck;
@@ -1911,5 +1928,7 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripRootMenuItemCommandDeck;
         private ToolStripMenuItem toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp;
         private ToolStripSeparator toolStripMainSeparatorWelcome;
+        private ToolStripMenuItem toolStripMainMenuItemHelpWhatsNew;
+        private ToolStripMenuItem toolStripMainMenuItemHelpDynamicRegexValidator;
     }
 }

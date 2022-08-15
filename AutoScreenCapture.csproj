@@ -447,6 +447,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="autoscreen.pfx" />
+    <None Include="help\dynamic_regex_validator.rtf" />
     <None Include="help\quick_start.rtf" />
     <None Include="help\welcome.rtf" />
     <None Include="help\license.rtf" />
@@ -461,6 +462,7 @@
     <None Include="help\schedules.rtf" />
     <None Include="help\macro_tags.rtf" />
     <None Include="help\triggers.rtf" />
+    <None Include="help\whats_new.rtf" />
     <None Include="icons\ico\autoscreen-warning.ico" />
     <Content Include="icons\ico\autoscreen-running-optimized.ico" />
     <Content Include="icons\ico\autoscreen.ico" />

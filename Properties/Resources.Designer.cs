@@ -242,11 +242,11 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Consolas;}{\f2\fnil\fcharset0 Consolas;}{\f3\fnil\fcharset2 Symbol;}}
-        ///{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;}
+        ///{\colortbl ;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Changelog\b0\fs22\par
         ///Who reads these things?\par
-        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as [rest of string was truncated]&quot;;.
+        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoeni [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string changelog {
             get {
@@ -296,12 +296,12 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
-        ///{\colortbl ;\red0\green128\blue0;\red0\green0\blue0;\red0\green0\blue255;}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Configuration File\b0\par
         ///\fs22 Auto Screen Capture comes with its own configuration file named &quot;autoscreen.conf&quot; that is usually found in the same folder as &quot;autoscreen.exe&quot;.\par
-        ///{\pict{\*\picprop}\wmetafile8\ [rest of string was truncated]&quot;;.
+        ///{\pict{\*\picprop}\wmetafile8\picw10742\pich3281\picwgoal6090\pichgoal1860 
+        ///010009000003b827010000009927010000000400000003010 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string configuration_file {
             get {
@@ -326,6 +326,20 @@ namespace AutoScreenCapture.Properties {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Dynamic Regex Validator\b0\par
+        ///
+        ///\pard\sa200\sl240\slmult1\fs22 This tool is useful for testing regular expressions.\par
+        ///Enter your regular expression in the &quot;Regular Expression&quot; field and a test value in the &quot;Test Value&quot; field. Modify either the regex or the test value and watch the colors and status of  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string dynamic_regex_validator {
+            get {
+                return ResourceManager.GetString("dynamic_regex_validator", resourceCulture);
             }
         }
         
@@ -385,12 +399,12 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Getting Started\fs22\par
         ///
         ///\pard\sa200\sl240\slmult1\b0 Check what will be captured before starting a screen capture session by making sure that the Preview button is enabled.\par
-        ///You should see a real-time preview when looking at the tab named &quot;Dashboard&quot; or any of the tabs to the right of the Dash [rest of string was truncated]&quot;;.
+        ///You should then see a real-time preview when looking at the tab named &quot;Dashboard&quot; or any of the tabs to the right of the Dashboard tab.\par
+        ///The Preview but [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string getting_started {
             get {
@@ -482,7 +496,7 @@ namespace AutoScreenCapture.Properties {
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Quick Start\fs22\par
         ///\b0 This is for people who don&apos;t want to read through the longer &quot;Getting Started&quot; help section and just want to jump straight into using the application so the information in this section is intentionally very short and basic.\par
-        ///Right-click on the system tray icon to open the system tray icon menu and select &quot;S [rest of string was truncated]&quot;;.
+        ///There are two recommended ways to begin using Auto Screen Capture depending on how  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string quick_start {
             get {
@@ -516,8 +530,11 @@ namespace AutoScreenCapture.Properties {
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Regions\b0\fs22\par
         ///The &quot;Regions&quot; module gives you the ability to add, configure, and remove multiple regions. A region represents an area of a screen and will always be defined by its X, Y, Width, and Height values.\par
         ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6509\pich4763\picwgoal3690\pichgoal2700 
-        ///010009000003 [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl240\slmult1\par
+        ///\par
+        ///
+        ///\pard\sa200\sl276\slmult1\b Adding Regions\b0\par
+        ///To add a new Region cli [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string regions {
             get {
@@ -541,8 +558,10 @@ namespace AutoScreenCapture.Properties {
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Schedules\b0\fs22\par
         ///The &quot;Schedules&quot; module gives you the ability to add, configure, and remove schedules that define when screenshots should be taken between a time period (and what screens and regions should be captured during the running schedule).\par
-        ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picpro [rest of string was truncated]&quot;;.
+        ///\par
+        ///\par
+        ///\b Adding Schedules\b0\par
+        ///To  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string schedules {
             get {
@@ -639,7 +658,9 @@ namespace AutoScreenCapture.Properties {
         ///The &quot;Triggers&quot; module gives you the ability to add, configure, and remove triggers.\par
         ///A trigger controls the behaviour of Auto Screen Capture by having the application perform a specified action based on a specified condition.\par
         ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafi [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl240\slmult1\par
+        ///\par
+        ///\b Adding Trig [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string triggers {
             get {
@@ -677,6 +698,22 @@ namespace AutoScreenCapture.Properties {
         internal static string welcome {
             get {
                 return ResourceManager.GetString("welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 What&apos;s New\b0\par
+        ///\fs22 Auto Screen Capture 2.5 (&quot;Limoncello&quot;) includes a number of new features.\par
+        ///\par
+        ///\par
+        ///\b Enhanced Configuration File Format (&quot;autoscreen.conf&quot;)\b0\par
+        ///You can now define your own default Screens, Regions, Editors, Schedules, Macro Tags, and Triggers in the &quot;autoscreen.conf&quot; fi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string whats_new {
+            get {
+                return ResourceManager.GetString("whats_new", resourceCulture);
             }
         }
         

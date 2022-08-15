@@ -292,4 +292,10 @@
   <data name="space_cat_wallpaper" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\space-cat-wallpaper.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="whats_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\whats_new.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="dynamic_regex_validator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\dynamic_regex_validator.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>
