@@ -296,6 +296,9 @@ namespace AutoScreenCapture
                             // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
                             imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, decryptedScreenshot.FilePath);
                         }
+
+                        // Encrypt the screenshot again since we've checked the image difference and have the imageDiff value.
+                        _security.EncryptScreenshot(lastScreenshotOfThisView);
                     }
                     else
                     {
