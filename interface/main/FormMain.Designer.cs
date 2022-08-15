@@ -184,6 +184,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemToolsScreenCaptureStatusWithLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemAboutAutoScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainSeparatorAbout = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMainMenuItemHelpWelcome = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpLicense = new System.Windows.Forms.ToolStripMenuItem();
@@ -201,7 +202,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemConfigurationFile = new System.Windows.Forms.ToolStripMenuItem();
             this.panelModules = new System.Windows.Forms.Panel();
             this.buttonResizeModulesPanel = new System.Windows.Forms.Button();
-            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainSeparatorWelcome = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -1528,8 +1529,9 @@ namespace AutoScreenCapture
             // 
             this.toolStripMainMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMainMenuItemAboutAutoScreenCapture,
-            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp,
             this.toolStripMainSeparatorAbout,
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp,
+            this.toolStripMainSeparatorWelcome,
             this.toolStripMainMenuItemHelpWelcome,
             this.toolStripMainMenuItemHelpLicense,
             this.toolStripMainMenuItemHelpChangelog,
@@ -1556,6 +1558,13 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemAboutAutoScreenCapture.Size = new System.Drawing.Size(258, 22);
             this.toolStripMainMenuItemAboutAutoScreenCapture.Text = "About Auto Screen Capture";
             this.toolStripMainMenuItemAboutAutoScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
+            // 
+            // toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp
+            // 
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Name = "toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp";
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Text = "Auto Screen Capture For Beginners";
+            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Click += new System.EventHandler(this.toolStripMenuItemAutoScreenCaptureForBeginners_Click);
             // 
             // toolStripMainSeparatorAbout
             // 
@@ -1685,12 +1694,10 @@ namespace AutoScreenCapture
             this.buttonResizeModulesPanel.UseVisualStyleBackColor = true;
             this.buttonResizeModulesPanel.Click += new System.EventHandler(this.buttonResizeModulesPanel_Click);
             // 
-            // toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp
+            // toolStripMainSeparatorWelcome
             // 
-            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Name = "toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp";
-            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Size = new System.Drawing.Size(258, 22);
-            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Text = "Auto Screen Capture For Beginners";
-            this.toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp.Click += new System.EventHandler(this.toolStripMenuItemAutoScreenCaptureForBeginners_Click);
+            this.toolStripMainSeparatorWelcome.Name = "toolStripMainSeparatorWelcome";
+            this.toolStripMainSeparatorWelcome.Size = new System.Drawing.Size(255, 6);
             // 
             // FormMain
             // 
@@ -1903,5 +1910,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemAutoScreenCaptureForBeginners;
         private ToolStripMenuItem toolStripRootMenuItemCommandDeck;
         private ToolStripMenuItem toolStripMainMenuItemAutoScreenCaptureForBeginnersInHelp;
+        private ToolStripSeparator toolStripMainSeparatorWelcome;
     }
 }
