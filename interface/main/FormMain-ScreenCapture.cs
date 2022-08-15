@@ -145,7 +145,7 @@ namespace AutoScreenCapture
                     {
                         // The default Capture Now macro if we were unable to get the value from the CaptureNowMacro key
                         // since this might be from an older version of the application when the CaptureNowMacro key didn't exist yet.
-                        string captureNowMacro = @"manual\%date%\%name%\%date%_%time%.%format%";
+                        string captureNowMacro = @"%date%\%name%\%date%_%time%.%format%";
 
                         Setting captureNowMacroSetting = _config.Settings.User.GetByKey("CaptureNowMacro");
 

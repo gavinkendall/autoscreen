@@ -44,7 +44,18 @@ namespace AutoScreenCapture
 
         private void FormCaptureNowOptions_Load(object sender, System.EventArgs e)
         {
-            textBoxCaptureNowMacro.Text = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
+            // The default Capture Now macro if we were unable to get the value from the CaptureNowMacro key
+            // since this might be from an older version of the application when the CaptureNowMacro key didn't exist yet.
+            string captureNowMacro = @"%date%\%name%\%date%_%time%.%format%";
+
+            Setting captureNowMacroSetting = _config.Settings.User.GetByKey("CaptureNowMacro");
+
+            if (captureNowMacroSetting != null)
+            {
+                captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
+            }
+
+            textBoxCaptureNowMacro.Text = captureNowMacro;
         }
 
         private void Save()
