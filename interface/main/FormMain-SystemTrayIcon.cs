@@ -143,6 +143,7 @@ namespace AutoScreenCapture
             if (_screenCapture.LockScreenCaptureSession)
             {
                 // Hide the menu items that need to be hidden when a screen capture session is locked.
+                toolStripRootMenuItemCommandDeck.Visible = false;
                 toolStripSeparatorScreenCapture.Visible = false;
                 toolStripMenuItemCommandLine.Visible = false;
                 toolStripMenuItemOpenProgramFolder.Visible = false;
@@ -166,6 +167,7 @@ namespace AutoScreenCapture
             else
             {
                 // Show the menu items that need to be shown when a screen capture session is unlocked.
+                toolStripRootMenuItemCommandDeck.Visible = true;
                 toolStripSeparatorScreenCapture.Visible = true;
                 toolStripMenuItemCommandLine.Visible = true;
                 toolStripMenuItemOpenProgramFolder.Visible = true;

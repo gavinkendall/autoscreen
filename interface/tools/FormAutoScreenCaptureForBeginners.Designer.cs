@@ -79,8 +79,8 @@
             this.labelScreenshotsFolderHelp.Name = "labelScreenshotsFolderHelp";
             this.labelScreenshotsFolderHelp.Size = new System.Drawing.Size(537, 40);
             this.labelScreenshotsFolderHelp.TabIndex = 34;
-            this.labelScreenshotsFolderHelp.Text = "This is the folder where all of your screenshots will be saved. Use the yellow fo" +
-    "lder button to change it.";
+            this.labelScreenshotsFolderHelp.Text = "This is the folder where all of your screenshots will be saved. It will replace a" +
+    "ll folder paths for every Screen and Region.";
             // 
             // textBoxScreenshotsFolder
             // 
@@ -256,8 +256,8 @@
             this.labelFilenamePatternHelp.Name = "labelFilenamePatternHelp";
             this.labelFilenamePatternHelp.Size = new System.Drawing.Size(537, 40);
             this.labelFilenamePatternHelp.TabIndex = 50;
-            this.labelFilenamePatternHelp.Text = "The filename pattern for each file that will be saved for each screenshot taken. " +
-    "The filepath is based on the pattern.";
+            this.labelFilenamePatternHelp.Text = "The filename pattern for each file that will be saved for each screenshot. Filepa" +
+    "ths for Screens and Regions will be replaced.";
             // 
             // buttonExitApplication
             // 

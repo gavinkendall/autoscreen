@@ -39,18 +39,6 @@ namespace AutoScreenCapture
             _helpTips.Add("The Command Deck provides Region Select options if you toggle the \"Region Select\" button. These are the same options available in the Region Select menu");
             _helpTips.Add("The \"Add Region (Express)\" option immediately adds a new Region based on the selected area of a screen without showing the Add Region dialog window");
             
-
-            //_helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day. When you click on a day the list of screenshots for that day will be shown underneath");
-            //_helpTips.Add("Below the calendar are the list of screenshots taken on the day selected from the calendar organized in chronological order");
-            //_helpTips.Add("On the right side are modules. This includes Screens, Regions, Editors, Schedules, Macro Tags, and Triggers. You can add, configure, or remove various items in each module");
-            //_helpTips.Add("The Screens module displays a list of screens. Add, configure, or remove screens from the Screens module");
-            //_helpTips.Add("Use the Configure button to configure a Screen or Region. You can add multiple screens and regions each with their own set of attributes");
-            //_helpTips.Add("You can add as many editors as you want but only one editor can be set as the default editor");
-            //_helpTips.Add("Use the Macro field of a Screen or Region to define the filename pattern for each file with macro tags (such as %date% and %time%)");
-            //_helpTips.Add("Macro tags can represent the current date and time. You can also acquire the name of the user or computer. Have a look in the Macro Tags module");
-            //_helpTips.Add("There are keyboard shortcuts you can use to manually take screenshots in your own time rather than wait for the next screen capture cycle");
-            //_helpTips.Add("You can change the behaviour of the application by configuring triggers. Each trigger performs a certain action based on a particular condition");
-
             // Tool tips for various controls.
             _toolTip.SetToolTip(comboBoxFilterType, "Choose a type of filter. This could be a label or the title of an active window from an application that was captured during a session");
             _toolTip.SetToolTip(comboBoxFilterValue, "Select a filter value based on the chosen filter type. This will show you what days in the calendar are associated with the filter value");

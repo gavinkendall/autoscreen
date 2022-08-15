@@ -411,10 +411,19 @@ namespace AutoScreenCapture
 
                 Log.WriteStartupMessage("Getting default screenshots folder");
 
-                // The screenshots folder is from user settings.
+                // The screenshots folder from user settings.
+                // Call ProcessPath as we want sub-folders to be created.
                 fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
 
+                Log.WriteStartupMessage("Getting default filename pattern");
+
+                // The filename pattern from user settings.
+                // Do not call ProcessPath as we don't want the sub-folders to be created yet.
+                fileSystem.FilenamePattern = Settings.User.GetByKey("FilenamePattern").Value.ToString();
+
                 Log.WriteStartupMessage("The default screenshots folder is " + fileSystem.ScreenshotsFolder);
+
+                Log.WriteStartupMessage("The default filename pattern is " + fileSystem.FilenamePattern);
 
                 Log.WriteStartupMessage("Loading SFTP settings (for file transfer operations since we can use SFTP to upload screenshots to a file server)");
 
@@ -755,7 +764,7 @@ namespace AutoScreenCapture
                     {
                         bool enable = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["Enable"].Value);
                         string name = Regex.Match(line, REGEX_SCREEN).Groups["Name"].Value;
-                        string folder = Regex.Match(line, REGEX_SCREEN).Groups["Folder"].Value;
+                        string folder = ProcessPath(Regex.Match(line, REGEX_SCREEN).Groups["Folder"].Value); // Create any sub-folders we need.
                         string macro = Regex.Match(line, REGEX_SCREEN).Groups["Macro"].Value;
                         int source = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["Source"].Value);
                         int component = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["Component"].Value);
@@ -824,7 +833,7 @@ namespace AutoScreenCapture
                     {
                         bool enable = Convert.ToBoolean(Regex.Match(line, REGEX_REGION).Groups["Enable"].Value);
                         string name = Regex.Match(line, REGEX_REGION).Groups["Name"].Value;
-                        string folder = Regex.Match(line, REGEX_REGION).Groups["Folder"].Value;
+                        string folder = ProcessPath(Regex.Match(line, REGEX_REGION).Groups["Folder"].Value); // Create any sub-folders we need.
                         string macro = Regex.Match(line, REGEX_REGION).Groups["Macro"].Value;
                         int x = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["X"].Value);
                         int y = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["Y"].Value);
@@ -1192,6 +1201,9 @@ namespace AutoScreenCapture
             const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
             const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
 
+            // Filename Pattern
+            const string REGEX_FILENAME_PATTERN = "^FilenamePattern=(?<Path>.+)$";
+
             // Parse the old configuration file.
             foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
             {
@@ -1253,6 +1265,11 @@ namespace AutoScreenCapture
                 if (Regex.IsMatch(line, REGEX_SCHEDULES_FILE))
                 {
                     Settings.Application.SetValueByKey("SchedulesFile", Regex.Match(line, REGEX_SCHEDULES_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_FILENAME_PATTERN))
+                {
+                    Settings.User.SetValueByKey("FilenamePattern", Regex.Match(line, REGEX_FILENAME_PATTERN).Groups["Path"].Value);
                 }
             }
         }

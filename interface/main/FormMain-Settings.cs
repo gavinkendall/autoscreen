@@ -36,41 +36,6 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("It looks like the application successfully parsed your \"" + _fileSystem.ConfigFile + "\" file");
 
-                _log.WriteDebugMessage("Checking for a user-defined screenshots folder path in user settings and if it differs from the path set by autoscreen.conf");
-
-                // Let's see if the user has their own screenshots folder they would like to use. Check user settings.
-                // If they have defined a screenshots folder in user settings then use that folder path otherwise keep using the path from the config file.
-                Setting screenshotsFolderDefinedByUser = _config.Settings.User.GetByKey("ScreenshotsFolder", _fileSystem.ScreenshotsFolder, createKeyIfNotFound: false);
-
-                // Set the screenshots folder path to be the user-defined screenshots folder path if it's different from the path used by the configuration file.
-                if (screenshotsFolderDefinedByUser != null && !screenshotsFolderDefinedByUser.Value.ToString().Equals(_fileSystem.ScreenshotsFolder))
-                {
-                    _fileSystem.ScreenshotsFolder = screenshotsFolderDefinedByUser.Value.ToString();
-
-                    _log.WriteDebugMessage("WARNING! A user-defined screenshots folder path was found in user settings and this path is different from what was set in the autoscreen.conf file so the application will be using this path instead!");
-                    _log.WriteDebugMessage("The screenshots folder path that will be used is \"" + _fileSystem.ScreenshotsFolder + "\"");
-                }
-                else
-                {
-                    _log.WriteDebugMessage("No difference in folder path found. Screenshots folder path from autoscreen.conf file will be used (\"" + _fileSystem.ScreenshotsFolder + "\")");
-                }
-
-                // Let's see if the user has their own filename pattern they would like to use. Check user settings.
-                // If they have defined a filename pattern in user settings then use that filename pattern otherwise keep using the filename pattern from the config file.
-                Setting filenamePatternDefinedByUser = _config.Settings.User.GetByKey("FilenamePattern", _fileSystem.FilenamePattern, createKeyIfNotFound: false);
-
-                if (filenamePatternDefinedByUser != null && !filenamePatternDefinedByUser.Value.ToString().Equals(_fileSystem.FilenamePattern))
-                {
-                    _fileSystem.FilenamePattern = filenamePatternDefinedByUser.Value.ToString();
-
-                    _log.WriteDebugMessage("WARNING! A user-defined filename pattern was found in user settings and it is different from what was set in the autoscreen.conf file so the application will be using the user-defined filename pattern instead!");
-                    _log.WriteDebugMessage("The filename pattern that will be used is \"" + _fileSystem.FilenamePattern + "\"");
-                }
-                else
-                {
-                    _log.WriteDebugMessage("No difference in filename pattern found. Filename pattern in autoscreen.conf file will be used (\"" + _fileSystem.FilenamePattern + "\")");
-                }
-
                 _log.WriteDebugMessage("Initializing screen capture");
                 _screenCapture = new ScreenCapture(_config, _fileSystem, _log);
 
