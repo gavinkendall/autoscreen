@@ -192,7 +192,14 @@ namespace AutoScreenCapture
             _slideNameList = new List<string>();
             _log.WriteDebugMessage("Initialized slide name list");
 
-            _screenCapture.OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
+            _screenCapture.OptimizeScreenCapture = false;
+
+            Setting optimizeScreenCaptureSetting = config.Settings.User.GetByKey("OptimizeScreenCapture");
+
+            if (optimizeScreenCaptureSetting != null)
+            {
+                _screenCapture.OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
+            }
 
             EmailedScreenshotFilePathList = new List<string>();
         }

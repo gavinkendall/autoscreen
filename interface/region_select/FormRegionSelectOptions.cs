@@ -64,7 +64,14 @@ namespace AutoScreenCapture
                 comboBoxFormat.Items.Add(imageFormat.Name);
             }
 
-            comboBoxFormat.SelectedIndex = comboBoxFormat.Items.IndexOf(_config.Settings.User.GetByKey("AutoSaveFormat").Value.ToString());
+            comboBoxFormat.SelectedIndex = 3;
+
+            Setting autoSaveFormatSetting = _config.Settings.User.GetByKey("AutoSaveFormat");
+
+            if (autoSaveFormatSetting != null)
+            {
+                comboBoxFormat.SelectedIndex = comboBoxFormat.Items.IndexOf(_config.Settings.User.GetByKey("AutoSaveFormat").Value.ToString());
+            }
         }
 
         private void SaveOptions()

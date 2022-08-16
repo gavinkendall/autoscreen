@@ -313,7 +313,14 @@ namespace AutoScreenCapture
                         config: _config,
                         slideValueToDisplay: comboBoxFilterType.Text); // Give the currently selected filter type as the slide value to display
 
-                    int selectedSlideIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedSlideIndex").Value);
+                    int selectedSlideIndex = 0;
+
+                    Setting selectedSlideIndexSetting = _config.Settings.User.GetByKey("SelectedSlideIndex");
+
+                    if (selectedSlideIndexSetting != null)
+                    {
+                        selectedSlideIndex  = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedSlideIndex").Value);
+                    }
 
                     if (listBoxScreenshots.Items.Count > 0)
                     {

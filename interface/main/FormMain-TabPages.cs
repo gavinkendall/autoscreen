@@ -463,7 +463,14 @@ namespace AutoScreenCapture
                 tabControlViews.Controls.Add(tabPageRegion);
             }
 
-            tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex").Value);
+            tabControlViews.SelectedIndex = 0;
+
+            Setting selectedTabPageIndexSetting = _config.Settings.User.GetByKey("SelectedTabPageIndex");
+
+            if (selectedTabPageIndexSetting != null)
+            {
+                tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex").Value);
+            }
 
             if (tabControlViews.SelectedIndex >= tabControlViews.TabCount)
             {

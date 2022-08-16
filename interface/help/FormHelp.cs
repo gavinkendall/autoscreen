@@ -40,6 +40,7 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("Quick Start");
             listBoxHelpItems.Items.Add("Getting Started");
             listBoxHelpItems.Items.Add("What's New");
+            listBoxHelpItems.Items.Add("Configuration File");
             listBoxHelpItems.Items.Add("Screens");
             listBoxHelpItems.Items.Add("Regions");
             listBoxHelpItems.Items.Add("Editors");
@@ -48,7 +49,6 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("Triggers");
             listBoxHelpItems.Items.Add("Command Line");
             listBoxHelpItems.Items.Add("Common Setup Scenarios");
-            listBoxHelpItems.Items.Add("Configuration File");
             listBoxHelpItems.Items.Add("Dynamic Regex Validator");
 
             listBoxHelpItems.SelectedIndex = 0;
@@ -91,39 +91,39 @@ namespace AutoScreenCapture
                     break;
 
                 case 6:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.screens;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.configuration_file;
                     break;
 
                 case 7:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.regions;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.screens;
                     break;
 
                 case 8:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.editors;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.regions;
                     break;
 
                 case 9:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.schedules;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.editors;
                     break;
 
                 case 10:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.macro_tags;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.schedules;
                     break;
 
                 case 11:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.triggers;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.macro_tags;
                     break;
 
                 case 12:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.command_line1;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.triggers;
                     break;
 
                 case 13:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.common_setup_scenarios;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.command_line1;
                     break;
 
                 case 14:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.configuration_file;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.common_setup_scenarios;
                     break;
 
                 case 15:

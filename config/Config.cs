@@ -417,9 +417,17 @@ namespace AutoScreenCapture
 
                 Log.WriteStartupMessage("Getting default filename pattern");
 
-                // The filename pattern from user settings.
-                // Do not call ProcessPath as we don't want the sub-folders to be created yet.
-                fileSystem.FilenamePattern = Settings.User.GetByKey("FilenamePattern").Value.ToString();
+                // The default filename pattern if we can't find "FilenamePattern" in the config file (which could happen with a config file from 2.3).
+                fileSystem.FilenamePattern = @"%date%\%name%\%date%_%time%.%format%";
+
+                Setting filenamePatternSetting = Settings.User.GetByKey("FilenamePattern");
+
+                if (filenamePatternSetting != null)
+                {
+                    // The filename pattern from user settings.
+                    // Do not call ProcessPath as we don't want the sub-folders to be created yet.
+                    fileSystem.FilenamePattern = Settings.User.GetByKey("FilenamePattern").Value.ToString();
+                }
 
                 Log.WriteStartupMessage("The default screenshots folder is " + fileSystem.ScreenshotsFolder);
 
@@ -1199,6 +1207,7 @@ namespace AutoScreenCapture
             const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
             const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
             const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
+            const string REGEX_TAGS_FILE = "^TagsFile=(?<Path>.+)$"; // The old version of Macro Tags (in 2.3 I think)
             const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
 
             // Filename Pattern
@@ -1260,6 +1269,11 @@ namespace AutoScreenCapture
                 if (Regex.IsMatch(line, REGEX_MACRO_TAGS_FILE))
                 {
                     Settings.Application.SetValueByKey("MacroTagsFile", Regex.Match(line, REGEX_MACRO_TAGS_FILE).Groups["Path"].Value);
+                }
+
+                if (Regex.IsMatch(line, REGEX_TAGS_FILE))
+                {
+                    Settings.Application.SetValueByKey("MacroTagsFile", Regex.Match(line, REGEX_TAGS_FILE).Groups["Path"].Value);
                 }
 
                 if (Regex.IsMatch(line, REGEX_SCHEDULES_FILE))

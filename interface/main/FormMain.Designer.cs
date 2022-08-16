@@ -202,9 +202,9 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpCommandLine = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpCommonSetupScenarios = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpConfigurationFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.panelModules = new System.Windows.Forms.Panel();
             this.buttonResizeModulesPanel = new System.Windows.Forms.Button();
-            this.toolStripMainMenuItemHelpDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -1540,6 +1540,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpQuickStart,
             this.toolStripMainMenuItemHelpGettingStarted,
             this.toolStripMainMenuItemHelpWhatsNew,
+            this.toolStripMainMenuItemHelpConfigurationFile,
             this.toolStripMainMenuItemHelpScreens,
             this.toolStripMainMenuItemHelpRegions,
             this.toolStripMainMenuItemHelpEditors,
@@ -1548,7 +1549,6 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpTriggers,
             this.toolStripMainMenuItemHelpCommandLine,
             this.toolStripMainMenuItemHelpCommonSetupScenarios,
-            this.toolStripMainMenuItemHelpConfigurationFile,
             this.toolStripMainMenuItemHelpDynamicRegexValidator});
             this.toolStripMainMenuItemHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
             this.toolStripMainMenuItemHelp.Name = "toolStripMainMenuItemHelp";
@@ -1685,6 +1685,12 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpConfigurationFile.Text = "Configuration File";
             this.toolStripMainMenuItemHelpConfigurationFile.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
+            // toolStripMainMenuItemHelpDynamicRegexValidator
+            // 
+            this.toolStripMainMenuItemHelpDynamicRegexValidator.Name = "toolStripMainMenuItemHelpDynamicRegexValidator";
+            this.toolStripMainMenuItemHelpDynamicRegexValidator.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemHelpDynamicRegexValidator.Text = "Dynamic Regex Validator";
+            // 
             // panelModules
             // 
             this.panelModules.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1709,12 +1715,6 @@ namespace AutoScreenCapture
             this.buttonResizeModulesPanel.Text = ">";
             this.buttonResizeModulesPanel.UseVisualStyleBackColor = true;
             this.buttonResizeModulesPanel.Click += new System.EventHandler(this.buttonResizeModulesPanel_Click);
-            // 
-            // toolStripMainMenuItemHelpDynamicRegexValidator
-            // 
-            this.toolStripMainMenuItemHelpDynamicRegexValidator.Name = "toolStripMainMenuItemHelpDynamicRegexValidator";
-            this.toolStripMainMenuItemHelpDynamicRegexValidator.Size = new System.Drawing.Size(258, 22);
-            this.toolStripMainMenuItemHelpDynamicRegexValidator.Text = "Dynamic Regex Validator";
             // 
             // FormMain
             // 
