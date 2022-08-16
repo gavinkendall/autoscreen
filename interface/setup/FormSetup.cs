@@ -90,7 +90,7 @@ namespace AutoScreenCapture
                 listBoxMacroTags.Items.Add(macroTag.Name + " (" + macroTag.Description + ")");
             }
 
-            checkBoxUseKeyboardShortcuts.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("UseKeyboardShortcuts").Value);
+            checkBoxUseKeyboardShortcuts.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("UseKeyboardShortcuts", false, true).Value);
 
             comboBoxKeyboardShortcutStartScreenCaptureModifier1.Items.Clear();
             comboBoxKeyboardShortcutStartScreenCaptureModifier1.Items.Add(AutoScreenCapture.ModifierKeys.Alt.ToString());
@@ -199,8 +199,8 @@ namespace AutoScreenCapture
             }
 
             // Optimize Screen Capture
-            checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
-            trackBarImageDiffTolerance.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance").Value);
+            checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", false, true).Value);
+            trackBarImageDiffTolerance.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance", 20, true).Value);
             labelSelectedImageDiffTolerance.Text = trackBarImageDiffTolerance.Value.ToString() + "%";
             CheckEnabledStatusOnOptimizeScreenCaptureControls();
 
@@ -212,8 +212,8 @@ namespace AutoScreenCapture
 
         private void FormSetup_Shown(object sender, EventArgs e)
         {
-            bool applyScreenshotLabel = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel").Value);
-            string screenshotLabel = _config.Settings.User.GetByKey("ScreenshotLabel").Value.ToString();
+            bool applyScreenshotLabel = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", false, true).Value);
+            string screenshotLabel = _config.Settings.User.GetByKey("ScreenshotLabel", string.Empty, true).Value.ToString();
 
             checkBoxScreenshotLabel.Checked = applyScreenshotLabel;
 
@@ -451,7 +451,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            string applicationFocus = _config.Settings.User.GetByKey("ApplicationFocus").Value.ToString();
+            string applicationFocus = _config.Settings.User.GetByKey("ApplicationFocus", string.Empty, true).Value.ToString();
 
             if (string.IsNullOrEmpty(applicationFocus))
             {
@@ -471,8 +471,8 @@ namespace AutoScreenCapture
 
             listBoxProcessList.SelectedIndex = listBoxProcessList.Items.IndexOf(applicationFocus);
 
-            numericUpDownApplicationFocusDelayBefore.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayBefore").Value);
-            numericUpDownApplicationFocusDelayAfter.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayAfter").Value);
+            numericUpDownApplicationFocusDelayBefore.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayBefore", 0, true).Value);
+            numericUpDownApplicationFocusDelayAfter.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayAfter", 0, true).Value);
         }
 
         /// <summary>
@@ -548,7 +548,7 @@ namespace AutoScreenCapture
 
             _config.Settings.User.Save(_config.Settings, _fileSystem);
 
-            textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase").Value.ToString();
+            textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase", string.Empty, true).Value.ToString();
 
             //_security.Key = textBoxPassphrase.Text;
             textBoxPassphrase.Clear();
@@ -565,7 +565,7 @@ namespace AutoScreenCapture
 
             _config.Settings.User.Save(_config.Settings, _fileSystem);
 
-            textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase").Value.ToString();
+            textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase", string.Empty, true).Value.ToString();
 
             //_security.Key = string.Empty;
             textBoxPassphrase.Clear();
