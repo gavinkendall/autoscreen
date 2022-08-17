@@ -216,7 +216,7 @@ namespace AutoScreenCapture
 
                 string appVersion = "[(v" + _settings.ApplicationVersion + ") ";
 
-                _fileSystem.AppendToFile(AppDomain.CurrentDomain.BaseDirectory + "autoscreen_startup_log.txt", appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message);
+                _fileSystem.AppendToFile(_fileSystem.StartupLogFile, appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message);
             }
             finally
             {

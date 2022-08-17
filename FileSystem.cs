@@ -60,9 +60,14 @@ namespace AutoScreenCapture
         public readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides\\";
 
         /// <summary>
+        /// The file to create when the application is starting up and needing to log its startup procedure.
+        /// </summary>
+        public readonly string StartupLogFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Auto Screen Capture\\autoscreen_startup_log.txt";
+
+        /// <summary>
         /// The file to create when the user runs an instance of autoscreen while existing instances are already running.
         /// </summary>
-        public readonly string StartupErrorFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen_startup_error.txt";
+        public readonly string StartupErrorFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Auto Screen Capture\\autoscreen_startup_error.txt";
 
         /// <summary>
         /// Screenshots folder.

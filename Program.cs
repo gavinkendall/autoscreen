@@ -50,8 +50,13 @@ namespace AutoScreenCapture
             Config config = new Config();
             FileSystem fileSystem = new FileSystem();
 
+            if (!fileSystem.DirectoryExists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Auto Screen Capture"))
+            {
+                fileSystem.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Auto Screen Capture");
+            }
+
             // Look for the -kill command. We want to find all the instances of Auto Screen Capture and kill them.
-            if (args.Length == 1 && !string.IsNullOrEmpty(args[0]) && args[0].Equals("-kill"))
+                if (args.Length == 1 && !string.IsNullOrEmpty(args[0]) && args[0].Equals("-kill"))
             {
                 // Find all instances of autoscreen and kill them.
                 foreach (var process in Process.GetProcessesByName("autoscreen"))
