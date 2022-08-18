@@ -272,6 +272,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.2.3")); // New trigger conditions CaptureCycleElapsed, DurationFromStartScreenCapture, and DurationFromStopScreenCapture. Trigger condition BeforeScreenshotTaken moved to SaveScreenshot method (instead of TakeScreenshot method). Fixed exception errors when opening forms that are already open from system tray icon menu.
             _versionCollection.Add(new Version(CODENAME_LIMONCELLO, "2.5.0.0"));
             _versionCollection.Add(new Version(CODENAME_LIMONCELLO, "2.5.0.1"));
+            _versionCollection.Add(new Version(CODENAME_LIMONCELLO, "2.5.0.2"));
 
             Application = new SettingCollection()
             {

@@ -41,11 +41,6 @@ namespace AutoScreenCapture
         public bool IsNew { get; set; }
 
         /// <summary>
-        /// Determines if this schedule was processed by timerScheduleCheck.
-        /// </summary>
-        public bool IsProcessed { get; set; }
-
-        /// <summary>
         /// The timer the schedule uses for its own interval.
         /// </summary>
         public System.Windows.Forms.Timer Timer { get; set; }

@@ -72,14 +72,7 @@ namespace AutoScreenCapture
                 // Process the list of schedules we need to consider.
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
-                    if (schedule.CaptureAt.Date < dtNow.Date ||
-                        schedule.StartAt.Date < dtNow.Date ||
-                        schedule.StopAt.Date < dtNow.Date)
-                    {
-                        schedule.IsProcessed = false;
-                    }
-
-                    if (!schedule.Enable || schedule.IsProcessed)
+                    if (!schedule.Enable
                     {
                         continue;
                     }
@@ -95,11 +88,10 @@ namespace AutoScreenCapture
                         if (schedule.ModeOneTime)
                         {
                             if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
-                                (dtNow.Minute == schedule.CaptureAt.Minute))
+                                (dtNow.Minute == schedule.CaptureAt.Minute) &&
+                                (dtNow.Second == schedule.CaptureAt.Second))
                             {
                                 TakeScreenshot(schedule.Scope, captureNow: true);
-
-                                schedule.IsProcessed = true;
                             }
                         }
 
@@ -108,34 +100,34 @@ namespace AutoScreenCapture
                             if (schedule.Logic == 0)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                    (dtNow.Minute == schedule.StartAt.Minute))
+                                    (dtNow.Minute == schedule.StartAt.Minute) &&
+                                    (dtNow.Second == schedule.StartAt.Second))
                                 {
                                     StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute))
+                                    (dtNow.Minute == schedule.StopAt.Minute) &&
+                                    (dtNow.Second == schedule.StopAt.Second))
                                 {
                                     StopScreenCapture();
-
-                                    schedule.IsProcessed = true;
                                 }
                             }
 
                             if (schedule.Logic == 1)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                    (dtNow.Minute == schedule.StartAt.Minute))
+                                    (dtNow.Minute == schedule.StartAt.Minute) &&
+                                    (dtNow.Second == schedule.StartAt.Second))
                                 {
                                     StartSchedule(schedule);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute))
+                                    (dtNow.Minute == schedule.StopAt.Minute) &&
+                                    (dtNow.Second == schedule.StopAt.Second))
                                 {
                                     StopSchedule(schedule);
-
-                                    schedule.IsProcessed = true;
                                 }
                             }
                         }
