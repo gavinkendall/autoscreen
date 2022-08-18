@@ -72,7 +72,7 @@ namespace AutoScreenCapture
                 // Process the list of schedules we need to consider.
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
-                    if (!schedule.Enable
+                    if (!schedule.Enable)
                     {
                         continue;
                     }
