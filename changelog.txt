@@ -1,5 +1,6 @@
 ﻿Auto Screen Capture by Gavin Kendall
 
+2.5.0.4    Fix to filepaths that may contain whitespace in between sub-folders due to stripping of invalid Windows characters from titles and/or labels before saving the screenshot image file to disk. This should prevent some GDI+ errors when saving JPEGs.
 2.5.0.3    Fix to schedules.
 2.5.0.2    Fix to schedules not starting or running the next day.
 2.5.0.1    Startup log file is now written to user's Local AppData directory inside "Auto Screen Capture" directory instead of same directory as application.

@@ -301,7 +301,7 @@ namespace AutoScreenCapture
             // The user's "My Documents" folder.
             macro = macro.Replace("$MyDocuments$", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
-            return StripInvalidWindowsCharacters(macro);
+            return macro;
         }
 
         /// <summary>

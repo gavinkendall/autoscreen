@@ -373,6 +373,21 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Gets the fully qualified name of the given path (stripping any whitespace in between sub-folders).
+        /// </summary>
+        /// <param name="path">The path to get the full path from.</param>
+        /// <returns>The full path (stripped from any whitespace in between sub-folders).</returns>
+        public string GetFullPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return string.Empty;
+            }
+
+            return Path.GetFullPath(path);
+        }
+
+        /// <summary>
         /// Writes a line to a file.
         /// </summary>
         /// <param name="path">The path to the file to be written.</param>

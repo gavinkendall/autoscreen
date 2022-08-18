@@ -512,6 +512,12 @@ namespace AutoScreenCapture
             {
                 if (screenshot.Bitmap != null && screenshot.Format != null && !string.IsNullOrEmpty(screenshot.FilePath))
                 {
+                    // Sometimes we might be handling a path that has whitespace in between sub-folders
+                    // for situations where a label or a title had invalid Windows characters that were replaced by whitespace.
+                    // This ensures that a path such as "C:\blah\blah blah \blah\blah\" becomes "C:\blah\blah blah\blah\blah".
+                    // (note the extra space that we need to remove in between the sub-folders).
+                    screenshot.FilePath = _fileSystem.GetFullPath(screenshot.FilePath);
+
                     if (screenshot.Format.Name.Equals("JPEG"))
                     {
                         var encoderParams = new EncoderParameters(1);
@@ -556,7 +562,7 @@ namespace AutoScreenCapture
 
                 return screenshot;
             }
-            catch
+            catch (Exception ex)
             {
                 screenshot.Bitmap.Dispose();
                 screenshot.Bitmap = null;
@@ -564,6 +570,10 @@ namespace AutoScreenCapture
                 // We want to write to the error file instead of writing an exception just in case the user
                 // has ExitOnError set and the exception causes the application to exit.
                 _log.WriteErrorMessage("There was an error encountered when saving the screenshot image");
+
+                _log.WriteErrorMessage(ex.Message);
+
+                _log.WriteErrorMessage(ex.StackTrace);
 
                 return null;
             }
