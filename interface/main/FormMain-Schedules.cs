@@ -72,6 +72,13 @@ namespace AutoScreenCapture
                 // Process the list of schedules we need to consider.
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
+                    if (schedule.CaptureAt.Date < dtNow.Date ||
+                        schedule.StartAt.Date < dtNow.Date ||
+                        schedule.StopAt.Date < dtNow.Date)
+                    {
+                        schedule.IsProcessed = false;
+                    }
+
                     if (!schedule.Enable || schedule.IsProcessed)
                     {
                         continue;
