@@ -404,16 +404,6 @@ namespace AutoScreenCapture
         {
             ScheduleObject.Name = textBoxName.Text;
 
-            // Compare the Date/Time values of each Date/Time field and if they're different to
-            // what we currently have in ScheduleObject then set the IsProcessed flag to false
-            // so that timerScheduleCheck_Tick will pick it up on the next tick.
-            if (!ScheduleObject.CaptureAt.Equals(dateTimePickerCaptureAt.Value) ||
-                !ScheduleObject.StartAt.Equals(dateTimePickerStartAt.Value) ||
-                !ScheduleObject.StopAt.Equals(dateTimePickerStopAt.Value))
-            {
-                ScheduleObject.IsProcessed = false;
-            }
-
             ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
             ScheduleObject.StartAt = dateTimePickerStartAt.Value;
             ScheduleObject.StopAt = dateTimePickerStopAt.Value;
