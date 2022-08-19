@@ -315,7 +315,11 @@ namespace AutoScreenCapture
                         panelModules.Width = 274;
 
                         labelHelp.Width -= 274;
-                        tabControlViews.Width -= 274;
+
+                        if (tabControlViews.Width > 796)
+                        {
+                            tabControlViews.Width -= 274;
+                        }
 
                         buttonResizeModulesPanel.Text = ">";
                     }
