@@ -781,10 +781,14 @@ namespace AutoScreenCapture
         {
             try
             {
+                _log.WriteDebugMessage($"Getting active window bitmap using resolutionRatio={resolutionRatio}, mouse={mouse}");
+
                 GetWindowRect(GetForegroundWindow(), out Rectangle rect);
 
                 int width = rect.Width - rect.X;
                 int height = rect.Height - rect.Y;
+
+                _log.WriteDebugMessage($"width={width}, height={height}");
 
                 if (width > 0 && height > 0)
                 {
@@ -929,6 +933,8 @@ namespace AutoScreenCapture
             {
                 CaptureError = false;
 
+                _log.WriteDebugMessage($"Getting screen images using source={source}, component={component}, captureMethod={captureMethod}, autoAdapt={autoAdapt}, x={x}, y={y}, width={width}, height={height}, resolutionRatio={resolutionRatio}, mouse={mouse}");
+
                 bitmap = source == 0 && component == 0 && !autoAdapt
                     ? GetActiveWindowBitmap(resolutionRatio, mouse)
                     : GetScreenBitmap(source, component, captureMethod, x, y, width, height, resolutionRatio, mouse);
@@ -937,6 +943,8 @@ namespace AutoScreenCapture
                 {
                     return true;
                 }
+
+                _log.WriteDebugMessage("Bitmap image could not be retrieved during capture process");
 
                 return false;
             }

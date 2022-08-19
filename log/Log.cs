@@ -145,12 +145,12 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(_fileSystem.ErrorsFolder))
                 {
-                    _fileSystem.ErrorsFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + _fileSystem.PathDelimiter + "errors" + _fileSystem.PathDelimiter;
+                    _fileSystem.ErrorsFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\!autoscreen" + _fileSystem.PathDelimiter + "errors" + _fileSystem.PathDelimiter;
                 }
 
                 if (string.IsNullOrEmpty(_fileSystem.LogsFolder))
                 {
-                    _fileSystem.LogsFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + _fileSystem.PathDelimiter + "logs" + _fileSystem.PathDelimiter;
+                    _fileSystem.LogsFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\!autoscreen" + _fileSystem.PathDelimiter + "logs" + _fileSystem.PathDelimiter;
                 }
 
                 if (!_fileSystem.DirectoryExists(_fileSystem.ErrorsFolder))

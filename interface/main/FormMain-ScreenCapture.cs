@@ -125,6 +125,8 @@ namespace AutoScreenCapture
         /// <param name="initiatedByUser">Determines if the screen capture was initiated by the user.</param>
         private void TakeScreenshot(string scope = "All Screens and Regions", bool captureNow = false, bool initiatedByUser = false)
         {
+            _log.WriteDebugMessage($"Taking screenshot using scope={scope}, captureNow={captureNow}, initiatedByUser={initiatedByUser}");
+
             try
             {
                 // Test to see if we can get images of the screen before continuing.
@@ -227,6 +229,12 @@ namespace AutoScreenCapture
         {
             try
             {
+                // Default to "All Screens and Regions" if provided scope is empty regardless of default value.
+                if (string.IsNullOrEmpty(scope))
+                {
+                    scope = "All Screens and Regions";
+                }
+
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
                    // If there was an application error just forget about it for now
@@ -262,7 +270,7 @@ namespace AutoScreenCapture
                     _screenCapture.Interval = screenCaptureInterval;
                     _screenCapture.Limit = _formSetup.checkBoxCaptureLimit.Checked ? (int)_formSetup.numericUpDownCaptureLimit.Value : 0;
 
-                    _log.WriteMessage("Starting screen capture");
+                    _log.WriteMessage($"Starting screen capture using scope={scope}");
 
                     dtStartScreenCapture = DateTime.Now;
 
@@ -277,7 +285,7 @@ namespace AutoScreenCapture
 
                     if (_formSetup.checkBoxInitialScreenshot.Checked)
                     {
-                        _log.WriteMessage("Taking initial screenshots");
+                        _log.WriteMessage($"Taking initial screenshots using scope={scope}");
 
                         TakeScreenshot(scope);
                     }

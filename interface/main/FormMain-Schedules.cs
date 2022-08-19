@@ -88,8 +88,7 @@ namespace AutoScreenCapture
                         if (schedule.ModeOneTime)
                         {
                             if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
-                                (dtNow.Minute == schedule.CaptureAt.Minute) &&
-                                (dtNow.Second == schedule.CaptureAt.Second))
+                                (dtNow.Minute == schedule.CaptureAt.Minute))
                             {
                                 TakeScreenshot(schedule.Scope, captureNow: true);
                             }
@@ -100,15 +99,13 @@ namespace AutoScreenCapture
                             if (schedule.Logic == 0)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                    (dtNow.Minute == schedule.StartAt.Minute) &&
-                                    (dtNow.Second == schedule.StartAt.Second))
+                                    (dtNow.Minute == schedule.StartAt.Minute))
                                 {
                                     StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute) &&
-                                    (dtNow.Second == schedule.StopAt.Second))
+                                    (dtNow.Minute == schedule.StopAt.Minute))
                                 {
                                     StopScreenCapture();
                                 }
@@ -117,15 +114,13 @@ namespace AutoScreenCapture
                             if (schedule.Logic == 1)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                    (dtNow.Minute == schedule.StartAt.Minute) &&
-                                    (dtNow.Second == schedule.StartAt.Second))
+                                    (dtNow.Minute == schedule.StartAt.Minute))
                                 {
                                     StartSchedule(schedule);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute) &&
-                                    (dtNow.Second == schedule.StopAt.Second))
+                                    (dtNow.Minute == schedule.StopAt.Minute))
                                 {
                                     StopSchedule(schedule);
                                 }

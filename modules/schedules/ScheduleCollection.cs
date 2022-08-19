@@ -234,6 +234,12 @@ namespace AutoScreenCapture
                                     case SCHEDULE_SCOPE:
                                         xReader.Read();
                                         schedule.Scope = xReader.Value;
+
+                                        // Set the scope for the schedule to be "All Screens and Regions" if the value is empty.
+                                        if (string.IsNullOrEmpty(schedule.Scope))
+                                        {
+                                            schedule.Scope = "All Screens and Regions";
+                                        }
                                         break;
                                 }
                             }
@@ -358,6 +364,13 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCHEDULE_SUNDAY, schedule.Sunday.ToString());
                         xWriter.WriteElementString(SCHEDULE_NOTES, schedule.Notes);
                         xWriter.WriteElementString(SCHEDULE_LOGIC, schedule.Logic.ToString());
+
+                        // Default to "All Screens and Regions" if scope is empty.
+                        if (string.IsNullOrEmpty(schedule.Scope))
+                        {
+                            schedule.Scope = "All Screens and Regions";
+                        }
+
                         xWriter.WriteElementString(SCHEDULE_SCOPE, schedule.Scope);
 
                         xWriter.WriteEndElement();
