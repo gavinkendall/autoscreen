@@ -1,5 +1,6 @@
 ﻿Auto Screen Capture by Gavin Kendall
 
+2.5.0.6    New schedules no longer crash when using "independent" logic and being started manually from Add Schedule dialog form.
 2.5.0.5    Schedule scope defaults to "All Screens and Regions" if value of "scope" is empty during loading of schedules collection from XML data file. Removed check on Seconds for schedules during schedule check timer so we can handle schedules when a second is skipped. Added more debug logging statements. Errors and Logs folders now save to AppData\Local instead of base directory if not found.
 2.5.0.4    Fix to filepaths that may contain whitespace in between sub-folders due to stripping of invalid Windows characters from titles and/or labels before saving the screenshot image file to disk. This should prevent some GDI+ errors when saving JPEGs.
 2.5.0.3    Fix to schedules.
