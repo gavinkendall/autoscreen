@@ -322,21 +322,120 @@ namespace AutoScreenCapture
                 }
 
                 // The folders for errors and logs are in the application settings collection.
-                fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
-                fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
+                Setting errorsFolderSetting = Settings.Application.GetByKey("ErrorsFolder");
+
+                if (errorsFolderSetting != null)
+                {
+                    fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.ErrorsFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\!autoscreen\errors\";
+                }
+
+                Setting logsFolderSetting = Settings.Application.GetByKey("LogsFolder");
+
+                if (logsFolderSetting != null)
+                {
+                    fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.LogsFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\!autoscreen\logs\";
+                }
 
                 Log.WriteStartupMessage("ErrorsFolder=" + fileSystem.ErrorsFolder);
                 Log.WriteStartupMessage("LogsFolder=" + fileSystem.LogsFolder);
 
                 // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
-                fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
-                fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
-                fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
-                fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
-                fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
-                fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
-                fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
-                fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
+
+                Setting commandFileSetting = Settings.Application.GetByKey("CommandFile");
+
+                if (commandFileSetting != null)
+                {
+                    fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.CommandFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\command.txt";
+                }
+
+                Setting screenshotsFileSetting = Settings.Application.GetByKey("ScreenshotsFile");
+
+                if (screenshotsFileSetting != null)
+                {
+                    fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.ScreenshotsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\screenshots.xml";
+                }
+
+                Setting screensFileSetting = Settings.Application.GetByKey("ScreensFile");
+
+                if (screensFileSetting != null)
+                {
+                    fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.ScreensFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\screens.xml";
+                }
+
+                Setting regionsFileSetting = Settings.Application.GetByKey("RegionsFile");
+
+                if (regionsFileSetting != null)
+                {
+                    fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.RegionsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\regions.xml";
+                }
+
+                Setting editorsFileSetting = Settings.Application.GetByKey("EditorsFile");
+
+                if (editorsFileSetting != null)
+                {
+                    fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.EditorsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\editors.xml";
+                }
+
+                Setting schedulesFileSetting = Settings.Application.GetByKey("SchedulesFile");
+
+                if (schedulesFileSetting != null)
+                {
+                    fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.SchedulesFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\schedules.xml";
+                }
+
+                Setting macroTagsFileSetting = Settings.Application.GetByKey("MacroTagsFile");
+
+                if (macroTagsFileSetting != null)
+                {
+                    fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.MacroTagsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\macrotags.xml";
+                }
+
+                Setting triggersFileSetting = Settings.Application.GetByKey("TriggersFile");
+
+                if (triggersFileSetting != null)
+                {
+                    fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.TriggersFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\!autoscreen\triggers.xml";
+                }
 
                 Log.WriteStartupMessage("CommandFile=" + fileSystem.CommandFile);
                 Log.WriteStartupMessage("ScreenshotsFile=" + fileSystem.ScreenshotsFile);
@@ -413,7 +512,17 @@ namespace AutoScreenCapture
 
                 // The screenshots folder from user settings.
                 // Call ProcessPath as we want sub-folders to be created.
-                fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
+
+                Setting screenshotsFolderSetting = Settings.User.GetByKey("ScreenshotsFolder");
+
+                if (screenshotsFolderSetting != null)
+                {
+                    fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
+                }
+                else
+                {
+                    fileSystem.ScreenshotsFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Auto Screen Capture\screenshots\";
+                }
 
                 Log.WriteStartupMessage("Getting default filename pattern");
 

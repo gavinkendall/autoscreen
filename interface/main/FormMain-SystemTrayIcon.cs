@@ -258,12 +258,15 @@ namespace AutoScreenCapture
                     return;
                 }
 
-                notifyIcon.Text = "Ready [" +
-                    _formSetup.numericUpDownHoursInterval.Value.ToString("00") + ":" +
-                    _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
-                    _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "] " +
-                    (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial capture] " : string.Empty) +
-                    (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
+                if (_formSetup != null)
+                {
+                    notifyIcon.Text = "Ready [" +
+                        _formSetup.numericUpDownHoursInterval.Value.ToString("00") + ":" +
+                        _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
+                        _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "] " +
+                        (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial capture] " : string.Empty) +
+                        (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
+                }
 
                 _formCommandDeck.toolStripStatusLabel.Text = "Ready " +
                     (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");

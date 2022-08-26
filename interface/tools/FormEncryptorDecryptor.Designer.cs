@@ -492,7 +492,6 @@
             this.MinimumSize = new System.Drawing.Size(714, 513);
             this.Name = "FormEncryptorDecryptor";
             this.Text = "Encryptor / Decryptor";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEncryptorDecryptor_FormClosing);
             this.Load += new System.EventHandler(this.FormEncryptorDecryptor_Load);
             this.tabControl.ResumeLayout(false);

@@ -371,23 +371,48 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
-            if (_preview)
-            {
-                toolStripDropDownButtonPreview.BackColor = Color.Black;
-                toolStripDropDownButtonPreview.ForeColor = Color.White;
-            }
-            else
-            {
-                toolStripDropDownButtonPreview.BackColor = Color.White;
-                toolStripDropDownButtonPreview.ForeColor = Color.Black;
-            }
-
             ClearScreenshotMetadataFields();
 
             // Dashboard
             if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
             {
                 FlowLayoutPanel flowLayoutPanel = (FlowLayoutPanel)tabControlViews.SelectedTab.Controls["flowLayoutPanel"];
+
+                ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
+
+                ToolStripButton previewButton = (ToolStripButton)toolStripDashboard.Items["dashboardPreview"];
+
+                ToolStripButton startScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStartScreenCapture"];
+
+                ToolStripButton stopScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStopScreenCapture"];
+
+                if (_preview)
+                {
+                    previewButton.BackColor = Color.Black;
+                    previewButton.ForeColor = Color.White;
+
+                    toolStripDropDownButtonPreview.BackColor = Color.Black;
+                    toolStripDropDownButtonPreview.ForeColor = Color.White;
+                }
+                else
+                {
+                    previewButton.BackColor = Color.White;
+                    previewButton.ForeColor = Color.Black;
+
+                    toolStripDropDownButtonPreview.BackColor = Color.White;
+                    toolStripDropDownButtonPreview.ForeColor = Color.Black;
+                }
+
+                if (_screenCapture.Running)
+                {
+                    startScreenCaptureButton.Enabled = false;
+                    stopScreenCaptureButton.Enabled = true;
+                }
+                else
+                {
+                    startScreenCaptureButton.Enabled = true;
+                    stopScreenCaptureButton.Enabled = false;
+                }
 
                 int i = 1;
 

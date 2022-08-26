@@ -43,6 +43,9 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(comboBoxFilterType, "Choose a type of filter. This could be a label or the title of an active window from an application that was captured during a session");
             _toolTip.SetToolTip(comboBoxFilterValue, "Select a filter value based on the chosen filter type. This will show you what days in the calendar are associated with the filter value");
             _toolTip.SetToolTip(buttonRefreshFilterValues, "Click this button to refresh the list of filter values");
+
+            timerHelpTips.Enabled = true;
+            timerHelpTips.Start();
         }
 
         /// <summary>

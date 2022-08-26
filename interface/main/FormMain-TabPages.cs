@@ -39,10 +39,39 @@ namespace AutoScreenCapture
 
             ToolStrip toolStripDashboard = new ToolStrip
             {
-                Name = "toolStripDasboard",
+                Name = "toolStripDashboard",
                 GripStyle = ToolStripGripStyle.Hidden
             };
-            
+
+            ToolStripButton previewButton = new ToolStripButton()
+            {
+                Name = "dashboardPreview",
+                Text = "Preview",
+                AutoToolTip = false
+            };
+
+            previewButton.Click += toolStripDropDownButtonPreview_Click;
+
+            ToolStripButton startScreenCaptureButton = new ToolStripButton()
+            {
+                Name = "dashboardStartScreenCapture",
+                Text = "Start Screen Capture",
+                AutoToolTip = false,
+                Image = Resources.start_screen_capture
+            };
+
+            startScreenCaptureButton.Click += toolStripMenuItemStartScreenCapture_Click;
+
+            ToolStripButton stopScreenCaptureButton = new ToolStripButton()
+            {
+                Name = "dashboardStopScreenCapture",
+                Text = "Stop Screen Capture",
+                AutoToolTip = false,
+                Image = Resources.stop_screen_capture
+            };
+
+            stopScreenCaptureButton.Click += toolStripMenuItemStopScreenCapture_Click;
+
             ToolStripDropDownButton add = new ToolStripDropDownButton
             {
                 Alignment = ToolStripItemAlignment.Left,
@@ -274,6 +303,10 @@ namespace AutoScreenCapture
             zoomIn.Click += dashboardZoomIn_Click;
             zoomOut.Click += dashboardZoomOut_Click;
 
+            toolStripDashboard.Items.Add(previewButton);
+            toolStripDashboard.Items.Add(startScreenCaptureButton);
+            toolStripDashboard.Items.Add(stopScreenCaptureButton);
+            toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(add);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(configure);

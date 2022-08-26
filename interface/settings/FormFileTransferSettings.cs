@@ -74,11 +74,11 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            _config.Settings.SFTP.GetByKey("FileTransferServerHost").Value = textBoxHost.Text;
-            _config.Settings.SFTP.GetByKey("FileTransferServerPort").Value = numericUpDownPort.Value;
-            _config.Settings.SFTP.GetByKey("FileTransferClientUsername").Value = textBoxUsername.Text;
-            _config.Settings.SFTP.GetByKey("FileTransferClientPassword").Value = textBoxPassword.Text;
-            _config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer").Value = checkBoxIsLinux.Checked;
+            _config.Settings.SFTP.SetValueByKey("FileTransferServerHost", textBoxHost.Text);
+            _config.Settings.SFTP.SetValueByKey("FileTransferServerPort", numericUpDownPort.Value);
+            _config.Settings.SFTP.SetValueByKey("FileTransferClientUsername", textBoxUsername.Text);
+            _config.Settings.SFTP.SetValueByKey("FileTransferClientPassword", textBoxPassword.Text);
+            _config.Settings.SFTP.SetValueByKey("FileTransferIsLinuxServer", checkBoxIsLinux.Checked);
 
             _config.Settings.SFTP.Save(_config.Settings, _fileSystem);
 

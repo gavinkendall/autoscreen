@@ -1024,7 +1024,7 @@ namespace AutoScreenCapture
             // 
             // timerHelpTips
             // 
-            this.timerHelpTips.Enabled = true;
+            this.timerHelpTips.Enabled = false;
             this.timerHelpTips.Interval = 1000;
             this.timerHelpTips.Tick += new System.EventHandler(this.timerHelpTip_Tick);
             // 
