@@ -47,9 +47,12 @@ namespace AutoScreenCapture
         {
             if (GetScreenCaptureInterval() > 0)
             {
-                ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
-                ToolStripButton startScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStartScreenCapture"];
-                startScreenCaptureButton.Enabled = true;
+                if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
+                {
+                    ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
+                    ToolStripButton startScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStartScreenCapture"];
+                    startScreenCaptureButton.Enabled = true;
+                }
 
                 toolStripDropDownButtonStartScreenCapture.Enabled = true;
                 toolStripMenuItemStartScreenCapture.Enabled = true;
@@ -68,9 +71,12 @@ namespace AutoScreenCapture
         /// </summary>
         private void EnableStopScreenCapture()
         {
-            ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
-            ToolStripButton stopScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStopScreenCapture"];
-            stopScreenCaptureButton.Enabled = true;
+            if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
+            {
+                ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
+                ToolStripButton stopScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStopScreenCapture"];
+                stopScreenCaptureButton.Enabled = true;
+            }
 
             toolStripDropDownButtonStopScreenCapture.Enabled = true;
             toolStripMenuItemStopScreenCapture.Enabled = true;
@@ -84,9 +90,12 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStopCapture()
         {
-            ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
-            ToolStripButton stopScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStopScreenCapture"];
-            stopScreenCaptureButton.Enabled = false;
+            if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
+            {
+                ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
+                ToolStripButton stopScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStopScreenCapture"];
+                stopScreenCaptureButton.Enabled = false;
+            }
 
             toolStripDropDownButtonStopScreenCapture.Enabled = false;
             toolStripMenuItemStopScreenCapture.Enabled = false;
@@ -100,9 +109,12 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStartCapture()
         {
-            ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
-            ToolStripButton startScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStartScreenCapture"];
-            startScreenCaptureButton.Enabled = false;
+            if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
+            {
+                ToolStrip toolStripDashboard = (ToolStrip)tabControlViews.SelectedTab.Controls["toolStripDashboard"];
+                ToolStripButton startScreenCaptureButton = (ToolStripButton)toolStripDashboard.Items["dashboardStartScreenCapture"];
+                startScreenCaptureButton.Enabled = false;
+            }
 
             toolStripDropDownButtonStartScreenCapture.Enabled = false;
             toolStripMenuItemStartScreenCapture.Enabled = false;

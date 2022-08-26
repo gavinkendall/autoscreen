@@ -1,5 +1,6 @@
 ﻿Auto Screen Capture by Gavin Kendall
 
+2.5.0.9    Fixed bug if you opened the application without having Dashboard as your selected tab view on startup.
 2.5.0.8    Fixed issue with SFTP settings when FileTransferIsLinuxServer setting was not available in sftp.xml due to an upgrade from an old version of the application. Added Preview, Start Screen Capture, and Stop Screen Capture buttons to Dashboard. Dynamic Regex Validator and Encryptor/Decryptor tool windows no longer "float"; they now behave like normal non-floating windows. Fixed startup issue when upgrading from an old version of the application and using the wrong version of the config file.
 2.5.0.7    Fixed modules panel open state so it no longer affects width of tabs view if modules panel's state is open during LoadSettings.
 2.5.0.6    New schedules no longer crash when using "independent" logic and being started manually from Add Schedule dialog form.
