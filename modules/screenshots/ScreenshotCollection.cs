@@ -104,7 +104,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="screenshotsToDelete">A list of screenshots to delete.</param>
         /// <param name="failedUploads">A dictionary of failed uploads.</param>
-        private void DeleteScreenshots(List<Screenshot> screenshotsToDelete, Dictionary<string, string> failedUploads)
+        private void DeleteScreenshots(List<Screenshot> screenshotsToDelete, Dictionary<Screenshot, string> failedUploads)
         {
             lock (_screenshotList)
             {
@@ -115,11 +115,11 @@ namespace AutoScreenCapture
                     _slideList.Remove(screenshot.Slide);
                     _slideNameList.Remove(screenshot.Slide.Name);
 
-                    // Do not delete the screenshot if the path exists in the dictionary of failed uploads.
-                    string[] filePathsOfFailedUploads = new string[failedUploads.Count];
-                    failedUploads.Keys.CopyTo(filePathsOfFailedUploads, 0);
+                    // Do not delete the screenshot if it exists in the dictionary of failed uploads.
+                    Screenshot[] screenshotsThatFailedToUpload = new Screenshot[failedUploads.Count];
+                    failedUploads.Keys.CopyTo(screenshotsThatFailedToUpload, 0);
                     
-                    if (filePathsOfFailedUploads.Contains(screenshot.FilePath))
+                    if (screenshotsThatFailedToUpload.Contains(screenshot))
                     {
                         continue;
                     }
@@ -1433,7 +1433,7 @@ namespace AutoScreenCapture
         /// <param name="macroParser">The macro tag parser to use.</param>
         /// <param name="macroTagCollection">A collectino of macro tags.</param>
         /// <param name="failedUploads">A dictionary of failed uploads.</param>
-        public void DeleteScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection, Dictionary<string, string> failedUploads)
+        public void DeleteScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection, Dictionary<Screenshot, string> failedUploads)
         {
             try
             {
@@ -1503,7 +1503,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="cycleCount">The cycle count to use when considering when to delete screenshots.</param>
         /// <param name="failedUploads">A dictionary of failed uploads.</param>
-        public void DeleteScreenshotsByCycleCount(int cycleCount, Dictionary<string, string> failedUploads)
+        public void DeleteScreenshotsByCycleCount(int cycleCount, Dictionary<Screenshot, string> failedUploads)
         {
             try
             {
@@ -1566,7 +1566,7 @@ namespace AutoScreenCapture
         /// Deletes screenshots from the oldest screen capture cycle. You can use this for a rolling delete given the correctly configured setup.
         /// </summary>
         /// <param name="failedUploads">A dictionary of failed uploads.</param>
-        public void DeleteScreenshotsFromOldestCaptureCycle(Dictionary<string, string> failedUploads)
+        public void DeleteScreenshotsFromOldestCaptureCycle(Dictionary<Screenshot, string> failedUploads)
         {
             try
             {
