@@ -43,7 +43,8 @@ namespace AutoScreenCapture
                     if (_formSchedule.ScheduleCollection.SpecialScheduleModeOneTime)
                     {
                         if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Hour) &&
-                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Minute))
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Minute) &&
+                            (dtNow.Second == 0))
                         {
                             TakeScreenshot(captureNow: true);
 
@@ -88,7 +89,8 @@ namespace AutoScreenCapture
                         if (schedule.ModeOneTime)
                         {
                             if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
-                                (dtNow.Minute == schedule.CaptureAt.Minute))
+                                (dtNow.Minute == schedule.CaptureAt.Minute) &&
+                                (dtNow.Second == 0))
                             {
                                 TakeScreenshot(schedule.Scope, captureNow: true);
                             }
