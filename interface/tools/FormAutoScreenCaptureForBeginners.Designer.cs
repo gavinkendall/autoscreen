@@ -53,10 +53,13 @@
             this.buttonExitApplication = new System.Windows.Forms.Button();
             this.checkBoxShowScreenCaptureStatusOnStart = new System.Windows.Forms.CheckBox();
             this.checkBoxShowScreenshotsFolderOnStop = new System.Windows.Forms.CheckBox();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.labelMillisecondsInterval = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxButYoureAPanda)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxButYoureAPanda
@@ -295,11 +298,37 @@
             this.checkBoxShowScreenshotsFolderOnStop.UseVisualStyleBackColor = true;
             this.checkBoxShowScreenshotsFolderOnStop.CheckedChanged += new System.EventHandler(this.checkBoxShowScreenshotsFolderOnStop_CheckedChanged);
             // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(664, 342);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(50, 25);
+            this.numericUpDownMillisecondsInterval.TabIndex = 54;
+            this.numericUpDownMillisecondsInterval.TabStop = false;
+            // 
+            // labelMillisecondsInterval
+            // 
+            this.labelMillisecondsInterval.AutoSize = true;
+            this.labelMillisecondsInterval.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMillisecondsInterval.Location = new System.Drawing.Point(720, 344);
+            this.labelMillisecondsInterval.Name = "labelMillisecondsInterval";
+            this.labelMillisecondsInterval.Size = new System.Drawing.Size(104, 18);
+            this.labelMillisecondsInterval.TabIndex = 55;
+            this.labelMillisecondsInterval.Text = "milliseconds";
+            // 
             // FormAutoScreenCaptureForBeginners
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(835, 499);
+            this.Controls.Add(this.labelMillisecondsInterval);
+            this.Controls.Add(this.numericUpDownMillisecondsInterval);
             this.Controls.Add(this.checkBoxShowScreenshotsFolderOnStop);
             this.Controls.Add(this.checkBoxShowScreenCaptureStatusOnStart);
             this.Controls.Add(this.buttonExitApplication);
@@ -333,6 +362,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,9 +378,12 @@
         private System.Windows.Forms.Label labelHoursInterval;
         private System.Windows.Forms.Label labelMinutesInterval;
         private System.Windows.Forms.Label labelSecondsInterval;
+        private System.Windows.Forms.Label labelMillisecondsInterval;
         private System.Windows.Forms.Label labelIntervalHelp;
         private System.Windows.Forms.Label labelFilenamePattern;
         private System.Windows.Forms.Label labelFilenamePatternHelp;
+        private System.Windows.Forms.CheckBox checkBoxShowScreenCaptureStatusOnStart;
+        private System.Windows.Forms.CheckBox checkBoxShowScreenshotsFolderOnStop;
 
         /// <summary>
         /// The screenshots folder.
@@ -378,6 +411,11 @@
         public System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
 
         /// <summary>
+        /// Milliseconds.
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
+
+        /// <summary>
         /// Start Screen Capture.
         /// </summary>
         public System.Windows.Forms.Button buttonStartScreenCapture;
@@ -391,7 +429,5 @@
         /// Exit Auto Screen Capture.
         /// </summary>
         public System.Windows.Forms.Button buttonExitApplication;
-        private System.Windows.Forms.CheckBox checkBoxShowScreenCaptureStatusOnStart;
-        private System.Windows.Forms.CheckBox checkBoxShowScreenshotsFolderOnStop;
     }
 }

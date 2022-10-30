@@ -1081,6 +1081,7 @@ namespace AutoScreenCapture
             _formSetup.numericUpDownHoursInterval.Value = _formAutoScreenCaptureForBeginners.numericUpDownHoursInterval.Value;
             _formSetup.numericUpDownMinutesInterval.Value = _formAutoScreenCaptureForBeginners.numericUpDownMinutesInterval.Value;
             _formSetup.numericUpDownSecondsInterval.Value = _formAutoScreenCaptureForBeginners.numericUpDownSecondsInterval.Value;
+            _formSetup.numericUpDownMillisecondsInterval.Value = _formAutoScreenCaptureForBeginners.numericUpDownMillisecondsInterval.Value;
 
             foreach (Screen screen in _formScreen.ScreenCollection)
             {

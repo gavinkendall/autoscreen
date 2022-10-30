@@ -404,6 +404,7 @@ namespace AutoScreenCapture
                 _formAutoScreenCaptureForBeginners.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 _formAutoScreenCaptureForBeginners.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 _formAutoScreenCaptureForBeginners.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                _formAutoScreenCaptureForBeginners.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 // Setup
                 _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formScreenCaptureStatusWithLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser, _screenshotCollection);
