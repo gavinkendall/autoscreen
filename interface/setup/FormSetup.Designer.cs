@@ -151,6 +151,8 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.labelMillisecondsInterval = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
@@ -169,6 +171,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSetup
@@ -504,6 +507,8 @@
             // 
             // tabPageInterval
             // 
+            this.tabPageInterval.Controls.Add(this.labelMillisecondsInterval);
+            this.tabPageInterval.Controls.Add(this.numericUpDownMillisecondsInterval);
             this.tabPageInterval.Controls.Add(this.labelLimitHelp);
             this.tabPageInterval.Controls.Add(this.labelInitialCaptureHelp);
             this.tabPageInterval.Controls.Add(this.labelIntervalHelp);
@@ -1504,6 +1509,28 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(390, 48);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMillisecondsInterval.TabIndex = 4;
+            this.numericUpDownMillisecondsInterval.TabStop = false;
+            // 
+            // labelMillisecondsInterval
+            // 
+            this.labelMillisecondsInterval.AutoSize = true;
+            this.labelMillisecondsInterval.Location = new System.Drawing.Point(438, 50);
+            this.labelMillisecondsInterval.Name = "labelMillisecondsInterval";
+            this.labelMillisecondsInterval.Size = new System.Drawing.Size(63, 13);
+            this.labelMillisecondsInterval.TabIndex = 5;
+            this.labelMillisecondsInterval.Text = "milliseconds";
+            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1550,6 +1577,7 @@
             this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1563,6 +1591,7 @@
         private System.Windows.Forms.TabPage tabPageApplicationFocus;
         private System.Windows.Forms.TabPage tabPageSecurity;
         private System.Windows.Forms.TabPage tabPageKeyboardShortcuts;
+        private System.Windows.Forms.Label labelMillisecondsInterval;
         private System.Windows.Forms.Label labelSecondsInterval;
         private System.Windows.Forms.Label labelMinutesInterval;
         private System.Windows.Forms.Label labelHoursInterval;
@@ -1658,6 +1687,11 @@
         /// The checkbox control for "Limit".
         /// </summary>
         public System.Windows.Forms.CheckBox checkBoxCaptureLimit;
+
+        /// <summary>
+        /// The numeric up/down control for "Milliseconds".
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
 
         /// <summary>
         /// The numeric up/down control for "Seconds".

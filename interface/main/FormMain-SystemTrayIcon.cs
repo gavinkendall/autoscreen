@@ -263,13 +263,14 @@ namespace AutoScreenCapture
                     notifyIcon.Text = "Ready [" +
                         _formSetup.numericUpDownHoursInterval.Value.ToString("00") + ":" +
                         _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
-                        _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "] " +
-                        (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial capture] " : string.Empty) +
+                        _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "." +
+                        _formSetup.numericUpDownMillisecondsInterval.Value.ToString("000") + "] " +
+                        (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial] " : string.Empty) +
                         (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
                 }
 
                 _formCommandDeck.toolStripStatusLabel.Text = "Ready " +
-                    (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
+                    (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
@@ -357,7 +358,7 @@ namespace AutoScreenCapture
 
                                 if (_screenCapture.OptimizeScreenCapture)
                                 {
-                                    _formCommandDeck.toolStripStatusLabel.Text += " [optimized]";
+                                    _formCommandDeck.toolStripStatusLabel.Text += " [optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]";
                                 }
                                 else
                                 {

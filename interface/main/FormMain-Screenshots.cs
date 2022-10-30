@@ -371,6 +371,17 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
+            if (_preview)
+            {
+                toolStripDropDownButtonPreview.BackColor = Color.Black;
+                toolStripDropDownButtonPreview.ForeColor = Color.White;
+            }
+            else
+            {
+                toolStripDropDownButtonPreview.BackColor = Color.White;
+                toolStripDropDownButtonPreview.ForeColor = Color.Black;
+            }
+
             ClearScreenshotMetadataFields();
 
             // Dashboard
@@ -390,17 +401,11 @@ namespace AutoScreenCapture
                 {
                     previewButton.BackColor = Color.Black;
                     previewButton.ForeColor = Color.White;
-
-                    toolStripDropDownButtonPreview.BackColor = Color.Black;
-                    toolStripDropDownButtonPreview.ForeColor = Color.White;
                 }
                 else
                 {
                     previewButton.BackColor = Color.White;
                     previewButton.ForeColor = Color.Black;
-
-                    toolStripDropDownButtonPreview.BackColor = Color.White;
-                    toolStripDropDownButtonPreview.ForeColor = Color.Black;
                 }
 
                 if (_screenCapture.Running)

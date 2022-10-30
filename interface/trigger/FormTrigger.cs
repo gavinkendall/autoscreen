@@ -142,6 +142,7 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 numericUpDownDuration.Value = TriggerObject.Duration;
                 comboBoxDuration.SelectedIndex = TriggerObject.DurationType;
@@ -203,7 +204,7 @@ namespace AutoScreenCapture
                 if (TriggerCollection.GetByName(textBoxTriggerName.Text) == null)
                 {
                     int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, (int)numericUpDownMillisecondsInterval.Value);
 
                     Trigger trigger = new Trigger()
                     {
@@ -313,7 +314,7 @@ namespace AutoScreenCapture
                     }
 
                     int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, (int)numericUpDownMillisecondsInterval.Value);
 
                     TriggerCollection.Get(TriggerObject).ScreenCaptureInterval = screenCaptureInterval;
 
@@ -633,6 +634,7 @@ namespace AutoScreenCapture
             numericUpDownHoursInterval.Enabled = false;
             numericUpDownMinutesInterval.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
+            numericUpDownMillisecondsInterval.Enabled = false;
 
             numericUpDownDays.Value = 30;
 
@@ -642,6 +644,7 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
+                numericUpDownMillisecondsInterval.Enabled = true;
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshotsByDays)

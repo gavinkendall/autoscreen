@@ -66,11 +66,13 @@
             this.labelLogic = new System.Windows.Forms.Label();
             this.buttonStartSchedule = new System.Windows.Forms.Button();
             this.buttonStopSchedule = new System.Windows.Forms.Button();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
             this.groupBoxDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.groupBoxInterval.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -79,7 +81,7 @@
             this.buttonOK.Location = new System.Drawing.Point(581, 399);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 36;
+            this.buttonOK.TabIndex = 37;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -336,7 +338,7 @@
             this.labelNotes.Location = new System.Drawing.Point(9, 239);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(38, 13);
-            this.labelNotes.TabIndex = 34;
+            this.labelNotes.TabIndex = 35;
             this.labelNotes.Text = "Notes:";
             // 
             // textBoxNotes
@@ -350,11 +352,11 @@
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(673, 126);
-            this.textBoxNotes.TabIndex = 35;
+            this.textBoxNotes.TabIndex = 36;
             // 
             // numericUpDownSecondsInterval
             // 
-            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(138, 24);
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(100, 24);
             this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -366,7 +368,7 @@
             // 
             // numericUpDownMinutesInterval
             // 
-            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(74, 24);
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(51, 24);
             this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -378,7 +380,7 @@
             // 
             // numericUpDownHoursInterval
             // 
-            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(10, 24);
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(3, 24);
             this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
             23,
             0,
@@ -392,11 +394,12 @@
             // 
             this.groupBoxInterval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxInterval.Controls.Add(this.labelMinutes);
-            this.groupBoxInterval.Controls.Add(this.labelHours);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownMillisecondsInterval);
             this.groupBoxInterval.Controls.Add(this.numericUpDownHoursInterval);
             this.groupBoxInterval.Controls.Add(this.numericUpDownMinutesInterval);
             this.groupBoxInterval.Controls.Add(this.numericUpDownSecondsInterval);
+            this.groupBoxInterval.Controls.Add(this.labelHours);
+            this.groupBoxInterval.Controls.Add(this.labelMinutes);
             this.groupBoxInterval.Enabled = false;
             this.groupBoxInterval.Location = new System.Drawing.Point(493, 166);
             this.groupBoxInterval.Name = "groupBoxInterval";
@@ -408,7 +411,7 @@
             // labelMinutes
             // 
             this.labelMinutes.AutoSize = true;
-            this.labelMinutes.Location = new System.Drawing.Point(122, 26);
+            this.labelMinutes.Location = new System.Drawing.Point(92, 26);
             this.labelMinutes.Name = "labelMinutes";
             this.labelMinutes.Size = new System.Drawing.Size(10, 13);
             this.labelMinutes.TabIndex = 30;
@@ -417,7 +420,7 @@
             // labelHours
             // 
             this.labelHours.AutoSize = true;
-            this.labelHours.Location = new System.Drawing.Point(58, 26);
+            this.labelHours.Location = new System.Drawing.Point(43, 26);
             this.labelHours.Name = "labelHours";
             this.labelHours.Size = new System.Drawing.Size(10, 13);
             this.labelHours.TabIndex = 28;
@@ -473,7 +476,7 @@
             this.buttonStartSchedule.Location = new System.Drawing.Point(493, 228);
             this.buttonStartSchedule.Name = "buttonStartSchedule";
             this.buttonStartSchedule.Size = new System.Drawing.Size(90, 23);
-            this.buttonStartSchedule.TabIndex = 32;
+            this.buttonStartSchedule.TabIndex = 33;
             this.buttonStartSchedule.Text = "Start Schedule";
             this.buttonStartSchedule.UseVisualStyleBackColor = true;
             this.buttonStartSchedule.Click += new System.EventHandler(this.buttonStartSchedule_Click);
@@ -485,10 +488,22 @@
             this.buttonStopSchedule.Location = new System.Drawing.Point(592, 228);
             this.buttonStopSchedule.Name = "buttonStopSchedule";
             this.buttonStopSchedule.Size = new System.Drawing.Size(90, 23);
-            this.buttonStopSchedule.TabIndex = 33;
+            this.buttonStopSchedule.TabIndex = 34;
             this.buttonStopSchedule.Text = "Stop Schedule";
             this.buttonStopSchedule.UseVisualStyleBackColor = true;
             this.buttonStopSchedule.Click += new System.EventHandler(this.buttonStopSchedule_Click);
+            // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(145, 24);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMillisecondsInterval.TabIndex = 32;
             // 
             // FormSchedule
             // 
@@ -533,6 +548,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             this.groupBoxInterval.ResumeLayout(false);
             this.groupBoxInterval.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -576,5 +592,6 @@
         private System.Windows.Forms.Label labelLogic;
         private System.Windows.Forms.Button buttonStartSchedule;
         private System.Windows.Forms.Button buttonStopSchedule;
+        private System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
     }
 }

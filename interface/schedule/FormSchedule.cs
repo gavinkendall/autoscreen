@@ -118,10 +118,12 @@ namespace AutoScreenCapture
                 decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Hours);
                 decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Minutes);
                 decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Seconds);
+                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Milliseconds);
 
                 numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 checkBoxMonday.Checked = ScheduleObject.Monday;
                 checkBoxTuesday.Checked = ScheduleObject.Tuesday;
@@ -164,10 +166,12 @@ namespace AutoScreenCapture
                 decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Hours);
                 decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Minutes);
                 decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Seconds);
+                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Milliseconds);
 
                 numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 radioButtonOneTime.Checked = true;
                 radioButtonPeriod.Checked = false;
@@ -182,9 +186,6 @@ namespace AutoScreenCapture
                 labelLogic.Enabled = false;
                 comboBoxLogic.Enabled = false;
                 groupBoxInterval.Enabled = false;
-                numericUpDownHoursInterval.Enabled = false;
-                numericUpDownMinutesInterval.Enabled = false;
-                numericUpDownSecondsInterval.Enabled = false;
 
                 checkBoxWorkWeek.Checked = true;
                 checkBoxWeekend.Checked = false;
@@ -255,7 +256,7 @@ namespace AutoScreenCapture
         private Schedule CreateScheduleObject()
         {
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, (int)numericUpDownMillisecondsInterval.Value);
 
             Schedule schedule = new Schedule()
             {
@@ -280,7 +281,11 @@ namespace AutoScreenCapture
             };
 
             // Set the schedule's timer interval and make sure to not enable the timer until we're ready for it.
-            schedule.Timer.Interval = screenCaptureInterval;
+            if (screenCaptureInterval > 0)
+            {
+                schedule.Timer.Interval = screenCaptureInterval;
+            }
+
             schedule.Timer.Enabled = false;
 
             return schedule;
@@ -302,7 +307,7 @@ namespace AutoScreenCapture
             ScheduleObject.StopAt = dateTimePickerStopAt.Value;
 
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, (int)numericUpDownMillisecondsInterval.Value);
 
             ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
 
@@ -409,7 +414,7 @@ namespace AutoScreenCapture
             ScheduleObject.StopAt = dateTimePickerStopAt.Value;
 
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+                (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, (int)numericUpDownMillisecondsInterval.Value);
 
             ScheduleObject.Timer.Interval = screenCaptureInterval;
             ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
@@ -435,9 +440,6 @@ namespace AutoScreenCapture
                 labelLogic.Enabled = false;
                 comboBoxLogic.Enabled = false;
                 groupBoxInterval.Enabled = false;
-                numericUpDownHoursInterval.Enabled = false;
-                numericUpDownMinutesInterval.Enabled = false;
-                numericUpDownSecondsInterval.Enabled = false;
 
                 StopSchedule.Invoke(sender, e);
 
@@ -464,9 +466,6 @@ namespace AutoScreenCapture
                 labelLogic.Enabled = true;
                 comboBoxLogic.Enabled = true;
                 groupBoxInterval.Enabled = true;
-                numericUpDownHoursInterval.Enabled = true;
-                numericUpDownMinutesInterval.Enabled = true;
-                numericUpDownSecondsInterval.Enabled = true;
             }
 
             CheckTimerEnabled();
@@ -531,7 +530,7 @@ namespace AutoScreenCapture
             buttonStopSchedule.Enabled = true;
 
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, (int)numericUpDownMillisecondsInterval.Value);
 
             ScheduleObject.Timer.Tag = ScheduleObject;
 

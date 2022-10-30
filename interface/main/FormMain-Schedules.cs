@@ -103,12 +103,25 @@ namespace AutoScreenCapture
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
                                     (dtNow.Minute == schedule.StartAt.Minute))
                                 {
+                                    // Set the main interval with the schedule's interval.
+                                    decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Hours);
+                                    decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Minutes);
+                                    decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Seconds);
+                                    decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Milliseconds);
+
+                                    _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                                    _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                                    _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                                    _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+
+                                    // Start the main timer.
                                     StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
                                     (dtNow.Minute == schedule.StopAt.Minute))
                                 {
+                                    // Stop the main timer.
                                     StopScreenCapture();
                                 }
                             }
@@ -168,7 +181,7 @@ namespace AutoScreenCapture
             _formSchedule.ScheduleObject = null;
 
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)_formSetup.numericUpDownHoursInterval.Value,
-                        (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value);
+                        (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value, (int)_formSetup.numericUpDownMillisecondsInterval.Value);
 
             _formSchedule.ScreenCaptureInterval = screenCaptureInterval;
 
@@ -280,6 +293,17 @@ namespace AutoScreenCapture
                 // This schedule is being started with the intention that it controls the main timer and overrides its interval and scope.
                 if (schedule.Logic == 0)
                 {
+                    // Set the main interval with the schedule's interval.
+                    decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Hours);
+                    decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Minutes);
+                    decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Seconds);
+                    decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Milliseconds);
+
+                    _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                    _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                    _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                    _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+
                     // Start the main timer.
                     StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);
                 }

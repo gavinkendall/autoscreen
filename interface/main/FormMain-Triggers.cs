@@ -340,20 +340,25 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.SetScreenCaptureInterval:
-                    timerScreenCapture.Stop();
+                    if (trigger.ScreenCaptureInterval > 0)
+                    {
+                        timerScreenCapture.Stop();
 
-                    _screenCapture.Interval = trigger.ScreenCaptureInterval;
-                    timerScreenCapture.Interval = trigger.ScreenCaptureInterval;
+                        _screenCapture.Interval = trigger.ScreenCaptureInterval;
+                        timerScreenCapture.Interval = trigger.ScreenCaptureInterval;
 
-                    decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Hours);
-                    decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Minutes);
-                    decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Seconds);
+                        decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Hours);
+                        decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Minutes);
+                        decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Seconds);
+                        decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Milliseconds);
 
-                    _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
-                    _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
-                    _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                        _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                        _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                        _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                        _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
-                    timerScreenCapture.Start();
+                        timerScreenCapture.Start();
+                    }
                     break;
 
                 case TriggerActionType.EnableScreen:

@@ -37,7 +37,7 @@ namespace AutoScreenCapture
         private int GetScreenCaptureInterval()
         {
             return ConvertIntoMilliseconds((int)_formSetup.numericUpDownHoursInterval.Value,
-                (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value);
+                (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value, (int)_formSetup.numericUpDownMillisecondsInterval.Value);
         }
 
         /// <summary>

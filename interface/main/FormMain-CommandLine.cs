@@ -582,16 +582,18 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    // -interval=hh:mm:ss
+                    // -interval=hh:mm:ss.nnn (milliseconds (.nnn) are optional)
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INTERVAL))
                     {
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Seconds"].Value);
+                        int milliseconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value);
 
                         _formSetup.numericUpDownHoursInterval.Value = hours;
                         _formSetup.numericUpDownMinutesInterval.Value = minutes;
                         _formSetup.numericUpDownSecondsInterval.Value = seconds;
+                        _formSetup.numericUpDownMillisecondsInterval.Value = milliseconds;
 
                         int screenCaptureInterval = GetScreenCaptureInterval();
 

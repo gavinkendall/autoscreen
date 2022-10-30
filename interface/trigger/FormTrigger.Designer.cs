@@ -73,6 +73,8 @@
             this.labelDeleteFolder = new System.Windows.Forms.Label();
             this.textBoxDeleteFolder = new System.Windows.Forms.TextBox();
             this.textBoxActionHelp = new System.Windows.Forms.TextBox();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.labelMilliseconds = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
@@ -84,6 +86,7 @@
             this.groupBoxInterval.SuspendLayout();
             this.groupBoxDeleteScreenshots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCycleCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -485,6 +488,8 @@
             // 
             // groupBoxInterval
             // 
+            this.groupBoxInterval.Controls.Add(this.labelMilliseconds);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownMillisecondsInterval);
             this.groupBoxInterval.Controls.Add(this.labelHours);
             this.groupBoxInterval.Controls.Add(this.labelMinutes);
             this.groupBoxInterval.Controls.Add(this.labelSeconds);
@@ -592,6 +597,29 @@
             this.textBoxActionHelp.TabIndex = 33;
             this.textBoxActionHelp.TabStop = false;
             // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Enabled = false;
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(399, 19);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMillisecondsInterval.TabIndex = 26;
+            this.numericUpDownMillisecondsInterval.TabStop = false;
+            // 
+            // labelMilliseconds
+            // 
+            this.labelMilliseconds.AutoSize = true;
+            this.labelMilliseconds.Location = new System.Drawing.Point(326, 21);
+            this.labelMilliseconds.Name = "labelMilliseconds";
+            this.labelMilliseconds.Size = new System.Drawing.Size(67, 13);
+            this.labelMilliseconds.TabIndex = 27;
+            this.labelMilliseconds.Text = "Milliseconds:";
+            // 
             // FormTrigger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -630,6 +658,7 @@
             this.groupBoxDeleteScreenshots.ResumeLayout(false);
             this.groupBoxDeleteScreenshots.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCycleCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -647,6 +676,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
         private System.Windows.Forms.ComboBox comboBoxDay;
         private System.Windows.Forms.DateTimePicker dateTimePickerTime;
         private System.Windows.Forms.DateTimePicker dateTimePickerDate;
@@ -669,6 +699,7 @@
         private System.Windows.Forms.Label labelHours;
         private System.Windows.Forms.Label labelMinutes;
         private System.Windows.Forms.Label labelSeconds;
+        private System.Windows.Forms.Label labelMilliseconds;
         private System.Windows.Forms.Label labelCycleCount;
         private System.Windows.Forms.NumericUpDown numericUpDownCycleCount;
         private System.Windows.Forms.Label labelDeleteFolder;
