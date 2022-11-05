@@ -409,6 +409,8 @@ namespace AutoScreenCapture
         {
             ScheduleObject.Name = textBoxName.Text;
 
+            ScheduleObject.Enable = checkBoxEnable.Checked;
+
             ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
             ScheduleObject.StartAt = dateTimePickerStartAt.Value;
             ScheduleObject.StopAt = dateTimePickerStopAt.Value;

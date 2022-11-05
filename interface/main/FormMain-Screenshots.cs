@@ -537,15 +537,13 @@ namespace AutoScreenCapture
 
                 ToolStrip toolStrip = (ToolStrip)selectedTabPage.Controls[selectedTabPage.Name + "toolStrip"];
 
-                ToolStripLabel toolStripLabel = (ToolStripLabel)toolStrip.Items[selectedTabPage.Name + "toolStripLabelFilename"];
-
-                ToolStripTextBox toolStripTextBox = (ToolStripTextBox)toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
-
                 ToolStripSplitButton toolStripSplitButtonEdit = (ToolStripSplitButton)toolStrip.Items[selectedTabPage.Name + "toolStripSplitButtonEdit"];
 
                 ToolStripButton toolStripButtonEncryptDecrypt = (ToolStripButton)toolStrip.Items[selectedTabPage.Name + "toolStripButtonEncryptDecrypt"];
 
-                ToolStripItem toolstripButtonOpenFolder = (ToolStripItem)toolStrip.Items[selectedTabPage.Name + "toolstripButtonOpenFolder"];
+                ToolStripItem toolstripButtonScreenshotLocation = (ToolStripItem)toolStrip.Items[selectedTabPage.Name + "toolstripButtonScreenshotLocation"];
+
+                TextBox textBox = (TextBox)selectedTabPage.Controls[selectedTabPage.Name + "textBox"];
 
                 PictureBox pictureBox = (PictureBox)selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
 
@@ -623,8 +621,7 @@ namespace AutoScreenCapture
 
                     if (!string.IsNullOrEmpty(path))
                     {
-                        toolStripTextBox.Text = _fileSystem.GetFileName(path);
-                        toolStripTextBox.ToolTipText = path;
+                        textBox.Text = path;
 
                         string dirName = _fileSystem.GetDirectoryName(path);
 
@@ -632,20 +629,17 @@ namespace AutoScreenCapture
                         {
                             if (selectedScreenshot.Encrypted)
                             {
-                                toolStripLabel.Text = "File [encrypted]:";
-
-                                toolStripTextBox.ForeColor = Color.White;
+                                textBox.ForeColor = Color.White;
 
                                 if (!string.IsNullOrEmpty(dirName))
                                 {
                                     if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
                                     {
-                                        toolStripTextBox.BackColor = Color.Black;
+                                        textBox.BackColor = Color.Black;
                                     }
                                     else
                                     {
-                                        toolStripTextBox.BackColor = Color.PaleVioletRed;
-                                        toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
+                                        textBox.BackColor = Color.PaleVioletRed;
 
                                         _formScreenshotMetadata.textBoxScreenshotPath.Text = path;
                                         _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot could not be found. Perhaps it was deleted or the reference is incorrect.";
@@ -678,20 +672,17 @@ namespace AutoScreenCapture
                             }
                             else
                             {
-                                toolStripLabel.Text = "File:";
-
-                                toolStripTextBox.ForeColor = Color.Black;
+                                textBox.ForeColor = Color.Black;
 
                                 if (!string.IsNullOrEmpty(dirName))
                                 {
                                     if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
                                     {
-                                        toolStripTextBox.BackColor = Color.PaleGreen;
+                                        textBox.BackColor = Color.PaleGreen;
                                     }
                                     else
                                     {
-                                        toolStripTextBox.BackColor = Color.PaleVioletRed;
-                                        toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
+                                        textBox.BackColor = Color.PaleVioletRed;
 
                                         _formScreenshotMetadata.textBoxScreenshotPath.Text = path;
                                         _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot could not be found. Perhaps it was deleted or the reference is incorrect.";
@@ -744,17 +735,17 @@ namespace AutoScreenCapture
                             }
                         }
 
-                        toolstripButtonOpenFolder.Enabled = true;
+                        toolstripButtonScreenshotLocation.Enabled = true;
                     }
                     else
                     {
                         toolStripSplitButtonEdit.Enabled = false;
                         toolStripButtonEncryptDecrypt.Enabled = false;
 
-                        toolStripTextBox.Text = string.Empty;
-                        toolStripTextBox.BackColor = Color.LightYellow;
-                        toolStripTextBox.ToolTipText = string.Empty;
-                        toolstripButtonOpenFolder.Enabled = false;
+                        textBox.Text = string.Empty;
+                        textBox.BackColor = Color.LightYellow;
+
+                        toolstripButtonScreenshotLocation.Enabled = false;
 
                         _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "A screenshot could not be found. Perhaps a screenshot has yet to be captured for this component.";
                     }

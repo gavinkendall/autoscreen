@@ -35,6 +35,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                ShowInfo();
+
                 DateTime dtNow = DateTime.Now;
 
                 // Special Schedule
@@ -113,6 +115,31 @@ namespace AutoScreenCapture
                                     _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                                     _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
                                     _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+
+                                    // Save the changed interval. We'll use the same code as if we had received the "-interval" command.
+                                    int screenCaptureInterval = GetScreenCaptureInterval();
+
+                                    if (screenCaptureInterval > 0)
+                                    {
+                                        timerScreenCapture.Stop();
+                                        timerScreenCapture.Enabled = false;
+
+                                        _screenCapture.DateTimePreviousCycle = DateTime.Now;
+                                        _screenCapture.Interval = screenCaptureInterval;
+                                        timerScreenCapture.Interval = screenCaptureInterval;
+
+                                        _config.Settings.User.SetValueByKey("ScreenCaptureInterval", screenCaptureInterval);
+
+                                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                                        {
+                                            _screenCapture.ApplicationError = true;
+                                        }
+
+                                        timerScreenCapture.Enabled = true;
+                                        timerScreenCapture.Start();
+
+                                        _formSchedule.ScheduleCollection.SpecialScheduleScreenCaptureInterval = screenCaptureInterval;
+                                    }
 
                                     // Start the main timer.
                                     StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);

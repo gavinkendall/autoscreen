@@ -283,10 +283,6 @@ namespace AutoScreenCapture
                         }
 
                         _formCommandDeck.toolStripStatusLabel.Text = "Error";
-
-                        labelHelp.Image = Resources.warning;
-                        labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
-                        HelpMessage($"Please check \"{ _fileSystem.ErrorsFolder + _fileSystem.ErrorFile}\"");
                     }
                     else if (_screenCapture.ApplicationWarning)
                     {
@@ -371,9 +367,6 @@ namespace AutoScreenCapture
                     {
                         notifyIcon.Icon = Resources.autoscreen;
                     }
-
-                    labelHelp.Image = Resources.about;
-                    labelHelp.BackColor = System.Drawing.Color.LightYellow;
                 }
 
                 toolStripCycleCount.Text = $"Cycle: {_screenCapture.CycleCount}";

@@ -433,11 +433,20 @@ namespace AutoScreenCapture
 
                 toolStripScreen = BuildViewTabPageToolStripItems(toolStripScreen, screen.Name);
 
+                TextBox textBoxScreen = new TextBox
+                {
+                    Name = screen.Name + "textBox",
+                    ReadOnly = true,
+                    TabStop = false,
+                    Location = new Point(4, 29),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
+                };
+
                 PictureBox pictureBoxScreen = new PictureBox
                 {
                     Name = screen.Name + "pictureBox",
                     BackColor = Color.Black,
-                    Location = new Point(4, 29),
+                    Location = new Point(4, 55),
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     ContextMenuStrip = contextMenuStripScreenshot,
                     Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
@@ -451,10 +460,13 @@ namespace AutoScreenCapture
                 };
 
                 tabPageScreen.Controls.Add(toolStripScreen);
+                tabPageScreen.Controls.Add(textBoxScreen);
                 tabPageScreen.Controls.Add(pictureBoxScreen);
 
+                textBoxScreen.Width = (tabPageScreen.Width - 10);
+
                 pictureBoxScreen.Width = (tabPageScreen.Width - 10);
-                pictureBoxScreen.Height = (tabPageScreen.Height - 30);
+                pictureBoxScreen.Height = (tabPageScreen.Height - 55);
 
                 tabControlViews.Controls.Add(tabPageScreen);
             }
@@ -470,11 +482,20 @@ namespace AutoScreenCapture
 
                 toolStripRegion = BuildViewTabPageToolStripItems(toolStripRegion, region.Name);
 
+                TextBox textBoxRegion = new TextBox
+                {
+                    Name = region.Name + "textBox",
+                    ReadOnly = true,
+                    TabStop = false,
+                    Location = new Point(4, 29),
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
+                };
+
                 PictureBox pictureBoxRegion = new PictureBox
                 {
                     Name = region.Name + "pictureBox",
                     BackColor = Color.Black,
-                    Location = new Point(4, 29),
+                    Location = new Point(4, 55),
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     ContextMenuStrip = contextMenuStripScreenshot,
                     Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
@@ -488,7 +509,10 @@ namespace AutoScreenCapture
                 };
 
                 tabPageRegion.Controls.Add(toolStripRegion);
+                tabPageRegion.Controls.Add(textBoxRegion);
                 tabPageRegion.Controls.Add(pictureBoxRegion);
+
+                textBoxRegion.Width = (tabPageRegion.Width - 10);
 
                 pictureBoxRegion.Width = (tabPageRegion.Width - 10);
                 pictureBoxRegion.Height = (tabPageRegion.Height - 30);
@@ -532,7 +556,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
                 }
 
-                toolStripButtonConfigure.Text = "Configure";
+                toolStripButtonConfigure.Text = "Configure Screen";
 
                 toolStripButtonConfigure.Tag = toolStrip.Tag;
 
@@ -546,7 +570,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
                 }
 
-                toolStripButtonConfigure.Text = "Configure";
+                toolStripButtonConfigure.Text = "Configure Region";
 
                 toolStripButtonConfigure.Tag = toolStrip.Tag;
 
@@ -674,7 +698,7 @@ namespace AutoScreenCapture
 
             ToolStripButton toolStripButtonScreenshotMetadata = new ToolStripButton
             {
-                Text = "Metadata",
+                Text = "Screenshot Metadata",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
                 ToolTipText = "Show screenshot metadata (such as image format, width, height, date, time, and filepath)",
@@ -683,48 +707,26 @@ namespace AutoScreenCapture
 
             toolStripButtonScreenshotMetadata.Click += new EventHandler(screenshotMetadata_Click);
 
-            ToolStripItem toolStripLabelFilename = new ToolStripLabel
+            ToolStripItem toolstripButtonScreenshotLocation = new ToolStripButton
             {
-                Name = name + "toolStripLabelFilename",
-                Text = "File:",
-                Alignment = ToolStripItemAlignment.Right,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left
-            };
-
-            ToolStripItem toolStripTextBoxFilename = new ToolStripTextBox
-            {
-                Name = name + "toolStripTextBoxFilename",
-                Alignment = ToolStripItemAlignment.Right,
-                AutoSize = false,
-                ReadOnly = true,
-                Width = 200,
-                BackColor = Color.LightYellow,
-                Text = string.Empty
-            };
-
-            ToolStripItem toolstripButtonOpenFolder = new ToolStripButton
-            {
-                Name = name + "toolstripButtonOpenFolder",
+                Name = name + "toolstripButtonScreenshotLocation",
+                Text = "Screenshot Location",
                 Image = Resources.openfolder,
-                Alignment = ToolStripItemAlignment.Right,
                 AutoToolTip = false,
                 ToolTipText = "Show screenshot location",
-                DisplayStyle = ToolStripItemDisplayStyle.Image
+                DisplayStyle = ToolStripItemDisplayStyle.ImageAndText
             };
 
-            toolstripButtonOpenFolder.Click += new EventHandler(showScreenshotLocation_Click);
+            toolstripButtonScreenshotLocation.Click += new EventHandler(showScreenshotLocation_Click);
 
             toolStrip.Items.Add(toolStripButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Left });
+            toolStrip.Items.Add(toolstripButtonScreenshotLocation);
+            toolStrip.Items.Add(toolStripButtonScreenshotMetadata);
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEncryptDecrypt);
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripButtonFileTransfer);
-            toolStrip.Items.Add(toolStripButtonScreenshotMetadata);
-            toolStrip.Items.Add(toolstripButtonOpenFolder);
-            toolStrip.Items.Add(toolStripTextBoxFilename);
-            toolStrip.Items.Add(toolStripLabelFilename);
-            toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
 
             return toolStrip;
         }
