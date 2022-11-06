@@ -202,6 +202,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.panelModules = new System.Windows.Forms.Panel();
             this.buttonResizeModulesPanel = new System.Windows.Forms.Button();
+            this.toolStripMainMenuItemHelpEmailingScreenshots = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -968,7 +969,7 @@ namespace AutoScreenCapture
             this.tabPageRegions.AutoScrollMargin = new System.Drawing.Size(10, 0);
             this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
             this.tabPageRegions.Name = "tabPageRegions";
-            this.tabPageRegions.Size = new System.Drawing.Size(256, 556);
+            this.tabPageRegions.Size = new System.Drawing.Size(256, 624);
             this.tabPageRegions.TabIndex = 4;
             this.tabPageRegions.Text = "Regions";
             this.tabPageRegions.UseVisualStyleBackColor = true;
@@ -980,7 +981,7 @@ namespace AutoScreenCapture
             this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(256, 556);
+            this.tabPageEditors.Size = new System.Drawing.Size(256, 624);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
@@ -991,7 +992,7 @@ namespace AutoScreenCapture
             this.tabPageSchedules.AutoScrollMargin = new System.Drawing.Size(10, 0);
             this.tabPageSchedules.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedules.Name = "tabPageSchedules";
-            this.tabPageSchedules.Size = new System.Drawing.Size(256, 556);
+            this.tabPageSchedules.Size = new System.Drawing.Size(256, 624);
             this.tabPageSchedules.TabIndex = 8;
             this.tabPageSchedules.Text = "Schedules";
             this.tabPageSchedules.UseVisualStyleBackColor = true;
@@ -1002,7 +1003,7 @@ namespace AutoScreenCapture
             this.tabPageMacroTags.AutoScrollMargin = new System.Drawing.Size(10, 0);
             this.tabPageMacroTags.Location = new System.Drawing.Point(4, 40);
             this.tabPageMacroTags.Name = "tabPageMacroTags";
-            this.tabPageMacroTags.Size = new System.Drawing.Size(256, 556);
+            this.tabPageMacroTags.Size = new System.Drawing.Size(256, 624);
             this.tabPageMacroTags.TabIndex = 7;
             this.tabPageMacroTags.Text = "Macro Tags";
             this.tabPageMacroTags.UseVisualStyleBackColor = true;
@@ -1014,7 +1015,7 @@ namespace AutoScreenCapture
             this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(256, 556);
+            this.tabPageTriggers.Size = new System.Drawing.Size(256, 624);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
@@ -1504,7 +1505,8 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpTriggers,
             this.toolStripMainMenuItemHelpCommandLine,
             this.toolStripMainMenuItemHelpCommonSetupScenarios,
-            this.toolStripMainMenuItemHelpDynamicRegexValidator});
+            this.toolStripMainMenuItemHelpDynamicRegexValidator,
+            this.toolStripMainMenuItemHelpEmailingScreenshots});
             this.toolStripMainMenuItemHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
             this.toolStripMainMenuItemHelp.Name = "toolStripMainMenuItemHelp";
             this.toolStripMainMenuItemHelp.Size = new System.Drawing.Size(60, 20);
@@ -1645,6 +1647,7 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpDynamicRegexValidator.Name = "toolStripMainMenuItemHelpDynamicRegexValidator";
             this.toolStripMainMenuItemHelpDynamicRegexValidator.Size = new System.Drawing.Size(258, 22);
             this.toolStripMainMenuItemHelpDynamicRegexValidator.Text = "Dynamic Regex Validator";
+            this.toolStripMainMenuItemHelpDynamicRegexValidator.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
             // panelModules
             // 
@@ -1669,6 +1672,13 @@ namespace AutoScreenCapture
             this.buttonResizeModulesPanel.Text = ">";
             this.buttonResizeModulesPanel.UseVisualStyleBackColor = true;
             this.buttonResizeModulesPanel.Click += new System.EventHandler(this.buttonResizeModulesPanel_Click);
+            // 
+            // toolStripMainMenuItemHelpEmailingScreenshots
+            // 
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Name = "toolStripMainMenuItemHelpEmailingScreenshots";
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Text = "Emailing Screenshots";
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
             // FormMain
             // 
@@ -1880,5 +1890,6 @@ namespace AutoScreenCapture
         private ToolStripSeparator toolStripMainSeparatorWelcome;
         private ToolStripMenuItem toolStripMainMenuItemHelpWhatsNew;
         private ToolStripMenuItem toolStripMainMenuItemHelpDynamicRegexValidator;
+        private ToolStripMenuItem toolStripMainMenuItemHelpEmailingScreenshots;
     }
 }

@@ -297,11 +297,11 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+        ///{\colortbl ;\red255\green0\blue0;\red102\green102\blue102;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Configuration File\b0\par
         ///\fs22 Auto Screen Capture comes with its own configuration file named &quot;autoscreen.conf&quot; that is usually found in the same folder as &quot;autoscreen.exe&quot;.\par
-        ///{\pict{\*\picprop}\wmetafile8\picw10742\pich3281\picwgoal6090\pichgoal1860 
-        ///010009000003b827010000009927010000000400000003010 [rest of string was truncated]&quot;;.
+        ///{\pict{\*\picprop}\wmetafile8\picw10742\pich3281\picwgoal6090\pic [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string configuration_file {
             get {
@@ -374,6 +374,23 @@ namespace AutoScreenCapture.Properties {
             get {
                 object obj = ResourceManager.GetObject("email", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\colortbl ;\red255\green0\blue0;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Emailing Screenshots\b0\par
+        ///
+        ///\pard\sa200\sl240\slmult1\fs22 You can email screenshots to an email address (or multiple email addressses) while the application is taking screenshots.\par
+        ///\par
+        ///Go to Email Settings in the File menu:\par
+        ///{\pict{\*\picprop}\wmetafile8\picw5186\pich3757\picwgoal2940\pi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string emailing_screenshots {
+            get {
+                return ResourceManager.GetString("emailing_screenshots", resourceCulture);
             }
         }
         

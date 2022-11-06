@@ -530,8 +530,6 @@ namespace AutoScreenCapture
 
             if (errorCode == 2)
             {
-                HelpTip.Message = "Cannot load screenshots taken on " + date + " as the number of screenshots being loaded exceeds the allowed load limit (" + screenshotsLoadLimit + ")";
-
                 _log.WriteDebugMessage("Cannot load screenshots. The number of screenshots to be loaded exceeded the number allowed set by ScreenshotsLoadLimit (" + screenshotsLoadLimit + ")");
 
                 localSlideList = null;

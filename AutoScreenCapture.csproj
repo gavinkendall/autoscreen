@@ -87,7 +87,6 @@
     <Compile Include="config\Config.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="EmailManager.cs" />
-    <Compile Include="help\HelpTip.cs" />
     <Compile Include="interface\about\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -448,6 +447,7 @@
     </Content>
     <None Include="autoscreen.pfx" />
     <None Include="help\dynamic_regex_validator.rtf" />
+    <None Include="help\emailing_screenshots.rtf" />
     <None Include="help\quick_start.rtf" />
     <None Include="help\welcome.rtf" />
     <None Include="help\license.rtf" />

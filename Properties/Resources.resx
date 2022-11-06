@@ -298,4 +298,7 @@
   <data name="dynamic_regex_validator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\dynamic_regex_validator.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="emailing_screenshots" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\emailing_screenshots.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

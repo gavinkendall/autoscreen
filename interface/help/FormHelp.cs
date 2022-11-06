@@ -50,6 +50,7 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("Command Line");
             listBoxHelpItems.Items.Add("Common Setup Scenarios");
             listBoxHelpItems.Items.Add("Dynamic Regex Validator");
+            listBoxHelpItems.Items.Add("Emailing Screenshots");
 
             listBoxHelpItems.SelectedIndex = 0;
         }
@@ -128,6 +129,10 @@ namespace AutoScreenCapture
 
                 case 15:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.dynamic_regex_validator;
+                    break;
+
+                case 16:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.emailing_screenshots;
                     break;
             }
         }
