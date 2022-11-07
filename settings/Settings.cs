@@ -285,6 +285,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_LIMONCELLO, "2.5.1.0"));
             _versionCollection.Add(new Version(CODENAME_LIMONCELLO, "2.5.1.1"));
             _versionCollection.Add(new Version(CODENAME_LIMONCELLO, "2.5.1.2"));
+            _versionCollection.Add(new Version(CODENAME_LIMONCELLO, "2.5.1.3"));
 
             Application = new SettingCollection()
             {

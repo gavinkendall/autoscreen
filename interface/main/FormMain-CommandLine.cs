@@ -588,7 +588,15 @@ namespace AutoScreenCapture
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Seconds"].Value);
-                        int milliseconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value);
+
+                        int milliseconds = 0;
+
+                        string strMilliseconds = Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value;
+
+                        if (!string.IsNullOrEmpty(strMilliseconds))
+                        {
+                            milliseconds = Convert.ToInt32(strMilliseconds);
+                        }
 
                         _formSetup.numericUpDownHoursInterval.Value = hours;
                         _formSetup.numericUpDownMinutesInterval.Value = minutes;
