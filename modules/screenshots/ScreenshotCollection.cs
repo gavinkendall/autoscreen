@@ -321,7 +321,7 @@ namespace AutoScreenCapture
                     }
 
                     // Multiply imageDiff by 100. For example, if imageDiff is 0.12109375 then screenshot.DiffPercentageWithPreviousImage will be 12.
-                    screenshot.DiffPercentageWithPreviousImage = (int)(imageDiff * 100);
+                    screenshot.DiffPercentageWithPreviousImage = (int)(Math.Ceiling(imageDiff * 100));
 
                     _log.WriteDebugMessage("Screenshot's image is " + screenshot.DiffPercentageWithPreviousImage + "% different compared to the previous screenshot's image (your acceptable percentage is " + imageDiffTolerance + "%)");
 
