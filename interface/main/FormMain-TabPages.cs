@@ -761,7 +761,7 @@ namespace AutoScreenCapture
         private void dashboardWallpaper_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JPEG | *.jpg;*.jpeg";
+            openFileDialog.Filter = "BMP|*.bmp|EMF|*.emf|GIF|*.gif|JPEG|*.jpg;*.jpeg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
