@@ -303,6 +303,14 @@ namespace AutoScreenCapture
             zoomIn.Click += dashboardZoomIn_Click;
             zoomOut.Click += dashboardZoomOut_Click;
 
+            ToolStripButton dashboardWallpaper = new ToolStripButton
+            {
+                Text = "Dashboard Wallpaper ...",
+                AutoToolTip = false
+            };
+
+            dashboardWallpaper.Click += dashboardWallpaper_Click;
+
             toolStripDashboard.Items.Add(previewButton);
             toolStripDashboard.Items.Add(startScreenCaptureButton);
             toolStripDashboard.Items.Add(stopScreenCaptureButton);
@@ -313,6 +321,8 @@ namespace AutoScreenCapture
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(zoomIn);
             toolStripDashboard.Items.Add(zoomOut);
+            toolStripDashboard.Items.Add(new ToolStripSeparator());
+            toolStripDashboard.Items.Add(dashboardWallpaper);
 
             flowLayoutPanel = new FlowLayoutPanel
             {
@@ -746,6 +756,34 @@ namespace AutoScreenCapture
         private void dashboardZoomOut_Click(object sender, EventArgs e)
         {
             ResizeGroupBoxes(zoomIn: false);
+        }
+
+        private void dashboardWallpaper_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JPEG | *.jpg;*.jpeg";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (_fileSystem.FileExists(openFileDialog.FileName))
+                {
+                    try
+                    {
+                        flowLayoutPanel.BackgroundImage = Image.FromFile(openFileDialog.FileName);
+
+                        _config.Settings.User.SetValueByKey("DashboardWallpaper", openFileDialog.FileName);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+                    }
+                    catch
+                    {
+                        flowLayoutPanel.BackgroundImage = Resources.space_cat_wallpaper;
+                    }
+                }
+            }
         }
 
         /// <summary>

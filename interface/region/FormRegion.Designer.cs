@@ -363,7 +363,7 @@
             this.labelImageDifferenceTolerance.Location = new System.Drawing.Point(6, 48);
             this.labelImageDifferenceTolerance.Name = "labelImageDifferenceTolerance";
             this.labelImageDifferenceTolerance.Size = new System.Drawing.Size(142, 13);
-            this.labelImageDifferenceTolerance.TabIndex = 40;
+            this.labelImageDifferenceTolerance.TabIndex = 22;
             this.labelImageDifferenceTolerance.Text = "Image Difference Tolerance:";
             // 
             // numericUpDownImageDifferenceTolerance
@@ -371,7 +371,7 @@
             this.numericUpDownImageDifferenceTolerance.Location = new System.Drawing.Point(148, 46);
             this.numericUpDownImageDifferenceTolerance.Name = "numericUpDownImageDifferenceTolerance";
             this.numericUpDownImageDifferenceTolerance.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownImageDifferenceTolerance.TabIndex = 39;
+            this.numericUpDownImageDifferenceTolerance.TabIndex = 23;
             // 
             // groupBoxPosition
             // 
@@ -501,7 +501,7 @@
             this.checkBoxEncrypt.Location = new System.Drawing.Point(9, 19);
             this.checkBoxEncrypt.Name = "checkBoxEncrypt";
             this.checkBoxEncrypt.Size = new System.Drawing.Size(122, 17);
-            this.checkBoxEncrypt.TabIndex = 37;
+            this.checkBoxEncrypt.TabIndex = 26;
             this.checkBoxEncrypt.Text = "Encrypt screenshots";
             this.checkBoxEncrypt.UseVisualStyleBackColor = true;
             // 
@@ -512,7 +512,7 @@
             this.groupBoxSecurity.Location = new System.Drawing.Point(12, 398);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 103);
-            this.groupBoxSecurity.TabIndex = 38;
+            this.groupBoxSecurity.TabIndex = 25;
             this.groupBoxSecurity.TabStop = false;
             this.groupBoxSecurity.Text = "Security";
             // 

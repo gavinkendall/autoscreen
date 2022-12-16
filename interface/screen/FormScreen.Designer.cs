@@ -233,7 +233,7 @@
             this.checkBoxMouse.Location = new System.Drawing.Point(6, 102);
             this.checkBoxMouse.Name = "checkBoxMouse";
             this.checkBoxMouse.Size = new System.Drawing.Size(130, 17);
-            this.checkBoxMouse.TabIndex = 25;
+            this.checkBoxMouse.TabIndex = 27;
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
             this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
@@ -252,7 +252,7 @@
             this.groupBoxImageAttributes.Location = new System.Drawing.Point(12, 283);
             this.groupBoxImageAttributes.Name = "groupBoxImageAttributes";
             this.groupBoxImageAttributes.Size = new System.Drawing.Size(205, 125);
-            this.groupBoxImageAttributes.TabIndex = 18;
+            this.groupBoxImageAttributes.TabIndex = 19;
             this.groupBoxImageAttributes.TabStop = false;
             this.groupBoxImageAttributes.Text = "Image Attributes";
             // 
@@ -262,7 +262,7 @@
             this.labelImageDifferenceTolerance.Location = new System.Drawing.Point(6, 74);
             this.labelImageDifferenceTolerance.Name = "labelImageDifferenceTolerance";
             this.labelImageDifferenceTolerance.Size = new System.Drawing.Size(142, 13);
-            this.labelImageDifferenceTolerance.TabIndex = 42;
+            this.labelImageDifferenceTolerance.TabIndex = 25;
             this.labelImageDifferenceTolerance.Text = "Image Difference Tolerance:";
             // 
             // numericUpDownImageDifferenceTolerance
@@ -270,7 +270,7 @@
             this.numericUpDownImageDifferenceTolerance.Location = new System.Drawing.Point(148, 72);
             this.numericUpDownImageDifferenceTolerance.Name = "numericUpDownImageDifferenceTolerance";
             this.numericUpDownImageDifferenceTolerance.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownImageDifferenceTolerance.TabIndex = 41;
+            this.numericUpDownImageDifferenceTolerance.TabIndex = 26;
             // 
             // labelResolutionRatio
             // 
@@ -278,7 +278,7 @@
             this.labelResolutionRatio.Location = new System.Drawing.Point(6, 48);
             this.labelResolutionRatio.Name = "labelResolutionRatio";
             this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelResolutionRatio.TabIndex = 28;
+            this.labelResolutionRatio.TabIndex = 23;
             this.labelResolutionRatio.Text = "Resolution Ratio:";
             // 
             // numericUpDownResolutionRatio
@@ -291,8 +291,7 @@
             0});
             this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
             this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownResolutionRatio.TabIndex = 27;
-            this.numericUpDownResolutionRatio.TabStop = false;
+            this.numericUpDownResolutionRatio.TabIndex = 24;
             this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
             100,
             0,
@@ -583,7 +582,7 @@
             this.checkBoxEncrypt.Location = new System.Drawing.Point(9, 19);
             this.checkBoxEncrypt.Name = "checkBoxEncrypt";
             this.checkBoxEncrypt.Size = new System.Drawing.Size(122, 17);
-            this.checkBoxEncrypt.TabIndex = 37;
+            this.checkBoxEncrypt.TabIndex = 29;
             this.checkBoxEncrypt.Text = "Encrypt screenshots";
             this.checkBoxEncrypt.UseVisualStyleBackColor = true;
             // 
@@ -594,7 +593,7 @@
             this.groupBoxSecurity.Location = new System.Drawing.Point(12, 414);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 86);
-            this.groupBoxSecurity.TabIndex = 38;
+            this.groupBoxSecurity.TabIndex = 28;
             this.groupBoxSecurity.TabStop = false;
             this.groupBoxSecurity.Text = "Security";
             // 

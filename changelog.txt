@@ -1,5 +1,6 @@
 ﻿Auto Screen Capture by Gavin Kendall
 
+2.5.1.6    Image Difference Tolerance (as part of Optimize Screen Capture) is now available for individual Screens and Regions. Can now change dashboard wallpaper.
 2.5.1.5    Optimize Screen Capture tolerance percentage is calculated based on Math.Ceiling() for better results when comparing very small changes between the previous captured image and the current captured image.
 2.5.1.4    A small fix for the -interval command.
 2.5.1.3    The full filepath of each screenshot is clearly displayed for each Screen and Region tab view, the Screenshot Location button is now bigger, the "Metadata" button is now named "Screenshot Metadata", and the "Configure" button is now named "Configure Screen" or "Configure Region" depending on what type of tab view is being shown. Help tips have been removed from the main interface. Fixed issue with Schedules not saving their Enable state.
