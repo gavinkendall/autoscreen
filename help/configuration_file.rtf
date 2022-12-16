@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
 {\colortbl ;\red255\green0\blue0;\red102\green102\blue102;}
 {\*\generator Riched20 10.0.17763}\viewkind4\uc1 
 \pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Configuration File\b0\par
@@ -3898,7 +3898,7 @@ For example, running \cf1 autoscreen.exe\cf0  will start Auto Screen Capture usi
 \cf1 autoscreen.exe -config="Configuration3-JPEGForAllRegionsExceptRegion5.conf"\cf0\par
 \par
 The configuration file needs to define the version that's being used so make sure you include the following line:\par
-\cf2\f1\fs20 Version=2.5.1.3\cf0\f0\fs22\par
+\cf2\f1\fs20 Version=2.5.1.6\cf0\f0\fs22\par
 \par
 Auto Screen Capture will use the autoscreen.conf file to create its XML data files as defined by the ApplicationSettingsFile, UserSettingsFile, SFTPSettingsFile, and SMTPSettingsFile keys. These are normally created in the "!autoscreen" folder of the user's "AppData\\Local" folder.\par
 \cf2\f1\fs20 # Settings the application will use on its consecutive runs after its first run.\par
@@ -3969,6 +3969,9 @@ UserSetting::[Key="ImageFormat", Value="JPEG"]\par
 #\par
 # JPEGQuality\par
 # The quality of the image. This only works with JPEG.\par
+\f2 #\par
+# ImageDiffTolerance\par
+# The percentage of difference that should be tolerated between the previously captured image versus the current captured image when Optimize Screen Capture is enabled.\f1\par
 #\par
 # ResolutionRatio\par
 # This value determines the percentage of resolution ratio (from 1% to 100%) so it affects the size of the screenshots.\par
@@ -3988,24 +3991,24 @@ UserSetting::[Key="ImageFormat", Value="JPEG"]\par
 ApplicationSetting::[Key="ScreensFile", Value="$AppDataLocal$\\Auto Screen Capture\\!autoscreen\\screens.xml"]\par
 \par
 # This is the Active Window for taking screenshots of the active window. Remove the # at the beginning of the line to use it as a default Screen:\par
-# Screen::[Enable=True, Name="Active Window", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=0, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=False, Format=JPEG, JPEGQuality=100, ResolutionRatio=100, Mouse=True, Encrypt=False]\par
+# Screen::[Enable=True, Name="Active Window", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=0, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=False, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 ResolutionRatio=100, Mouse=True, Encrypt=False]\par
 \par
 # The default Screens to use:\par
-Screen::[Enable=True, Name="Screen 1", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, ResolutionRatio=100, Mouse=True, Encrypt=False]\par
-Screen::[Enable=True, Name="Screen 2", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, ResolutionRatio=100, Mouse=True, Encrypt=False]\par
-Screen::[Enable=True, Name="Screen 3", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, ResolutionRatio=100, Mouse=True, Encrypt=False]\par
+Screen::[Enable=True, Name="Screen 1", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 ResolutionRatio=100, Mouse=True, Encrypt=False]\par
+Screen::[Enable=True, Name="Screen 2", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 ResolutionRatio=100, Mouse=True, Encrypt=False]\par
+Screen::[Enable=True, Name="Screen 3", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 ResolutionRatio=100, Mouse=True, Encrypt=False]\par
 \par
 # Any additional Screens you may want:\par
-# Screen::[Enable=True, Name="Screen 4", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, ResolutionRatio=100, Mouse=True, Encrypt=False]\par
-# Screen::[Enable=True, Name="Screen 5", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, ResolutionRatio=100, Mouse=True, Encrypt=False]\par
+# Screen::[Enable=True, Name="Screen 4", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 ResolutionRatio=100, Mouse=True, Encrypt=False]\par
+# Screen::[Enable=True, Name="Screen 5", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", Source=2, Component=0, CaptureMethod=0, X=0, Y=0, Width=0, Height=0, AutoAdapt=True, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 ResolutionRatio=100, Mouse=True, Encrypt=False]\par
 \par
 # Regions\par
 # Each "Region" represents an area of a display defined by its X, Y, Width, and Height values.\par
 # A "Region" can have its own folder path ("Folder") and filename pattern ("Macro").\par
 ApplicationSetting::[Key="RegionsFile", Value="$AppDataLocal$\\Auto Screen Capture\\!autoscreen\\regions.xml"]\par
-# Region::[Enable=False, Name="Region 1", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", X=0, Y=0, Width=100, Height=100, Format=JPEG, JPEGQuality=100, Mouse=True, Encrypt=False]\par
-# Region::[Enable=False, Name="Region 2", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", X=0, Y=0, Width=100, Height=100, Format=JPEG, JPEGQuality=100, Mouse=True, Encrypt=False]\par
-# Region::[Enable=False, Name="Region 3", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", X=0, Y=0, Width=100, Height=100, Format=JPEG, JPEGQuality=100, Mouse=True, Encrypt=False]\par
+# Region::[Enable=False, Name="Region 1", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", X=0, Y=0, Width=100, Height=100, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 Mouse=True, Encrypt=False]\par
+# Region::[Enable=False, Name="Region 2", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", X=0, Y=0, Width=100, Height=100, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 Mouse=True, Encrypt=False]\par
+# Region::[Enable=False, Name="Region 3", Folder="$AppDataLocal$\\Auto Screen Capture\\screenshots\\", Macro="%date%\\%name%\\%date%_%time%.%format%", X=0, Y=0, Width=100, Height=100, Format=JPEG, JPEGQuality=100, \f2 ImageDiffTolerance\f1\lang1033 =20, \lang9 Mouse=True, Encrypt=False]\par
 \par
 # The default screen capture interval (in milliseconds).\par
 UserSetting::[Key="ScreenCaptureInterval", Value="60000"]\par
