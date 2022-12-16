@@ -41,6 +41,7 @@ namespace AutoScreenCapture
         private const string SCREEN_COMPONENT = "component";
         private const string SCREEN_FORMAT = "format";
         private const string SCREEN_JPEG_QUALITY = "jpeg_quality";
+        private const string SCREEN_IMAGE_DIFF_TOLERANCE = "image_diff_tolerance";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ENABLE = "enable";
         private const string SCREEN_X = "x";
@@ -167,6 +168,11 @@ namespace AutoScreenCapture
                                         screen.JpegQuality = Convert.ToInt32(xReader.Value);
                                         break;
 
+                                    case SCREEN_IMAGE_DIFF_TOLERANCE:
+                                        xReader.Read();
+                                        screen.ImageDiffTolerance = Convert.ToInt32(xReader.Value);
+                                        break;
+
                                     case SCREEN_MOUSE:
                                         xReader.Read();
                                         screen.Mouse = Convert.ToBoolean(xReader.Value);
@@ -238,6 +244,9 @@ namespace AutoScreenCapture
                         if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
                             log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
+
+                            int imageDiffTolerance = Convert.ToInt32(config.Settings.User.GetByKey("ImageDiffTolerance").Value);
+                            screen.ImageDiffTolerance = imageDiffTolerance;
 
                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                             Version v2338 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.3.8");
@@ -359,6 +368,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
                         xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
+                        xWriter.WriteElementString(SCREEN_IMAGE_DIFF_TOLERANCE, screen.ImageDiffTolerance.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
                         xWriter.WriteElementString(SCREEN_X, screen.X.ToString());
                         xWriter.WriteElementString(SCREEN_Y, screen.Y.ToString());

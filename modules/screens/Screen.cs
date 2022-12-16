@@ -63,6 +63,11 @@ namespace AutoScreenCapture
         public int JpegQuality { get; set; }
 
         /// <summary>
+        /// The image difference tolerance percentage.
+        /// </summary>
+        public int ImageDiffTolerance { get; set; }
+
+        /// <summary>
         /// Determines if we include the mouse pointer in the screen capture.
         /// </summary>
         public bool Mouse { get; set; }

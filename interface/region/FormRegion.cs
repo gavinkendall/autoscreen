@@ -112,6 +112,18 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your filename pattern in the Macro field");
             _toolTip.SetToolTip(checkBoxEncrypt, "Screenshots can be encrypted so only you can view each screenshot with Auto Screen Capture");
 
+            int imageDiffTolerance = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance").Value);
+            bool optimizeScreenCapture = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
+
+            if (optimizeScreenCapture)
+            {
+                numericUpDownImageDifferenceTolerance.Enabled = true;
+            }
+            else
+            {
+                numericUpDownImageDifferenceTolerance.Enabled = false;
+            }
+
             ScreenDictionary.Clear();
             comboBoxScreenTemplate.Items.Clear();
 
@@ -152,6 +164,7 @@ namespace AutoScreenCapture
                 textBoxMacro.Text = RegionObject.Macro;
                 comboBoxFormat.SelectedItem = RegionObject.Format.Name;
                 numericUpDownJpegQuality.Value = RegionObject.JpegQuality;
+                numericUpDownImageDifferenceTolerance.Value = RegionObject.ImageDiffTolerance;
                 checkBoxMouse.Checked = RegionObject.Mouse;
                 numericUpDownX.Value = RegionObject.X;
                 numericUpDownY.Value = RegionObject.Y;
@@ -169,6 +182,7 @@ namespace AutoScreenCapture
                 textBoxMacro.Text = _fileSystem.FilenamePattern;
                 comboBoxFormat.SelectedItem = ScreenCapture.ImageFormat;
                 numericUpDownJpegQuality.Value = 100;
+                numericUpDownImageDifferenceTolerance.Value = imageDiffTolerance;
                 checkBoxMouse.Checked = true;
                 numericUpDownX.Value = X;
                 numericUpDownY.Value = Y;
@@ -220,6 +234,7 @@ namespace AutoScreenCapture
                         Macro = textBoxMacro.Text,
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
+                        ImageDiffTolerance = (int)numericUpDownImageDifferenceTolerance.Value,
                         Mouse = checkBoxMouse.Checked,
                         X = (int)numericUpDownX.Value,
                         Y = (int)numericUpDownY.Value,
@@ -262,6 +277,7 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Macro = textBoxMacro.Text;
                         RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
                         RegionCollection.Get(RegionObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
+                        RegionCollection.Get(RegionObject).ImageDiffTolerance = (int)numericUpDownImageDifferenceTolerance.Value;
                         RegionCollection.Get(RegionObject).Mouse = checkBoxMouse.Checked;
                         RegionCollection.Get(RegionObject).X = (int)numericUpDownX.Value;
                         RegionCollection.Get(RegionObject).Y = (int)numericUpDownY.Value;
@@ -310,6 +326,7 @@ namespace AutoScreenCapture
                  !RegionObject.Macro.Equals(textBoxMacro.Text) ||
                  !RegionObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  RegionObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
+                 RegionObject.ImageDiffTolerance != (int)numericUpDownImageDifferenceTolerance.Value ||
                  !RegionObject.Mouse.Equals(checkBoxMouse.Checked) ||
                  RegionObject.X != (int)numericUpDownX.Value ||
                  RegionObject.Y != (int)numericUpDownY.Value ||

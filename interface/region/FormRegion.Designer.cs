@@ -48,11 +48,12 @@
             this.textBoxFolder = new System.Windows.Forms.TextBox();
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.comboBoxFormat = new System.Windows.Forms.ComboBox();
-            this.labelFormat = new System.Windows.Forms.Label();
             this.numericUpDownJpegQuality = new System.Windows.Forms.NumericUpDown();
             this.labelJpegQuality = new System.Windows.Forms.Label();
             this.checkBoxMouse = new System.Windows.Forms.CheckBox();
             this.groupBoxImageAttributes = new System.Windows.Forms.GroupBox();
+            this.labelImageDifferenceTolerance = new System.Windows.Forms.Label();
+            this.numericUpDownImageDifferenceTolerance = new System.Windows.Forms.NumericUpDown();
             this.groupBoxPosition = new System.Windows.Forms.GroupBox();
             this.groupBoxSize = new System.Windows.Forms.GroupBox();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
@@ -73,6 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImageAttributes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownImageDifferenceTolerance)).BeginInit();
             this.groupBoxPosition.SuspendLayout();
             this.groupBoxSize.SuspendLayout();
             this.groupBoxPreview.SuspendLayout();
@@ -296,24 +298,15 @@
             this.comboBoxFormat.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormat.FormattingEnabled = true;
-            this.comboBoxFormat.Location = new System.Drawing.Point(148, 22);
+            this.comboBoxFormat.Location = new System.Drawing.Point(6, 19);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(51, 21);
             this.comboBoxFormat.TabIndex = 19;
             this.comboBoxFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionFormat_SelectedIndexChanged);
             // 
-            // labelFormat
-            // 
-            this.labelFormat.AutoSize = true;
-            this.labelFormat.Location = new System.Drawing.Point(6, 25);
-            this.labelFormat.Name = "labelFormat";
-            this.labelFormat.Size = new System.Drawing.Size(42, 13);
-            this.labelFormat.TabIndex = 18;
-            this.labelFormat.Text = "Format:";
-            // 
             // numericUpDownJpegQuality
             // 
-            this.numericUpDownJpegQuality.Location = new System.Drawing.Point(148, 49);
+            this.numericUpDownJpegQuality.Location = new System.Drawing.Point(148, 20);
             this.numericUpDownJpegQuality.Minimum = new decimal(new int[] {
             1,
             0,
@@ -331,7 +324,7 @@
             // labelJpegQuality
             // 
             this.labelJpegQuality.AutoSize = true;
-            this.labelJpegQuality.Location = new System.Drawing.Point(6, 51);
+            this.labelJpegQuality.Location = new System.Drawing.Point(70, 22);
             this.labelJpegQuality.Name = "labelJpegQuality";
             this.labelJpegQuality.Size = new System.Drawing.Size(72, 13);
             this.labelJpegQuality.TabIndex = 20;
@@ -351,7 +344,8 @@
             // groupBoxImageAttributes
             // 
             this.groupBoxImageAttributes.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxImageAttributes.Controls.Add(this.labelFormat);
+            this.groupBoxImageAttributes.Controls.Add(this.labelImageDifferenceTolerance);
+            this.groupBoxImageAttributes.Controls.Add(this.numericUpDownImageDifferenceTolerance);
             this.groupBoxImageAttributes.Controls.Add(this.checkBoxMouse);
             this.groupBoxImageAttributes.Controls.Add(this.labelJpegQuality);
             this.groupBoxImageAttributes.Controls.Add(this.numericUpDownJpegQuality);
@@ -362,6 +356,22 @@
             this.groupBoxImageAttributes.TabIndex = 17;
             this.groupBoxImageAttributes.TabStop = false;
             this.groupBoxImageAttributes.Text = "Image Attributes";
+            // 
+            // labelImageDifferenceTolerance
+            // 
+            this.labelImageDifferenceTolerance.AutoSize = true;
+            this.labelImageDifferenceTolerance.Location = new System.Drawing.Point(6, 48);
+            this.labelImageDifferenceTolerance.Name = "labelImageDifferenceTolerance";
+            this.labelImageDifferenceTolerance.Size = new System.Drawing.Size(142, 13);
+            this.labelImageDifferenceTolerance.TabIndex = 40;
+            this.labelImageDifferenceTolerance.Text = "Image Difference Tolerance:";
+            // 
+            // numericUpDownImageDifferenceTolerance
+            // 
+            this.numericUpDownImageDifferenceTolerance.Location = new System.Drawing.Point(148, 46);
+            this.numericUpDownImageDifferenceTolerance.Name = "numericUpDownImageDifferenceTolerance";
+            this.numericUpDownImageDifferenceTolerance.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownImageDifferenceTolerance.TabIndex = 39;
             // 
             // groupBoxPosition
             // 
@@ -559,6 +569,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).EndInit();
             this.groupBoxImageAttributes.ResumeLayout(false);
             this.groupBoxImageAttributes.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownImageDifferenceTolerance)).EndInit();
             this.groupBoxPosition.ResumeLayout(false);
             this.groupBoxPosition.PerformLayout();
             this.groupBoxSize.ResumeLayout(false);
@@ -594,7 +605,6 @@
         private System.Windows.Forms.TextBox textBoxFolder;
         private System.Windows.Forms.Button buttonBrowseFolder;
         private System.Windows.Forms.ComboBox comboBoxFormat;
-        private System.Windows.Forms.Label labelFormat;
         private System.Windows.Forms.NumericUpDown numericUpDownJpegQuality;
         private System.Windows.Forms.Label labelJpegQuality;
         private System.Windows.Forms.CheckBox checkBoxMouse;
@@ -612,5 +622,7 @@
         private System.Windows.Forms.CheckBox checkBoxEncrypt;
         private System.Windows.Forms.GroupBox groupBoxSecurity;
         private System.Windows.Forms.Label labelSecurity;
+        private System.Windows.Forms.NumericUpDown numericUpDownImageDifferenceTolerance;
+        private System.Windows.Forms.Label labelImageDifferenceTolerance;
     }
 }

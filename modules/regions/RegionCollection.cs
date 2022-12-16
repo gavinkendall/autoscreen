@@ -40,6 +40,7 @@ namespace AutoScreenCapture
         private const string REGION_MACRO = "macro";
         private const string REGION_FORMAT = "format";
         private const string REGION_JPEG_QUALITY = "jpeg_quality";
+        private const string REGION_IMAGE_DIFF_TOLERANCE = "image_diff_tolerance";
         private const string REGION_MOUSE = "mouse";
         private const string REGION_X = "x";
         private const string REGION_Y = "y";
@@ -131,6 +132,11 @@ namespace AutoScreenCapture
                                         region.JpegQuality = Convert.ToInt32(xReader.Value);
                                         break;
 
+                                    case REGION_IMAGE_DIFF_TOLERANCE:
+                                        xReader.Read();
+                                        region.ImageDiffTolerance = Convert.ToInt32(xReader.Value);
+                                        break;
+
                                     case REGION_MOUSE:
                                         xReader.Read();
                                         region.Mouse = Convert.ToBoolean(xReader.Value);
@@ -177,6 +183,9 @@ namespace AutoScreenCapture
                         if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
                             log.WriteDebugMessage("An old version of the regions file was detected. Attempting upgrade to new region schema");
+
+                            int imageDiffTolerance = Convert.ToInt32(config.Settings.User.GetByKey("ImageDiffTolerance").Value);
+                            region.ImageDiffTolerance = imageDiffTolerance;
 
                             Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
@@ -302,6 +311,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_MACRO, region.Macro);
                         xWriter.WriteElementString(REGION_FORMAT, region.Format.Name);
                         xWriter.WriteElementString(REGION_JPEG_QUALITY, region.JpegQuality.ToString());
+                        xWriter.WriteElementString(REGION_IMAGE_DIFF_TOLERANCE, region.ImageDiffTolerance.ToString());
                         xWriter.WriteElementString(REGION_MOUSE, region.Mouse.ToString());
                         xWriter.WriteElementString(REGION_X, region.X.ToString());
                         xWriter.WriteElementString(REGION_Y, region.Y.ToString());

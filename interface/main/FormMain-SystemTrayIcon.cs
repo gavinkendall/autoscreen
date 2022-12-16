@@ -266,11 +266,11 @@ namespace AutoScreenCapture
                         _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "." +
                         _formSetup.numericUpDownMillisecondsInterval.Value.ToString("000") + "] " +
                         (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial] " : string.Empty) +
-                        (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
+                        (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
                 }
 
                 _formCommandDeck.toolStripStatusLabel.Text = "Ready " +
-                    (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
+                    (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
@@ -302,7 +302,7 @@ namespace AutoScreenCapture
                         if (_screenCapture.OptimizeScreenCapture)
                         {
                             // System tray icon is green if taking optimized screenshots.
-                            takingScreenshotsMessage = "Taking screenshots [optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]";
+                            takingScreenshotsMessage = "Taking screenshots [optimized]";
 
                             notifyIcon.Icon = Resources.autoscreen_running_optimized;
                         }
@@ -354,7 +354,7 @@ namespace AutoScreenCapture
 
                                 if (_screenCapture.OptimizeScreenCapture)
                                 {
-                                    _formCommandDeck.toolStripStatusLabel.Text += " [optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]";
+                                    _formCommandDeck.toolStripStatusLabel.Text += " [optimized]";
                                 }
                                 else
                                 {

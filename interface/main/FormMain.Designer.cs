@@ -200,9 +200,10 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpCommandLine = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpCommonSetupScenarios = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainMenuItemHelpDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpEmailingScreenshots = new System.Windows.Forms.ToolStripMenuItem();
             this.panelModules = new System.Windows.Forms.Panel();
             this.buttonResizeModulesPanel = new System.Windows.Forms.Button();
-            this.toolStripMainMenuItemHelpEmailingScreenshots = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemCommandLine = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -1133,6 +1134,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMainMenuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMainMenuItemOpenProgramFolder,
+            this.toolStripMainMenuItemCommandLine,
             this.toolStripMainMenuItemEmailSettings,
             this.toolStripMainMenuItemFileTransferSettings,
             this.toolStripSeparatorExit,
@@ -1649,6 +1651,13 @@ namespace AutoScreenCapture
             this.toolStripMainMenuItemHelpDynamicRegexValidator.Text = "Dynamic Regex Validator";
             this.toolStripMainMenuItemHelpDynamicRegexValidator.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
+            // toolStripMainMenuItemHelpEmailingScreenshots
+            // 
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Name = "toolStripMainMenuItemHelpEmailingScreenshots";
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Size = new System.Drawing.Size(258, 22);
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Text = "Emailing Screenshots";
+            this.toolStripMainMenuItemHelpEmailingScreenshots.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
+            // 
             // panelModules
             // 
             this.panelModules.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1673,12 +1682,13 @@ namespace AutoScreenCapture
             this.buttonResizeModulesPanel.UseVisualStyleBackColor = true;
             this.buttonResizeModulesPanel.Click += new System.EventHandler(this.buttonResizeModulesPanel_Click);
             // 
-            // toolStripMainMenuItemHelpEmailingScreenshots
+            // toolStripMainMenuItemCommandLine
             // 
-            this.toolStripMainMenuItemHelpEmailingScreenshots.Name = "toolStripMainMenuItemHelpEmailingScreenshots";
-            this.toolStripMainMenuItemHelpEmailingScreenshots.Size = new System.Drawing.Size(258, 22);
-            this.toolStripMainMenuItemHelpEmailingScreenshots.Text = "Emailing Screenshots";
-            this.toolStripMainMenuItemHelpEmailingScreenshots.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
+            this.toolStripMainMenuItemCommandLine.Image = global::AutoScreenCapture.Properties.Resources.command_line;
+            this.toolStripMainMenuItemCommandLine.Name = "toolStripMainMenuItemCommandLine";
+            this.toolStripMainMenuItemCommandLine.Size = new System.Drawing.Size(188, 22);
+            this.toolStripMainMenuItemCommandLine.Text = "Command Line";
+            this.toolStripMainMenuItemCommandLine.Click += new System.EventHandler(this.toolStripDropDownButtonCommandLine_Click);
             // 
             // FormMain
             // 
@@ -1891,5 +1901,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMainMenuItemHelpWhatsNew;
         private ToolStripMenuItem toolStripMainMenuItemHelpDynamicRegexValidator;
         private ToolStripMenuItem toolStripMainMenuItemHelpEmailingScreenshots;
+        private ToolStripMenuItem toolStripMainMenuItemCommandLine;
     }
 }

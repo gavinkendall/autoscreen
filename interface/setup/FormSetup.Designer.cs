@@ -60,6 +60,8 @@
             this.radioButtonImageFormatEmf = new System.Windows.Forms.RadioButton();
             this.radioButtonImageFormatBmp = new System.Windows.Forms.RadioButton();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
+            this.labelMillisecondsInterval = new System.Windows.Forms.Label();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
             this.labelLimitHelp = new System.Windows.Forms.Label();
             this.labelInitialCaptureHelp = new System.Windows.Forms.Label();
             this.labelIntervalHelp = new System.Windows.Forms.Label();
@@ -73,12 +75,14 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
-            this.labelTolerance = new System.Windows.Forms.Label();
+            this.buttonOptimizeScreenCaptureApplyToAllRegions = new System.Windows.Forms.Button();
+            this.buttonOptimizeScreenCaptureApplyToAllScreens = new System.Windows.Forms.Button();
             this.labelSelectedImageDiffTolerance = new System.Windows.Forms.Label();
             this.labelImageDifference = new System.Windows.Forms.Label();
             this.trackBarImageDiffTolerance = new System.Windows.Forms.TrackBar();
             this.labelOptimizeScreenCaptureHelp = new System.Windows.Forms.Label();
             this.checkBoxOptimizeScreenCapture = new System.Windows.Forms.CheckBox();
+            this.labelImageDiffTolerance = new System.Windows.Forms.Label();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
             this.buttonAddScreenshotLabelToList = new System.Windows.Forms.Button();
             this.labelScreenshotLabel = new System.Windows.Forms.Label();
@@ -151,13 +155,12 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
-            this.labelMillisecondsInterval = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
             this.tabPageImageFormat.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
@@ -171,7 +174,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSetup
@@ -529,6 +531,28 @@
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
             // 
+            // labelMillisecondsInterval
+            // 
+            this.labelMillisecondsInterval.AutoSize = true;
+            this.labelMillisecondsInterval.Location = new System.Drawing.Point(438, 50);
+            this.labelMillisecondsInterval.Name = "labelMillisecondsInterval";
+            this.labelMillisecondsInterval.Size = new System.Drawing.Size(63, 13);
+            this.labelMillisecondsInterval.TabIndex = 5;
+            this.labelMillisecondsInterval.Text = "milliseconds";
+            // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(390, 48);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMillisecondsInterval.TabIndex = 4;
+            this.numericUpDownMillisecondsInterval.TabStop = false;
+            // 
             // labelLimitHelp
             // 
             this.labelLimitHelp.BackColor = System.Drawing.Color.LightYellow;
@@ -659,12 +683,14 @@
             // 
             // tabPageOptimizeScreenCapture
             // 
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.labelTolerance);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.buttonOptimizeScreenCaptureApplyToAllRegions);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.buttonOptimizeScreenCaptureApplyToAllScreens);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.labelSelectedImageDiffTolerance);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.labelImageDifference);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.trackBarImageDiffTolerance);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.labelOptimizeScreenCaptureHelp);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.checkBoxOptimizeScreenCapture);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.labelImageDiffTolerance);
             this.tabPageOptimizeScreenCapture.Location = new System.Drawing.Point(4, 22);
             this.tabPageOptimizeScreenCapture.Name = "tabPageOptimizeScreenCapture";
             this.tabPageOptimizeScreenCapture.Padding = new System.Windows.Forms.Padding(3);
@@ -673,19 +699,32 @@
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
             // 
-            // labelTolerance
+            // buttonOptimizeScreenCaptureApplyToAllRegions
             // 
-            this.labelTolerance.AutoSize = true;
-            this.labelTolerance.Location = new System.Drawing.Point(6, 151);
-            this.labelTolerance.Name = "labelTolerance";
-            this.labelTolerance.Size = new System.Drawing.Size(58, 13);
-            this.labelTolerance.TabIndex = 4;
-            this.labelTolerance.Text = "Tolerance:";
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.Location = new System.Drawing.Point(175, 192);
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.Name = "buttonOptimizeScreenCaptureApplyToAllRegions";
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.Size = new System.Drawing.Size(159, 23);
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.TabIndex = 41;
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.TabStop = false;
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.Text = "Apply To All Regions";
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.UseVisualStyleBackColor = true;
+            this.buttonOptimizeScreenCaptureApplyToAllRegions.Click += new System.EventHandler(this.buttonOptimizeScreenCaptureApplyToAllRegions_Click);
+            // 
+            // buttonOptimizeScreenCaptureApplyToAllScreens
+            // 
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.Location = new System.Drawing.Point(10, 192);
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.Name = "buttonOptimizeScreenCaptureApplyToAllScreens";
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.Size = new System.Drawing.Size(159, 23);
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.TabIndex = 40;
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.TabStop = false;
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.Text = "Apply To All Screens";
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.UseVisualStyleBackColor = true;
+            this.buttonOptimizeScreenCaptureApplyToAllScreens.Click += new System.EventHandler(this.buttonOptimizeScreenCaptureApplyToAllScreens_Click);
             // 
             // labelSelectedImageDiffTolerance
             // 
             this.labelSelectedImageDiffTolerance.AutoSize = true;
-            this.labelSelectedImageDiffTolerance.Location = new System.Drawing.Point(70, 151);
+            this.labelSelectedImageDiffTolerance.Location = new System.Drawing.Point(160, 151);
             this.labelSelectedImageDiffTolerance.Name = "labelSelectedImageDiffTolerance";
             this.labelSelectedImageDiffTolerance.Size = new System.Drawing.Size(0, 13);
             this.labelSelectedImageDiffTolerance.TabIndex = 3;
@@ -732,6 +771,15 @@
             this.checkBoxOptimizeScreenCapture.Text = "Optimize screen capture";
             this.checkBoxOptimizeScreenCapture.UseVisualStyleBackColor = true;
             this.checkBoxOptimizeScreenCapture.CheckedChanged += new System.EventHandler(this.checkBoxOptimizeScreenCapture_CheckedChanged);
+            // 
+            // labelImageDiffTolerance
+            // 
+            this.labelImageDiffTolerance.AutoSize = true;
+            this.labelImageDiffTolerance.Location = new System.Drawing.Point(6, 151);
+            this.labelImageDiffTolerance.Name = "labelImageDiffTolerance";
+            this.labelImageDiffTolerance.Size = new System.Drawing.Size(142, 13);
+            this.labelImageDiffTolerance.TabIndex = 4;
+            this.labelImageDiffTolerance.Text = "Image Difference Tolerance:";
             // 
             // tabPageLabels
             // 
@@ -1509,28 +1557,6 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // numericUpDownMillisecondsInterval
-            // 
-            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(390, 48);
-            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
-            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownMillisecondsInterval.TabIndex = 4;
-            this.numericUpDownMillisecondsInterval.TabStop = false;
-            // 
-            // labelMillisecondsInterval
-            // 
-            this.labelMillisecondsInterval.AutoSize = true;
-            this.labelMillisecondsInterval.Location = new System.Drawing.Point(438, 50);
-            this.labelMillisecondsInterval.Name = "labelMillisecondsInterval";
-            this.labelMillisecondsInterval.Size = new System.Drawing.Size(63, 13);
-            this.labelMillisecondsInterval.TabIndex = 5;
-            this.labelMillisecondsInterval.Text = "milliseconds";
-            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1558,6 +1584,7 @@
             this.tabPageImageFormat.PerformLayout();
             this.tabPageInterval.ResumeLayout(false);
             this.tabPageInterval.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
@@ -1577,7 +1604,6 @@
             this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1655,7 +1681,7 @@
         private System.Windows.Forms.Button buttonImageFormatApplyToAllScreens;
         private System.Windows.Forms.Label labelFilenamePatternPreview;
         private System.Windows.Forms.Label labelFilenamePatternFilename;
-        private System.Windows.Forms.Label labelTolerance;
+        private System.Windows.Forms.Label labelImageDiffTolerance;
         private System.Windows.Forms.Label labelImageDifference;
 
         /// <summary>
@@ -1912,5 +1938,7 @@
         /// A trackbar control for the image difference percentage.
         /// </summary>
         public System.Windows.Forms.TrackBar trackBarImageDiffTolerance;
+        private System.Windows.Forms.Button buttonOptimizeScreenCaptureApplyToAllRegions;
+        private System.Windows.Forms.Button buttonOptimizeScreenCaptureApplyToAllScreens;
     }
 }

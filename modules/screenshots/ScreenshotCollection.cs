@@ -266,8 +266,9 @@ namespace AutoScreenCapture
         /// Processes a screenshot.
         /// </summary>
         /// <param name="screenshot">The screenshot to process.</param>
+        /// <param name="imageDiffTolerance">The image difference tolerance percentage.</param>
         /// <returns>True if processing the screenshot was successful. False if processing the screenshot was unsuccessful.</returns>
-        public bool Process(Screenshot screenshot)
+        public bool Process(Screenshot screenshot, int imageDiffTolerance)
         {
             try
             {
@@ -277,8 +278,6 @@ namespace AutoScreenCapture
                 // Check the image difference between the provided screenshot and the previous screenshot of the same view if we're using the Optimize Screen Capture feature.
                 if (_screenCapture.OptimizeScreenCapture)
                 {
-                    int imageDiffTolerance = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance").Value);
-
                     Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
                     // Add the screenshot to the collection if no previous screenshot of this view was found.

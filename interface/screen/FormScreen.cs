@@ -103,6 +103,18 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(checkBoxAutoAdapt, "The position and size will automatically adjust based on changes to your display setup");
             _toolTip.SetToolTip(checkBoxEncrypt, "Screenshots can be encrypted so only you can view each screenshot with Auto Screen Capture");
 
+            int imageDiffTolerance = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance").Value);
+            bool optimizeScreenCapture = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
+
+            if (optimizeScreenCapture)
+            {
+                numericUpDownImageDifferenceTolerance.Enabled = true;
+            }
+            else
+            {
+                numericUpDownImageDifferenceTolerance.Enabled = false;
+            }
+
             _autoAdaptUsesEnumDisplaySettings = Convert.ToBoolean(_config.Settings.User.GetByKey("AutoAdaptUsesEnumDisplaySettings").Value);
 
             comboBoxFormat.Items.Clear();
@@ -150,6 +162,7 @@ namespace AutoScreenCapture
                 comboBoxScreenCaptureMethod.SelectedIndex = ScreenObject.CaptureMethod;
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
+                numericUpDownImageDifferenceTolerance.Value = ScreenObject.ImageDiffTolerance;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
                 checkBoxEnable.Checked = ScreenObject.Enable;
                 numericUpDownX.Value = ScreenObject.X;
@@ -174,6 +187,7 @@ namespace AutoScreenCapture
                 comboBoxScreenCaptureMethod.SelectedIndex = 0;
                 comboBoxFormat.SelectedItem = ScreenCapture.ImageFormat;
                 numericUpDownJpegQuality.Value = 100;
+                numericUpDownImageDifferenceTolerance.Value = imageDiffTolerance;
                 checkBoxMouse.Checked = true;
                 checkBoxEnable.Checked = true;
                 numericUpDownX.Value = 0;
@@ -241,6 +255,7 @@ namespace AutoScreenCapture
                         Component = comboBoxScreenComponent.SelectedIndex,
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
+                        ImageDiffTolerance = (int)numericUpDownImageDifferenceTolerance.Value,
                         Mouse = checkBoxMouse.Checked,
                         Enable = checkBoxEnable.Checked,
                         X = (int)numericUpDownX.Value,
@@ -290,6 +305,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
                         ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
+                        ScreenCollection.Get(ScreenObject).ImageDiffTolerance = (int)numericUpDownImageDifferenceTolerance.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
                         ScreenCollection.Get(ScreenObject).Enable = checkBoxEnable.Checked;
                         ScreenCollection.Get(ScreenObject).X = (int)numericUpDownX.Value;
@@ -343,6 +359,7 @@ namespace AutoScreenCapture
                  ScreenObject.Component != comboBoxScreenComponent.SelectedIndex ||
                  !ScreenObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
+                 ScreenObject.ImageDiffTolerance != (int)numericUpDownImageDifferenceTolerance.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
                  !ScreenObject.Enable.Equals(checkBoxEnable.Checked) ||
                  ScreenObject.X != (int)numericUpDownX.Value ||

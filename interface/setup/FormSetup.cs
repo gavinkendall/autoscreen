@@ -782,15 +782,19 @@ namespace AutoScreenCapture
             {
                 labelImageDifference.Enabled = true;
                 trackBarImageDiffTolerance.Enabled = true;
-                labelTolerance.Enabled = true;
+                labelImageDiffTolerance.Enabled = true;
                 labelSelectedImageDiffTolerance.Enabled = true;
+                buttonOptimizeScreenCaptureApplyToAllScreens.Enabled = true;
+                buttonOptimizeScreenCaptureApplyToAllRegions.Enabled = true;
             }
             else
             {
                 labelImageDifference.Enabled = false;
                 trackBarImageDiffTolerance.Enabled = false;
-                labelTolerance.Enabled = false;
+                labelImageDiffTolerance.Enabled = false;
                 labelSelectedImageDiffTolerance.Enabled = false;
+                buttonOptimizeScreenCaptureApplyToAllScreens.Enabled = false;
+                buttonOptimizeScreenCaptureApplyToAllRegions.Enabled = false;
             }
         }
 
@@ -1031,6 +1035,30 @@ namespace AutoScreenCapture
         private void trackBarImageDifference_Scroll(object sender, EventArgs e)
         {
             labelSelectedImageDiffTolerance.Text = trackBarImageDiffTolerance.Value.ToString() + "%";
+        }
+
+        private void buttonOptimizeScreenCaptureApplyToAllScreens_Click(object sender, EventArgs e)
+        {
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                screen.ImageDiffTolerance = trackBarImageDiffTolerance.Value;
+            }
+
+            _formScreen.ScreenCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All screens are now using the image difference tolerance of " + trackBarImageDiffTolerance.Value + "%", "Image Difference Tolerance Applied To All Screens", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonOptimizeScreenCaptureApplyToAllRegions_Click(object sender, EventArgs e)
+        {
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                region.ImageDiffTolerance = trackBarImageDiffTolerance.Value;
+            }
+
+            _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All regions are now using the image difference tolerance of " + trackBarImageDiffTolerance.Value + "%", "Image Difference Tolerance Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -453,7 +453,7 @@ namespace AutoScreenCapture
             return returnFlag & (int)ScreenSavingErrorLevels.None;
         }
 
-        private int SaveToFile(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
+        private int SaveToFile(Security security, int jpegQuality, int imageDiffTolerance, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             int returnFlag = 0;
             string dirName = _fileSystem.GetDirectoryName(screenshot.FilePath);
@@ -476,7 +476,7 @@ namespace AutoScreenCapture
 
                 // Attempt to process the screenshot before it's saved to disk.
                 // This means we'll check for image diff tolerance (if Optimize Screen Capture is enabled).
-                if (screenshotCollection.Process(screenshot))
+                if (screenshotCollection.Process(screenshot, imageDiffTolerance))
                 {
                     // Save the screenshot to disk if it processed successfully.
                     // This method also handles the encryption of the screenshot so make sure we encrypt it (if needed) before adding it to the screenshot collection.
@@ -965,10 +965,11 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="security">The security class.</param>
         /// <param name="jpegQuality">The JPEG quality setting for JPEG images being saved.</param>
+        /// <param name="imageDiffTolerance">The image difference tolerance percentage.</param>
         /// <param name="screenshot">The screenshot to save.</param>
         /// <param name="screenshotCollection">A collection of screenshot objects.</param>
         /// <returns>A boolean to determine if we successfully saved the screenshot.</returns>
-        public int SaveScreenshot(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
+        public int SaveScreenshot(Security security, int jpegQuality, int imageDiffTolerance, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             int returnFlag = 0;
 
@@ -1024,7 +1025,7 @@ namespace AutoScreenCapture
                                 }
                             }
 
-                            return SaveToFile(security, jpegQuality, screenshot, screenshotCollection);
+                            return SaveToFile(security, jpegQuality, imageDiffTolerance, screenshot, screenshotCollection);
                         }
                         else
                         {
@@ -1037,7 +1038,7 @@ namespace AutoScreenCapture
                     else
                     {
                         // This is a UNC network share path (such as "\\SERVER\screenshots\").
-                        return SaveToFile(security, jpegQuality, screenshot, screenshotCollection);
+                        return SaveToFile(security, jpegQuality, imageDiffTolerance, screenshot, screenshotCollection);
                     }
                 }
 

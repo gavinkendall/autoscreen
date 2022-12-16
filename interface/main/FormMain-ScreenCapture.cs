@@ -452,6 +452,7 @@ namespace AutoScreenCapture
             string macro = string.Empty;
             ImageFormat format = new ImageFormat("JPEG", "jpeg");
             int jpegQuality = 100;
+            int imageDiffTolerance = 0;
             bool encrypt = false;
 
             if (screenOrRegion is Screen screen)
@@ -461,6 +462,7 @@ namespace AutoScreenCapture
                 macro = screen.Macro;
                 format = screen.Format;
                 jpegQuality = screen.JpegQuality;
+                imageDiffTolerance = screen.ImageDiffTolerance;
                 encrypt = screen.Encrypt;
             }
 
@@ -471,6 +473,7 @@ namespace AutoScreenCapture
                 macro = region.Macro;
                 format = region.Format;
                 jpegQuality = region.JpegQuality;
+                imageDiffTolerance = region.ImageDiffTolerance;
                 encrypt = region.Encrypt;
             }
 
@@ -527,7 +530,7 @@ namespace AutoScreenCapture
                 Encrypt = encrypt
             };
 
-            int errorLevel = _screenCapture.SaveScreenshot(_security, jpegQuality, screenshot, _screenshotCollection);
+            int errorLevel = _screenCapture.SaveScreenshot(_security, jpegQuality, imageDiffTolerance, screenshot, _screenshotCollection);
 
             // ScreenSavingErrorLevels enum written by Oskars Grauzis (https://github.com/grauziitisos)
             bool screenSaved = errorLevel == (int)ScreenSavingErrorLevels.None ||
