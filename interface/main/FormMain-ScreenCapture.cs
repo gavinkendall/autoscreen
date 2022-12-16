@@ -785,6 +785,7 @@ namespace AutoScreenCapture
                     ViewId = new Guid(),
                     Name = string.Empty,
                     JpegQuality = 100,
+                    ImageDiffTolerance = 0,
                     Format = imageFormat,
                     Folder = autoSaveFolder,
                     Macro = autoSaveMacro
@@ -892,6 +893,7 @@ namespace AutoScreenCapture
                     Macro = _fileSystem.FilenamePattern,
                     Format = _imageFormatCollection.GetByName(ScreenCapture.ImageFormat),
                     JpegQuality = 100,
+                    ImageDiffTolerance = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance").Value),
                     Mouse = true,
                     X = _formRegionSelectWithMouse.outputX,
                     Y = _formRegionSelectWithMouse.outputY,

@@ -51,10 +51,10 @@ namespace AutoScreenCapture
         private const string REGEX_SMTP_SETTING = "^SMTPSetting::\\[Key=\"(?<Key>.+)\", Value=\"(?<Value>.*)\"\\]$";
 
         // Screen Definition Regex
-        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>[A-Z]{3,4}), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
+        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>[A-Z]{3,4}), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ImageDiffTolerance=(?<ImageDiffTolerance>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
 
         // Region Definition Regex
-        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>[A-Z]{3,4}), JPEGQuality=(?<JPEGQuality>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
+        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>[A-Z]{3,4}), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ImageDiffTolerance=(?<ImageDiffTolerance>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
 
         // Editor Definition Regex
         private const string REGEX_EDITOR = "^Editor::\\[Name=\"(?<Name>.+)\", ApplicationPath=\"(?<ApplicationPath>.+)\", ApplicationArguments=\"(?<ApplicationArguments>.+)\", Notes=\"(?<Notes>.*)\"\\]$";
@@ -893,6 +893,7 @@ namespace AutoScreenCapture
                         bool autoAdapt = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["AutoAdapt"].Value);
                         string format = Regex.Match(line, REGEX_SCREEN).Groups["Format"].Value;
                         int jpegQuality = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["JPEGQuality"].Value);
+                        int imageDiffTolerance = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["ImageDiffTolerance"].Value);
                         int resolutionRatio = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["ResolutionRatio"].Value);
                         bool mouse = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["Mouse"].Value);
                         bool encrypt = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["Encrypt"].Value);
@@ -915,6 +916,7 @@ namespace AutoScreenCapture
                             AutoAdapt = autoAdapt,
                             Format = new ImageFormat(format, "." + format.ToLower()),
                             JpegQuality = jpegQuality,
+                            ImageDiffTolerance = imageDiffTolerance,
                             ResolutionRatio = resolutionRatio,
                             Mouse = mouse,
                             Encrypt = encrypt
@@ -958,6 +960,7 @@ namespace AutoScreenCapture
                         int height = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["Height"].Value);
                         string format = Regex.Match(line, REGEX_REGION).Groups["Format"].Value;
                         int jpegQuality = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["JPEGQuality"].Value);
+                        int imageDiffTolerance = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["ImageDiffTolerance"].Value);
                         bool mouse = Convert.ToBoolean(Regex.Match(line, REGEX_REGION).Groups["Mouse"].Value);
                         bool encrypt = Convert.ToBoolean(Regex.Match(line, REGEX_REGION).Groups["Encrypt"].Value);
 
@@ -974,6 +977,7 @@ namespace AutoScreenCapture
                             Height = height,
                             Format = new ImageFormat(format, "." + format.ToLower()),
                             JpegQuality = jpegQuality,
+                            ImageDiffTolerance = imageDiffTolerance,
                             Mouse = mouse,
                             Encrypt = encrypt
                         };
