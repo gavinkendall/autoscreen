@@ -64,5 +64,24 @@ namespace AutoScreenCapture
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
             }
         }
+
+        private void buttonAddScreenshotLabelToList_Click(object sender, EventArgs e)
+        {
+            string labelToAdd = textBoxNewLabel.Text.Trim();
+
+            if (string.IsNullOrEmpty(labelToAdd))
+            {
+                return;
+            }
+
+            textBoxNewLabel.Clear();
+
+            if (!comboBoxLabels.Items.Contains(labelToAdd))
+            {
+                comboBoxLabels.Items.Add(labelToAdd);
+
+                comboBoxLabels.SelectedItem = labelToAdd;
+            }
+        }
     }
 }
