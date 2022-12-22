@@ -1,5 +1,6 @@
 ﻿Auto Screen Capture by Gavin Kendall
 
+2.5.1.7    TimeFormatForTrigger considers seconds. Time property for Trigger sets time for zero seconds when loading Triggers, adding new Triggers, and changing existing Triggers so if a Trigger enables a module item it will rebuild the list of module items only once because DateTime.Now compared to Trigger.Time considers the top of the minute at zero seconds instead of triggering for an entire minute.
 2.5.1.6    Image Difference Tolerance (as part of Optimize Screen Capture) is now available for individual Screens and Regions. Can now change dashboard wallpaper.
 2.5.1.5    Optimize Screen Capture tolerance percentage is calculated based on Math.Ceiling() for better results when comparing very small changes between the previous captured image and the current captured image.
 2.5.1.4    A small fix for the -interval command.

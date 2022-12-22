@@ -201,6 +201,7 @@ namespace AutoScreenCapture
                                     case TRIGGER_TIME:
                                         xReader.Read();
                                         trigger.Time = Convert.ToDateTime(xReader.Value);
+                                        trigger.Time = new DateTime(trigger.Date.Year, trigger.Date.Month, trigger.Date.Day, trigger.Time.Hour, trigger.Time.Minute, 0);
                                         break;
 
                                     case TRIGGER_DAY:

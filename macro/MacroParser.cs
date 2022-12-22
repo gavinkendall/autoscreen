@@ -136,6 +136,8 @@ namespace AutoScreenCapture
                 sb.Append(HourFormat);
                 sb.Append(":");
                 sb.Append(MinuteFormat);
+                sb.Append(":");
+                sb.Append(SecondFormat);
 
                 return sb.ToString();
             }

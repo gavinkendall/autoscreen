@@ -213,7 +213,7 @@ namespace AutoScreenCapture
                         ActionType = (TriggerActionType)listBoxAction.SelectedIndex,
                         Enable = checkBoxEnable.Checked,
                         Date = dateTimePickerDate.Value,
-                        Time = dateTimePickerTime.Value,
+                        Time = new DateTime(dateTimePickerDate.Value.Year, dateTimePickerDate.Value.Month, dateTimePickerDate.Value.Day, dateTimePickerTime.Value.Hour, dateTimePickerTime.Value.Minute, 0),
                         Day = comboBoxDay.Text,
                         Days = (int)numericUpDownDays.Value,
                         CycleCount = (int)numericUpDownCycleCount.Value,
@@ -278,7 +278,7 @@ namespace AutoScreenCapture
                     TriggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)listBoxAction.SelectedIndex;
                     TriggerCollection.Get(TriggerObject).Enable = checkBoxEnable.Checked;
                     TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
-                    TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
+                    TriggerCollection.Get(TriggerObject).Time = new DateTime(dateTimePickerDate.Value.Year, dateTimePickerDate.Value.Month, dateTimePickerDate.Value.Day, dateTimePickerTime.Value.Hour, dateTimePickerTime.Value.Minute, 0);
                     TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
                     TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
                     TriggerCollection.Get(TriggerObject).CycleCount = (int)numericUpDownCycleCount.Value;
