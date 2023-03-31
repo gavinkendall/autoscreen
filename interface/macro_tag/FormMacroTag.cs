@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormMacroTag.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2022 Gavin Kendall
+//     Copyright (c) 2008-2023 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A form for adding a new macro tag or changing an existing macro tag.</summary>

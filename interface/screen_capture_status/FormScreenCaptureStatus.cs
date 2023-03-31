@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormScreenCaptureStatus.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2022 Gavin Kendall
+//     Copyright (c) 2008-2023 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A form for asking the user for the passphrase during a locked screen capture session.</summary>

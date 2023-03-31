@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormRegion.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2022 Gavin Kendall
+//     Copyright (c) 2008-2023 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A form for adding a new region or changing an existing region.</summary>
@@ -493,7 +493,7 @@ namespace AutoScreenCapture
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_screenCapture);
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
+            _formRegionSelectWithMouse.LoadCanvas();
 
             Cursor = Cursors.Arrow;
         }

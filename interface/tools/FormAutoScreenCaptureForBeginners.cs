@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormAutoScreenCaptureForBeginners.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2022 Gavin Kendall
+//     Copyright (c) 2008-2023 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A tool for people who are unfamiliar with Auto Screen Capture.</summary>

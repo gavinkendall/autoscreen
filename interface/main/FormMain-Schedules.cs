@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormMain-Schedules.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2022 Gavin Kendall
+//     Copyright (c) 2008-2023 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>All the methods for handling schedules.</summary>
@@ -57,13 +57,15 @@ namespace AutoScreenCapture
                     if (_formSchedule.ScheduleCollection.SpecialScheduleModePeriod)
                     {
                         if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Hour) &&
-                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Minute))
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Minute) &&
+                            (dtNow.Second == 0))
                         {
                             StartScreenCapture(_formSchedule.ScheduleCollection.SpecialScheduleScreenCaptureInterval);
                         }
 
                         if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Hour) &&
-                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Minute))
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Minute) &&
+                            (dtNow.Second == 0))
                         {
                             StopScreenCapture();
 
@@ -103,7 +105,8 @@ namespace AutoScreenCapture
                             if (schedule.Logic == 0)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                    (dtNow.Minute == schedule.StartAt.Minute))
+                                    (dtNow.Minute == schedule.StartAt.Minute) &&
+                                    (dtNow.Second == 0))
                                 {
                                     // Set the main interval with the schedule's interval.
                                     decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(schedule.ScreenCaptureInterval)).Hours);
@@ -146,7 +149,8 @@ namespace AutoScreenCapture
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute))
+                                    (dtNow.Minute == schedule.StopAt.Minute) &&
+                                    (dtNow.Second == 0))
                                 {
                                     // Stop the main timer.
                                     StopScreenCapture();
@@ -156,13 +160,15 @@ namespace AutoScreenCapture
                             if (schedule.Logic == 1)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                    (dtNow.Minute == schedule.StartAt.Minute))
+                                    (dtNow.Minute == schedule.StartAt.Minute) &&
+                                    (dtNow.Second == 0))
                                 {
                                     StartSchedule(schedule);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute))
+                                    (dtNow.Minute == schedule.StopAt.Minute) &&
+                                    (dtNow.Second == 0))
                                 {
                                     StopSchedule(schedule);
                                 }

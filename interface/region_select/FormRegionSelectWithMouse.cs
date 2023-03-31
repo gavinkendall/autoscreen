@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormRegionSelectWithMouse.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2022 Gavin Kendall
+//     Copyright (c) 2008-2023 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A form that covers all the available screens so we can do a mouse-driven region select.</summary>
@@ -32,8 +32,6 @@ namespace AutoScreenCapture
     public partial class FormRegionSelectWithMouse : Form
     {
         ScreenCapture _screenCapture;
-
-        private bool _sendToClipboard;
 
         private int _selectX;
         private int _selectY;
@@ -94,11 +92,8 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the canvas with the chosen output mode.
         /// </summary>
-        /// <param name="sendToClipboard">Determines if we want to send the captured image to the clipboard.</param>
-        public void LoadCanvas(bool sendToClipboard)
+        public void LoadCanvas()
         {
-            _sendToClipboard = sendToClipboard;
-
             Top = 0;
             Left = 0;
 
@@ -203,69 +198,19 @@ namespace AutoScreenCapture
                 _selectHeight = e.Y - _selectY;
             }
 
-            Bitmap bitmap = SelectBitmap();
+            _selectX = (Left + _selectX);
+            _selectY = (Top + _selectY);
 
-            if (bitmap != null)
-            {
-                if (_sendToClipboard)
-                {
-                    SendToClipboard(bitmap);
-                }
+            outputX = _selectX;
+            outputY = _selectY;
+            outputWidth = _selectWidth;
+            outputHeight = _selectHeight;
 
-                bitmap.Dispose();
-
-                outputX = _selectX;
-                outputY = _selectY;
-                outputWidth = _selectWidth;
-                outputHeight = _selectHeight;
-
-                CompleteMouseSelection(sender, e);
-            }
+            CompleteMouseSelection(sender, e);
 
             Cursor = Cursors.Arrow;
 
             Close();
-        }
-
-        /// <summary>
-        /// Gets a bitmap image from an area of the screen based on X, Y, Width, and Height.
-        /// </summary>
-        /// <returns>Returns a bitmap image based on X, Y, Width, and Height.</returns>
-        private Bitmap SelectBitmap()
-        {
-            if (_selectWidth > 0 && _selectHeight > 0)
-            {
-                Rectangle rect = new Rectangle(_selectX, _selectY, _selectWidth, _selectHeight);
-                Bitmap bitmapDestination = new Bitmap(pictureBoxMouseCanvas.Image, pictureBoxMouseCanvas.Width, pictureBoxMouseCanvas.Height);
-
-                Bitmap bitmapSource = new Bitmap(_selectWidth, _selectHeight);
-
-                using (Graphics g = Graphics.FromImage(bitmapSource))
-                {
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.DrawImage(bitmapDestination, Left, Top, rect, GraphicsUnit.Pixel);
-                }
-
-                return bitmapSource;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Sends the provided bitmap image to the clipboard.
-        /// </summary>
-        /// <param name="bitmap">A bitmap image to send to the clipboard.</param>
-        private void SendToClipboard(Bitmap bitmap)
-        {
-            if (bitmap != null)
-            {
-                Clipboard.SetImage(bitmap);
-            }
         }
     }
 }
